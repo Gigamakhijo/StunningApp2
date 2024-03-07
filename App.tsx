@@ -10,9 +10,11 @@ import {
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useColorScheme } from "react-native";
 import { LoginScreen } from "./app/screens/LoginScreen";
+import { SignInScreen } from "./app/screens/SignInScreen";
 
 export type AppStackParamList = {
   Login: undefined
+  SignIn: undefined
 }
 
 export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStackScreenProps<AppStackParamList, T>
@@ -32,6 +34,7 @@ function AppStack() {
       }}
       initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="SignIn" component={SignInScreen} />
       </Stack.Navigator>
   )
 }
