@@ -77,7 +77,7 @@ export const LoginScreen: FC<LoginScreenProps> = function LoginScreen(_props){
                     </View>
                 </KeyboardAvoidingView>
                 <View style={style.buttonfield}>
-                    <Pressable style={style.button1} onPress={()=>navigation.navigate("SignIn")}>
+                    <Pressable style={style.button1} onPress={()=>navigation.navigate("SignUp")}>
                         <Text style={{fontSize: 16, color: "#DD8181"}}>회원가입 하기</Text>
                     </Pressable>
                 </View>

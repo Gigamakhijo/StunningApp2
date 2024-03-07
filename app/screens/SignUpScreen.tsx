@@ -4,9 +4,9 @@ import { AppStackScreenProps } from "../../App"
 import { StatusBar, StatusBarProps } from "expo-status-bar"
 import { BasicScreen } from "../component/BasicScreen"
 
-interface SignInScreenProps extends AppStackScreenProps<"SignIn">{}
+interface SignUpnScreenProps extends AppStackScreenProps<"SignUp">{}
 
-export const SignInScreen: FC<SignInScreenProps> = function SignInScreen(_props){
+export const SignUpScreen: FC<SignUpnScreenProps> = function SignUpScreen(_props){
     const { navigation } = _props
 
     return(
