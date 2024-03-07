@@ -1,19 +1,17 @@
-import React, { ComponentType, FC, useState, useRef, useEffect, useMemo } from "react"
+import React, { ComponentType, FC, useState, useRef, useEffect, useMemo, Children } from "react"
 import { TextStyle, View, ViewStyle, TextInput, Text, StyleSheet, Image, ImageBackground, KeyboardAvoidingView, StyleProp } from "react-native"
 import { StatusBar, StatusBarProps } from "expo-status-bar"
 
 interface BasicScreenProps {
     children?: React.ReactNode
-    style?: StyleProp<ViewStyle>
-    StatusBarProps?: StatusBarProps
-    statusBarStyle?: "light" | "dark"
 }
 
-export function BasicScreen(){
-
+export function BasicScreen(props: BasicScreenProps){
+    const { children } = props
     const backgroundimage = require("../../assets/images/background-image.png")
 
     return(
+        <KeyboardAvoidingView style={{flex:1}}>
         <View style={style.container}>
             <StatusBar style={"dark"} />
             <ImageBackground
@@ -22,11 +20,12 @@ export function BasicScreen(){
             resizeMode="cover"
             >
              <View style={style.tab}>
-                
+                {children}
              </View>
 
             </ImageBackground>
         </View>
+        </KeyboardAvoidingView>
     )
 }
 
