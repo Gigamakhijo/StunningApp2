@@ -12,19 +12,19 @@ export function BasicScreen(props: BasicScreenProps){
 
     return(
         <KeyboardAvoidingView style={{flex:1}}>
-        <View style={style.container}>
-            <StatusBar style={"dark"} />
-            <ImageBackground
-            source={backgroundimage}
-            style={{flex:1, paddingTop: 60}}
-            resizeMode="cover"
-            >
-             <View style={style.tab}>
-                {children}
-             </View>
+            <View style={style.container}>
+                <StatusBar style={"dark"} />
+                <ImageBackground
+                source={backgroundimage}
+                style={{flex:1, paddingTop: 60}}
+                resizeMode="cover"
+                >
+                <View style={style.tab}>
+                    {children}
+                </View>
 
-            </ImageBackground>
-        </View>
+                </ImageBackground>
+            </View>
         </KeyboardAvoidingView>
     )
 }

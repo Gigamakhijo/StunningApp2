@@ -9,10 +9,12 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.5.17",
     "@react-navigation/native": "^6.1.14",
     "@react-navigation/native-stack": "^6.9.22",
     "@types/react": "~18.2.45",
     "expo": "~50.0.7",
+    "expo-image-picker": "~14.7.1",
     "expo-status-bar": "~1.11.1",
     "mobx-react-lite": "^4.0.5",
     "mobx-state-tree": "^5.4.1",

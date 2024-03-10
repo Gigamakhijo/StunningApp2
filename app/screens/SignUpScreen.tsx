@@ -30,72 +30,75 @@ export const SignUpScreen: FC<SignUpnScreenProps> = function SignUpScreen(_props
     }
 
     return(
-        <BasicScreen>
-                <Text style={style.logo}>STUNNING</Text>
-                <View style={style.profilefield}>
-                    <Image source={Profile} style={style.profileimage}/> 
-                    <View style={style.signupfield}>
-                    <View style={style.imagefield}>
-                            <Image source={ProfilePerson} style={{width:16, height: 18, marginBottom: 25,}}/>
-                            <Image source={ProfileLock} style={{width:16, height: 18,}}/>
-                        </View>  
-                        <View style={style.textfield}>
-                            <Text style={style.text}>아이디</Text>
-                            <Text style={style.text}>비밀번호</Text>
-                        </View>
-                        <View style={style.inputfield}>
-                            <TextInput                        
-                            onChangeText={onChangeId}
-                            value={id}
-                            placeholder="아이디를 입력하세요."
-                            placeholderTextColor={"#8C8C8C"} 
-                            style={style.textinput1}
-                            ref={ref_input[0]}
-                            onSubmitEditing={() => {
-                            ref_input[1].current.focus();
-                          }}
-                            />
-                            <TextInput                        
-                            onChangeText={onChangeId}
-                            value={id}
-                            placeholder="비밀번호를 입력하세요."
-                            placeholderTextColor={"#8C8C8C"} 
-                            style={style.textinput2}
-                            ref={ref_input[1]}
-                            onSubmitEditing={() => null}
-                            />
+        <KeyboardAvoidingView style={{flex:1}}>
+            <BasicScreen>
+                    <Text style={style.logo}>STUNNING</Text>
+                    <View style={style.profilefield}>
+                        <Image source={Profile} style={style.profileimage}/> 
+                        <View style={style.signupfield}>
+                        <View style={style.imagefield}>
+                                <Image source={ProfilePerson} style={{width:16, height: 18, marginBottom: 25,}}/>
+                                <Image source={ProfileLock} style={{width:16, height: 18,}}/>
+                            </View>  
+                            <View style={style.textfield}>
+                                <Text style={style.text}>아이디</Text>
+                                <Text style={style.text}>비밀번호</Text>
+                            </View>
+                            <View style={style.inputfield}>
+                                <TextInput                        
+                                onChangeText={onChangeId}
+                                value={id}
+                                placeholder="아이디를 입력하세요."
+                                placeholderTextColor={"#8C8C8C"} 
+                                style={style.textinput1}
+                                ref={ref_input[0]}
+                                onSubmitEditing={() => {
+                                ref_input[1].current.focus();
+                            }}
+                                />
+                                <TextInput                        
+                                onChangeText={onChangeId}
+                                value={id}
+                                placeholder="비밀번호를 입력하세요."
+                                placeholderTextColor={"#8C8C8C"} 
+                                style={style.textinput2}
+                                ref={ref_input[1]}
+                                onSubmitEditing={() => null}
+                                />
+                            </View>
                         </View>
                     </View>
-                </View>
-            <View style={style.buttonfield}>
-                        <View style={{
-                            backgroundColor: "#F3DDDD80",
-                            borderColor: "#00000010",
-                            borderBottomWidth: 3,
-                            borderRadius: 10,
-                            width: 160,
-                            height: 50,
-                            }}>
-                        <Pressable style={style.exit}
-                        onPress={()=>navigation.navigate("Login")}>
-                            <Text style={{fontSize: 20, fontWeight: "bold"}}>취소</Text>
-                        </Pressable> 
-                        </View>
-                        <View style={{
-                            backgroundColor: "#E7E6E680",         
-                            borderColor: "#00000010",
-                            borderBottomWidth: 3,
-                            borderRadius: 10,
-                            width: 160,
-                            height: 50,
-                            }}>
-                            <Pressable style={style.complete}>
-                                <Text style={{fontSize: 20, fontWeight: "bold"}}>완료</Text>
+                <View style={style.buttonfield}>
+                            <View style={{
+                                backgroundColor: "#F3DDDD80",
+                                borderColor: "#00000010",
+                                borderBottomWidth: 3,
+                                borderRadius: 10,
+                                width: 160,
+                                height: 50,
+                                }}>
+                            <Pressable style={style.exit}
+                            onPress={()=>navigation.navigate("Login")}>
+                                <Text style={{fontSize: 20, fontWeight: "bold"}}>취소</Text>
                             </Pressable> 
-                        </View>
+                            </View>
+                            <View style={{
+                                backgroundColor: "#E7E6E680",         
+                                borderColor: "#00000010",
+                                borderBottomWidth: 3,
+                                borderRadius: 10,
+                                width: 160,
+                                height: 50,
+                                }}>
+                                <Pressable style={style.complete}
+                                onPress={()=>navigation.navigate("SetProfile")}>
+                                    <Text style={{fontSize: 20, fontWeight: "bold"}}>완료</Text>
+                                </Pressable> 
+                            </View>
 
-                    </View>
-            </BasicScreen>
+                        </View>
+                </BasicScreen>
+            </KeyboardAvoidingView>
     )
 }
 
