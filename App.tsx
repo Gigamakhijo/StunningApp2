@@ -11,12 +11,10 @@ import {
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createBottomTabNavigator, BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { useColorScheme } from "react-native";
-import { LoginScreen } from "./app/screens/LoginScreen";
-import { SignUpScreen } from "./app/screens/SignUpScreen";
-import { MainScreen } from "./app/screens/MainScreen";
-import { SetProfileScreen } from "./app/screens/SetProfileScreen";
 import { Icon } from "./app/component/Icon";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { LoginScreen, SignUpScreen, SetProfileScreen, MainScreen, CameraScreen, MyFeedScreen, StudyWithMeListScreen } from './app/screens';
+import { BlurView } from "expo-blur";
 
 export type AppStackParamList = {
   Login: undefined
@@ -27,9 +25,9 @@ export type AppStackParamList = {
 
 export type TabStackParamList ={
   Main: undefined
-  StudyWithMeListScreen: undefined
-  CameraScreen: undefined
-  MyFeedScreen: undefined
+  StudyWithMeList: undefined
+  Camera: undefined
+  MyFeed: undefined
 }
 
 export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStackScreenProps<AppStackParamList, T>
@@ -61,59 +59,6 @@ function AppStack() {
   )
 }
 
-function TabBar({state, descriptors, navigation,}){
-  return(
-    <View style={{flexDirection: "row", flexBasis: 60, justifyContent: "space-evenly", backgroundColor: "#FFFFFF", alignItems: "center", paddingLeft: 40, paddingRight: 40,}}>
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
-
-        const isFocused = state.index === index;
-
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
-
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name, route.params);
-          }
-        };
-
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
-
-        return (
-          <TouchableOpacity
-            accessibilityRole="button"
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={{ flex: 1, }}
-          >
-            <Text style={{ color: isFocused ? '#000000' : '#8C8C8C' }}>
-              {label}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  )
-}
-
 function TabNavigator(){
   const insets = useSafeAreaInsets()
 
@@ -121,12 +66,23 @@ function TabNavigator(){
     <Tab.Navigator
     screenOptions={{
      headerShown: false,
+     tabBarStyle: {justifyContent: "space-evenly", alignItems: "center", backgroundColor: "#FFFFFF", alignSelf: "center", position: "absolute"},
+     tabBarBackground: () => (
+      <BlurView tint="light" intensity={100} style={StyleSheet.absoluteFill} />
+     )
     }}
-      tabBar={props => <TabBar {...props} />}
+    
       backBehavior="order"
     >
-      <Tab.Screen name="Main" component={MainScreen} options={{tabBarIcon: () => <Icon icon="calendar" color={"#000000"} size={30} />, tabBarShowLabel: false}
+      <Tab.Screen name="Main" component={MainScreen} options={{tabBarIcon: ({focused}) => <Icon icon="calendar" color={focused ? "#8C8C8C" : "#000000"} size={20} />, tabBarShowLabel: false}
     } />
+        <Tab.Screen name="Camera" component={CameraScreen} options={{tabBarIcon: ({focused}) => <Icon icon="camera" color={ focused ? "#8C8C8C" : "#000000"} size={20} />, tabBarShowLabel: false}
+    }/>
+        <Tab.Screen name="StudyWithMeList" component={StudyWithMeListScreen} options={{tabBarIcon: ({focused}) => <Icon icon="stdwmList" color={focused ? "#8C8C8C" : "#000000"} size={20} />, tabBarShowLabel: false}
+    }/>
+
+      <Tab.Screen name="MyFeed" component={MyFeedScreen}  options={{tabBarIcon: ({focused}) => <Icon icon="myprofile" color={focused ? "#8C8C8C" : "#000000"} size={20} />, tabBarShowLabel: false}
+    }/>
     </Tab.Navigator>
   )
 }

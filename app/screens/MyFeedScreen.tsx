@@ -1,17 +1,17 @@
 import React, { ComponentType, FC, useState, useRef, useEffect, useMemo } from "react"
-import { KeyboardAvoidingView, View } from "react-native"
 import { AppStackScreenProps, TabStackScreenProps } from "../../App"
+import { KeyboardAvoidingView, View } from "react-native"
 import { StatusBar, StatusBarProps } from "expo-status-bar"
 import { BasicScreen } from "../component/BasicScreen"
 
-interface MainScreenProps extends TabStackScreenProps<"Main">{}
+interface MyFeedScreenProps extends TabStackScreenProps<"MyFeed">{}
 
-export const MainScreen: FC<MainScreenProps> = function MainScreen(_props){
+export const MyFeedScreen: FC<MyFeedScreenProps> = function MyFeedScreen(_props){
     const { navigation } = _props
 
     return(
         <BasicScreen>
-            
+
         </BasicScreen>
     )
 }
