@@ -1,6 +1,5 @@
 import * as React from "react";
-import { StyleProp, View, ViewStyle, StyleSheet } from "react-native";
-// import { observer } from "mobx-react-lite"
+import { StyleProp, View, ViewStyle } from "react-native";
 
 export interface FullHorizonLineProps {
   style?: StyleProp<ViewStyle>;
