@@ -1,20 +1,20 @@
-import * as React from "react"
-import { StyleProp, View, ViewStyle } from "react-native"
+import * as React from "react";
+import { StyleProp, View, ViewStyle } from "react-native";
 export interface SemiHorizonLineProps {
   /**
    * An optional style override useful for padding & margin.
    */
-  style?: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>;
 }
 
 /**
  * Describe your component here
  */
 export function SemiHorizonLine(props: SemiHorizonLineProps) {
-  const { style } = props
-  const $styles = [$SemiHorizonLine, style]
+  const { style } = props;
+  const $styles = [$SemiHorizonLine, style];
 
-  return <View style={$styles} />
+  return <View style={$styles} />;
 }
 
 const $SemiHorizonLine: ViewStyle = {
@@ -23,4 +23,4 @@ const $SemiHorizonLine: ViewStyle = {
   width: 300,
   marginLeft: 92,
   marginBottom: 25,
-}
+};
