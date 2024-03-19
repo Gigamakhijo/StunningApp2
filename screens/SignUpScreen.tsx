@@ -24,8 +24,7 @@ export function SignUpScreen(_props) {
   ref_input[1] = useRef(null);
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }}>
-      <BasicScreen>
+    <KeyboardAvoidingView style={style.container}>
         <Text style={style.logo}>STUNNING</Text>
         <View style={style.profilefield}>
           <Image source={Profile} style={style.profileimage} />
@@ -101,12 +100,15 @@ export function SignUpScreen(_props) {
             </Pressable>
           </View>
         </View>
-      </BasicScreen>
     </KeyboardAvoidingView>
   );
 }
 
 const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F7F8FC"
+  },
   logo: {
     flex: 1,
     fontSize: 20,

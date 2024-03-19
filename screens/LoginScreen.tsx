@@ -29,12 +29,7 @@ export const LoginScreen: FC<LoginScreenProps> = function LoginScreen(_props) {
   return (
     <View style={style.container}>
       <StatusBar style={"dark"} />
-      <ImageBackground
-        source={backgroundimage}
-        style={{ flex: 1, paddingTop: 60 }}
-        resizeMode="cover"
-      >
-        <KeyboardAvoidingView
+      <KeyboardAvoidingView
           behavior="padding"
           keyboardVerticalOffset={0}
           style={style.keyboardAvoidingViewStyle}
@@ -46,7 +41,7 @@ export const LoginScreen: FC<LoginScreenProps> = function LoginScreen(_props) {
             <TextInput
               onChangeText={onChangeId}
               value={id}
-              placeholder="아이디를 입력하세요."
+              placeholder="이메일을 입력하세요."
               placeholderTextColor={"#8C8C8C"}
               ref={ref_input[0]}
               onSubmitEditing={() => {
@@ -81,17 +76,16 @@ export const LoginScreen: FC<LoginScreenProps> = function LoginScreen(_props) {
             style={style.button1}
             onPress={() => navigation.navigate("SignUp")}
           >
-            <Text style={{ fontSize: 16, color: "#DD8181" }}>
+            <Text style={{ fontSize: 16, color: "#408DFE" }}>
               회원가입 하기
             </Text>
           </Pressable>
         </View>
         <View style={style.buttonfield2}>
           <Pressable style={style.button2}>
-            <Text style={{ fontSize: 15, fontWeight: "bold" }}>로그인</Text>
+            <Text style={{ fontSize: 15, fontWeight: "bold", color: "#F7F8FC", }}>로그인</Text>
           </Pressable>
         </View>
-      </ImageBackground>
     </View>
   );
 };
@@ -99,18 +93,20 @@ export const LoginScreen: FC<LoginScreenProps> = function LoginScreen(_props) {
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F6E4E4",
+    backgroundColor: "#F7F8FC",
   },
   logoContainer: {
     justifyContent: "center",
     alignSelf: "center",
+    flex: 1,
   },
   logo: {
     fontSize: 48,
     fontWeight: "500",
+    color: "#408DFE"
   },
   keyboardAvoidingViewStyle: {
-    flex: 25,
+    flex: 30,
     backgroundColor: "#FEFEFE",
     borderTopLeftRadius: 53,
     borderTopRightRadius: 53,
@@ -137,7 +133,7 @@ const style = StyleSheet.create({
     padding: 10,
   },
   buttonfield: {
-    flex: 1,
+    flex: 2,
     backgroundColor: "#FFFFFF",
   },
   button1: {
@@ -153,7 +149,7 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   button2: {
-    backgroundColor: "#E1E1E180",
+    backgroundColor: "#77ADF5",
     borderBottomWidth: 2,
     borderRadius: 10,
     width: 300,
