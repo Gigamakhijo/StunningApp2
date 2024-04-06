@@ -20,6 +20,9 @@ const styles = StyleSheet.create({
     width: 300,
     height: 90,
   },
-  text: {},
+  text: {
+    fontSize: 15,
+    fontWeight: "normal",
+  },
   button: {},
 });
