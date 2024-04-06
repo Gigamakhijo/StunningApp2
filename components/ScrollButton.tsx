@@ -1,5 +1,7 @@
 import { View, Text, Pressable } from "react-native";
 import { StyleSheet } from "react-native";
+import colors from "@/constants/Colors";
+import spacing from "@/constants/spacing";
 
 export default function ScrollButton(props: { text: string }) {
   return (
@@ -12,7 +14,22 @@ export default function ScrollButton(props: { text: string }) {
 }
 
 const styles = StyleSheet.create({
-  container: {},
-  text: {},
-  button: {},
+  container: {
+    width: 75,
+    height: 20,
+    backgroundColor:colors.main.background,
+    borderRadius:15,
+    justifyContent:"center",
+    alignItems:"center",
+    marginLeft:"7%",
+    marginTop:spacing.s,
+  },
+  text: {
+    fontSize:10,
+    fontWeight:"bold",
+    color: colors.white.background,
+  },
+  button: {
+    color: colors.main.background,
+  },
 });
