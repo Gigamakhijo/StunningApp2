@@ -1,5 +1,6 @@
 import { View, TextInput } from "react-native";
 import { StyleSheet } from "react-native";
+import spacing from "@/constants/spacing";
 
 export default function TextField(props: any) {
   return (
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
     borderColor: "#C9C9C9",
     minWidth: 300,
     minHeight: 45,
-    padding: 10,
-    marginBottom: 10,
+    padding: spacing.s,
+    marginBottom: spacing.s,
   },
 });
