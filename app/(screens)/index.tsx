@@ -1,4 +1,4 @@
-import { View, FlatList, ScrollView, StyleSheet, Text, Pressable } from "react-native";
+import { View, FlatList, ScrollView, StyleSheet, Text, Pressable, TextInput } from "react-native";
 import { useState } from "react";
 
 import SmallButton from "@/components/SmallButton";
@@ -57,7 +57,7 @@ export default function MainScreen() {
           textDayFontWeight: "bold", // 일 글자굵기
           textMonthFontWeight: "bold", // 월 글자굵기
           textDayHeaderFontWeight: "bold", // 요일 글자굵기
-          calendarBackground: colors.normalgray.background, // 캘린더 배경색상
+          calendarBackground: "#F7F9FC", // 캘린더 배경색상
           textSectionTitleColor: "black", // 요일 글자색상
           textDayFontSize: 19, // day 글자크기 19
           textMonthFontSize: 23, // month 글자크기 23
@@ -98,9 +98,7 @@ export default function MainScreen() {
 
         <View style={styles.section}>
           <SectionButton href="./comment" text="Comment +" />
-          <Pressable style={styles.commentbox}>
-            <Text style={styles.commenttext}>{"회고를 남겨 보세요"}</Text>
-          </Pressable>
+          <TextInput style={styles.commenttext} placeholder="회고를 남겨 보세요." placeholderTextColor={colors.gray.background}></TextInput>
         </View>
 
         <View style={styles.section}>
@@ -142,7 +140,7 @@ const styles = StyleSheet.create({
   section: {
     flex:1,
   },
-  commentbox: {
+  commenttext:{
     height:135,
     width:320,
     backgroundColor:colors.white.background,
@@ -150,13 +148,11 @@ const styles = StyleSheet.create({
     borderColor:colors.main.background,
     borderWidth:1.5,
     justifyContent:"center",
-    alignItems:"center",
+    textAlign:"center",
     marginTop:spacing.s,
     marginLeft:"7%",
-  },
-  commenttext:{
-    fontSize:10,
+    fontSize:15,
     fontWeight:"normal",
-    color: colors.gray.background,
+    color: "black",
   },
 });
