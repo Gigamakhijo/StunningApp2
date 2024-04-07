@@ -19,11 +19,11 @@ export default function SectionButton(props: { href: string; text: string }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop:spacing.s,
+    marginTop: spacing.s,
   },
   text: {
-    fontSize:20,
-    fontWeight:"bold",
+    fontSize: 20,
+    fontWeight: "bold",
     color: colors.main.background,
   },
   button: {

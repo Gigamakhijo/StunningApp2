@@ -1,9 +1,17 @@
-import { View, FlatList, ScrollView, StyleSheet, Text, Pressable, TextInput } from "react-native";
+import {
+  View,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Pressable,
+  TextInput,
+} from "react-native";
 import { useState } from "react";
 
 import SmallButton from "@/components/SmallButton";
 import ScrollButton from "@/components/ScrollButton";
-import { Calendar ,LocaleConfig} from "react-native-calendars";
+import { Calendar, LocaleConfig } from "react-native-calendars";
 import SectionButton from "@/components/SectionButton";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
@@ -38,16 +46,24 @@ LocaleConfig.locales.en = {
     "nov",
     "dec",
   ],
-  dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  dayNames: [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ],
   dayNamesShort: ["S", "M", "T", "W", "T", "F", "S"],
   // numbers: ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'] // number localization example
-}
-LocaleConfig.defaultLocale = "en"
+};
+LocaleConfig.defaultLocale = "en";
 
 export default function MainScreen() {
   /* hacky way to convert to string */
   const [selected, setSelected] = useState(new Date(Date.now()) + "");
-  
+
   return (
     <ScrollView style={styles.entry}>
       <SmallButton href="./chat" text="Trainer" />
@@ -68,7 +84,7 @@ export default function MainScreen() {
           dayTextColor: "#2d4150", // 일 날짜 색상
           textDisabledColor: colors.gray.background, // 다른달 일 나오는 부분 색깔
           dotColor: "#deabb2",
-      }}
+        }}
         onDayPress={(day) => {
           setSelected(day.dateString);
         }}
@@ -87,7 +103,7 @@ export default function MainScreen() {
           <ScrollButton text="comment" />
           <ScrollButton text="challenge" />
         </View>
-        
+
         <View style={styles.section}>
           <SectionButton href="./schedule" text="Schedule +" />
         </View>
@@ -98,13 +114,16 @@ export default function MainScreen() {
 
         <View style={styles.section}>
           <SectionButton href="./comment" text="Comment +" />
-          <TextInput style={styles.commenttext} placeholder="회고를 남겨 보세요." placeholderTextColor={colors.gray.background}></TextInput>
+          <TextInput
+            style={styles.commenttext}
+            placeholder="회고를 남겨 보세요."
+            placeholderTextColor={colors.gray.background}
+          ></TextInput>
         </View>
 
         <View style={styles.section}>
           <SectionButton href="./schedule" text="Challenge +" />
         </View>
-
       </View>
     </ScrollView>
   );
@@ -116,43 +135,43 @@ function formatDate(d: Date) {
 }
 
 const styles = StyleSheet.create({
-  entry:{
-    height:"100%",
+  entry: {
+    height: "100%",
   },
   calendar: {
-    flex:1,
-    marginHorizontal:"5%",
+    flex: 1,
+    marginHorizontal: "5%",
   },
-  content:{
-    flex:2,
-    marginTop:"5%",
+  content: {
+    flex: 2,
+    marginTop: "5%",
   },
-  selectday:{
+  selectday: {
     marginLeft: "5%",
     fontSize: 25,
     fontWeight: "bold",
     color: colors.main.background,
   },
-  buttonRow: { 
-    flexDirection: "row", 
-    marginBottom:spacing.s,
+  buttonRow: {
+    flexDirection: "row",
+    marginBottom: spacing.s,
   },
   section: {
-    flex:1,
+    flex: 1,
   },
-  commenttext:{
-    height:135,
-    width:320,
-    backgroundColor:colors.white.background,
-    borderRadius:15,
-    borderColor:colors.main.background,
-    borderWidth:1.5,
-    justifyContent:"center",
-    textAlign:"center",
-    marginTop:spacing.s,
-    marginLeft:"7%",
-    fontSize:15,
-    fontWeight:"normal",
+  commenttext: {
+    height: 135,
+    width: 320,
+    backgroundColor: colors.white.background,
+    borderRadius: 15,
+    borderColor: colors.main.background,
+    borderWidth: 1.5,
+    justifyContent: "center",
+    textAlign: "center",
+    marginTop: spacing.s,
+    marginLeft: "7%",
+    fontSize: 15,
+    fontWeight: "normal",
     color: "black",
   },
 });
