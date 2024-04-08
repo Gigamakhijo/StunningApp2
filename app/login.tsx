@@ -1,22 +1,31 @@
-import { View, StyleSheet } from "react-native";
+import { Alert, Button, StyleSheet, Text, View } from "react-native";
+import { Redirect } from "expo-router";
 
-import TextField from "@/components/TextField";
 import LoginButton from "@/components/LoginButton";
-import SignUpButton from "@/components/SignUpButton";
 import Logo from "@/components/Logo";
 
+import { useAuth0 } from "react-native-auth0";
+
 export default function LoginScreen() {
-  return (
-    <>
-      <Logo />
+  const { authorize, user } = useAuth0();
 
-      <TextField />
-      <TextField />
+  const onLogin = async () => {
+    await authorize();
+  };
 
-      <SignUpButton />
-      <LoginButton />
-    </>
-  );
+  const loggedIn = user !== undefined && user !== null;
+
+  if (loggedIn) {
+    return <Redirect href="/(screens)" />;
+  } else {
+    return (
+      <>
+        <Logo />
+
+        <LoginButton onPress={onLogin} />
+      </>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

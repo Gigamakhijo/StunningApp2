@@ -7,7 +7,7 @@ export default function LoginButton(props: any) {
   return (
     <View style={styles.container}>
       <Link href="/" asChild>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={props.onPress}>
           <Text style={styles.text}>로그인</Text>
         </Pressable>
       </Link>
