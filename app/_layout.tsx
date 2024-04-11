@@ -3,7 +3,7 @@ import { Auth0Provider } from "react-native-auth0";
 
 export default function Layout() {
   return (
-    <Auth0Provider domain={""} clientId={""}>
+    <Auth0Provider domain={"dev-txofdyv5y7iqh1gd.us.auth0.com"} clientId={"qJE2uM0S653dLAMoQLC72to5vLOV3Bn6"}>
       <Slot />
     </Auth0Provider>
   );
