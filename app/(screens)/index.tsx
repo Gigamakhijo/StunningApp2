@@ -12,9 +12,12 @@ import { useState } from "react";
 import SmallButton from "@/components/SmallButton";
 import ScrollButton from "@/components/ScrollButton";
 import SectionButton from "@/components/SectionButton";
+import SwitchView from "@/components/SwitchView";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
 import CalendarView from "@/components/CalendarView";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { isEnabled } from "react-native/Libraries/Performance/Systrace";
 
 export default function MainScreen() {
   /* hacky way to convert to string */
@@ -42,6 +45,9 @@ export default function MainScreen() {
 
         <View style={styles.section}>
           <SectionButton href="./todo" text="Todolist +" />
+
+          <SwitchView/>
+
         </View>
 
         <View style={styles.section}>
@@ -50,7 +56,7 @@ export default function MainScreen() {
             style={styles.commentbox}
             placeholder="회고를 남겨 보세요."
             placeholderTextColor={colors.gray.background}
-          ></TextInput>
+          />
         </View>
 
         <View style={styles.section}>
