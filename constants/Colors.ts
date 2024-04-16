@@ -23,7 +23,7 @@ export default {
     background: "#77ADFD",
   },
   sub2: {
-    background: "#408DFE70",
+    background: "#408DFE",
   },
   white: {
     background: "#FFFFFF",
