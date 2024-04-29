@@ -60,13 +60,14 @@ export default function MainScreen() {
         <Image source={modifyicon} style={{height:20, width: 20}}/>
       </TouchableOpacity>
       <TouchableOpacity onPress={() =>  console.log("right button click")}>
-      <Image source={deleteicon} style={{height:20, width: 20}}/>
+        <Image source={deleteicon} style={{height:20, width: 20}}/>
       </TouchableOpacity>
     </View>
   );
   return (
+
     <ScrollView style={styles.entry}>
-      <SmallButton href="./chat" text="Trainer" />
+      {/* <SmallButton href="./chat" text="Trainer" /> */}
       <CalendarView
         selectday={selected}
         onDayPress={(day: {dateString: string})=> setSelected(day.dateString)}
