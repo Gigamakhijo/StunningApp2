@@ -5,12 +5,15 @@ import SmallButton from "@/components/SmallButton";
 
 export default function HeaderComponent(props: any)  {
     const listicon=require('@/assets/images/listicon.png')
+    const testpress=()=>{
+      console.log("hi")
+    };
   return (
     <>
       <View style={styles.container}>
         <SmallButton href="./chat" text="Trainer" />
-            <Pressable style={styles.buttonstyle} onPress={props.onPress}>
-            <Image style={styles.button}  source={listicon}/>
+            <Pressable style={styles.buttonstyle} onPress={testpress}>
+              <Image style={styles.button}  source={listicon}/>
             </Pressable>
       </View>
     </>
