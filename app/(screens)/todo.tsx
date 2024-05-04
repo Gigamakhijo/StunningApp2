@@ -1,114 +1,80 @@
 import React, { FC, useState, useEffect } from "react"
-import TextField from "@/components/TextField";
-import { StyleSheet, Text,View ,Pressable} from "react-native";
+// import TextField from "@/components/TextField";
+import { TextInput, StyleSheet, Text,View ,Pressable, ScrollView} from "react-native";
 import colors from "@/constants/Colors";
-
+import Fullline from "@/components/Fullline";
 export default function TodoScreen() {
   const [title, setTitle] = useState("")
   const [date, setDate] = useState(new Date(Date.now()))
-  const [color, setColor]=useState("FFFFFF99")
   const [content, setContent]=useState("")
+
+  const months = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+  const days = ["일", "월", "화", "수", "목", "금", "토"];
+
+  const formattedDate = `${date.getFullYear()}년 ${months[date.getMonth()]} ${date.getDate()}일 (${days[date.getDay()]})`;
+
 
   useEffect(() => {
     setDate(date)
     setTitle(title)
-    setColor(color)
     setContent(content)
     return () => {
       setDate(date)
       setTitle(title)
-      setColor(color)
       setContent(content)
     }
   })
   return (
     <>
-      <View style={styles.container}>
-        <TextField
+      <ScrollView style={styles.container}>
+        <TextInput
           value={title}
-          onChangeText={(value: {value2:string})=> setTitle(value.value2)}
+          onChangeText={(value:string)=> setTitle(value)}
           placeholder="할 일 제목"
           style={styles.title}
-          containerStyle={styles.titletextstyle}
-          inputWrapperStyle={styles.titletext}
           textAlignVertical="center"
+          placeholderTextColor={colors.main.background}
+          maxLength={30}
         />
-        <View style={styles.button}>
-          <Pressable>
-            <Text style={styles.buttontext}>컬러</Text>
-          </Pressable>
-        </View>
-        <Text style={styles.datestyle}>{date.toDateString()}</Text>
-        <View style={styles.fullline}/>
-        <TextField
+        <Text style={styles.datestyle}>
+          {` ${date.getMonth() + 1}월 ${date.getDate()}일 ${days[date.getDay()]}요일`}</Text>
+          {/* ${date.getFullYear()}년 */}
+        <Fullline/>
+        <TextInput
           value={content}
-          onChangeText={(value: {value2:string})=> setContent(value.value2)}
+          onChangeText={(value:string)=> setContent(value)}
           placeholder="내용을 입력하세요."
           style={styles.content}
-          containerStyle={styles.contentInner}
-          inputWrapperStyle={styles.contentInput}
           multiline={true}
+          placeholderTextColor={"black"}
         />
-      </View>
+      </ScrollView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container:{ 
-    marginLeft:"5%",
-    marginTop:"5%",
-
+    flex:1,
+    backgroundColor:colors.white.background,
     },
   title:{
-    fontSize:25,
+    fontSize:33,
     fontWeight:"bold",
-  },
-  titletextstyle:{
-    width:200,
-    height:45,
-    marginLeft:42,
-  },
-  titletext:{
-    width:200,
-    height:45,
-    backgroundColor:"#FFFEFE",
-    borderColor:"#FFFEFE",
-  },
-  button:{
-    width: 65,
-    height: 20,
-    backgroundColor: colors.main.background,
-    borderRadius: 15,
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: "5%",
-    marginTop: "10%",
-  },
-  buttontext:{
-    color: colors.white.background,
-    fontWeight: "bold",
-    fontSize: 10,
+    color:colors.main.background,
+    marginLeft:"10%",
+    marginRight:"10%",
   },
   datestyle:{
     fontSize:15,
     fontWeight: "bold",
-  },
-  fullline:{
-
+    color: colors.main.background,
+    marginTop:"5%",
+    marginLeft:"10%",
   },
   content:{
     fontSize:15,
-  },
-  contentInput:{
-    width:320,
-    height:400,
-    backgroundColor:"#FFFEFE",
-    borderColor: "#FFFEFE"
-  },
-  contentInner:{
-    width:320,
-    height:400,
-    marginLeft:"5%",
+    marginLeft:"10%",
+    marginRight:"10%",
   },
 });
