@@ -38,13 +38,13 @@ export default function Layout() {
 
   return(
     <Stack 
-      initialRouteName=""
+      initialRouteName="index"
       screenOptions={{
         header: MainHeader,
         headerStyle:{backgroundColor: colors.lightgray.background}
       }}
     >
-    {/* <Stack.Screen name="schedule" options={{header: HeaderComponent}}/> */}
+    <Stack.Screen name="schedule" options={{header: HeaderComponent}}/>
     <Stack.Screen name="todo" options={{header: HeaderComponent}}/>
     {/* <Stack.Screen name="Comment" options={{header:HeaderComponent}}/> */}
     {/* <Stack.Screen name="challenge" options={{header: HeaderComponent}}/> */}
