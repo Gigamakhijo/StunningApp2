@@ -5,6 +5,7 @@ import LoginButton from "@/components/LoginButton";
 import Logo from "@/components/Logo";
 
 import { useAuth0 } from "react-native-auth0";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LoginScreen() {
   const { authorize, user } = useAuth0();
@@ -13,23 +14,24 @@ export default function LoginScreen() {
     await authorize();
 
     // doesn't run if authentication fails
-    router.replace("/");
+    router.replace("/(screens)");
   };
 
   return (
     <>
-      <Logo />
+      <SafeAreaView style={styles.contianer}>
+         <Logo />
 
-      <LoginButton onPress={onLogin} />
+        <LoginButton onPress={onLogin} />
+      </SafeAreaView>
+     
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+  contianer:{
+    flex: 1,
+    backgroundColor: "#F7F8FC"
   },
 });

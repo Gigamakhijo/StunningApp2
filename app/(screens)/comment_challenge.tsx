@@ -1,71 +1,54 @@
-import {
-  View,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  Text,
-  Pressable,
-  TextInput,
-  Button,
-  SafeAreaView
-} from "react-native";
+import { StyleSheet, Text, SafeAreaView, View, TextInput } from "react-native";
 import { useState } from "react";
-import { useAuth0 } from "react-native-auth0";
-
+import CalenderView from "@/components/CalendarView";
 import SmallButton from "@/components/SmallButton";
-import ScrollButton from "@/components/ScrollButton";
 import SectionButton from "@/components/SectionButton";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
-import CalendarView from "@/components/CalendarView";
 
-export default function MainScreen() {
-  /* hacky way to convert to string */
+export default function CommentScreen() {
   const [selected, setSelected] = useState(new Date(Date.now()) + "");
 
-  const { clearSession } = useAuth0();
-
-  const onLogout = async () => {
-    try {
-      await clearSession();
-    } catch (e) {
-      console.log("Log out cancelled");
-    }
-  };
+  function formatDate(d: Date) {
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+    return dayNames[d.getDay()] + " " + d.getDate();
+  }
 
   return (
-    <ScrollView style={styles.entry}>
-      <SafeAreaView>
+  <>
+  <SafeAreaView style={styles.container}>
       <SmallButton href="./chat" text="Trainer" />
-      <CalendarView
+      <CalenderView
         selectday={selected}
         onDayPress={(day: {dateString: string})=> setSelected(day.dateString)}
       />
       <View style={styles.content}>
         <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
-        <View style={styles.section}>
-          <SectionButton href="./todo" text="Todolist +" />
-        </View>
       </View>
-      <Button title="logout" onPress={onLogout} />
-      </SafeAreaView>
-     
-    </ScrollView>
-  );
-}
+      <View style={styles.section}>
+          <SectionButton href="./comment" text="Comment +" />
+          <TextInput
+            style={styles.commentbox}
+            placeholder="회고를 남겨 보세요."
+            placeholderTextColor={colors.gray.background}
+          ></TextInput>
+        </View>
 
-function formatDate(d: Date) {
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
-  return dayNames[d.getDay()] + " " + d.getDate();
+        <View style={styles.section}>
+          <SectionButton href="./schedule" text="Challenge +" />
+        </View>
+      </SafeAreaView>
+  </>
+  
+);
 }
 
 const styles = StyleSheet.create({
-  entry: {
+  container: {
     flex: 1,
-    backgroundColor: "#F7F9FC"
+    backgroundColor: "#F7F8FC"
   },
   content: {
-    flex: 2,
     marginTop: "5%",
   },
   selectday: {
@@ -75,7 +58,6 @@ const styles = StyleSheet.create({
     color: colors.main.background,
   },
   section: {
-    flex: 1,
   },
   commentbox: {
     height: 135,
