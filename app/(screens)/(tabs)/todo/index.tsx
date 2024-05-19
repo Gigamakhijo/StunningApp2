@@ -22,6 +22,7 @@ import spacing from "@/constants/spacing";
 import CalendarView from "@/components/CalendarView";
 import { isEnabled } from "react-native/Libraries/Performance/Systrace";
 import { SwipeListView } from "react-native-swipe-list-view";
+
 interface DataItem{
   id:string;
   title: string;
@@ -38,7 +39,7 @@ export default function MainScreen() {
     { id: '3', title: 'Item 3', contents: 'content3', completed: false },
     // Add more items as needed
   ]);
-
+  
   const renderItem = ({ item }: {item: DataItem}) => (
     <View style={styles.row}>
       <View style={styles.rowcontent}>
