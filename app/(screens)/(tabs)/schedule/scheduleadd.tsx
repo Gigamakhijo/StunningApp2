@@ -3,26 +3,42 @@ import React, { FC, useState, useEffect } from "react"
 import { TextInput, StyleSheet, Text,View ,Pressable, ScrollView} from "react-native";
 import colors from "@/constants/Colors";
 import Fullline from "@/components/Fullline";
+import Datetimepickermodal from "react-native-modal-datetime-picker";
 
 export default function ScheduleScreen() {
   const [title, setTitle] = useState("")
-  const [date, setDate] = useState(new Date(Date.now()))
+  const [firstdate, setfirstDate] = useState(new Date(Date.now()))
   const [color, setColor]=useState("FFFFFF99")
   const [content, setContent]=useState("")
-
+  const [date, setDate] = useState(new Date(Date.now()))
   const months = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
   const days = ["일", "월", "화", "수", "목", "금", "토"];
 
-  const formattedDate = `${date.getFullYear()}년 ${months[date.getMonth()]} ${date.getDate()}일 (${days[date.getDay()]})`;
+  const formattedDate = `${firstdate.getFullYear()}년 ${months[firstdate.getMonth()]} ${firstdate.getDate()}일 (${days[firstdate.getDay()]})`;
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+};
 
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+};
+
+  const handleConfirm = (selectedDate) => {
+    setDate(selectedDate);
+    hideDatePicker();
+};
+  const [open,setOpen]=useState(false);
 
   useEffect(() => {
     setDate(date)
+    setfirstDate(firstdate)
     setTitle(title)
     setColor(color)
     setContent(content)
     return () => {
       setDate(date)
+      setfirstDate(firstdate)
       setTitle(title)
       setColor(color)
       setContent(content)
@@ -45,9 +61,21 @@ export default function ScheduleScreen() {
             <Text style={styles.buttontext}>컬러</Text>
           </Pressable>
         </View>
+        <View style={styles.datetext}>
         <Text style={styles.datestyle}>
           {` ${date.getMonth() + 1}월 ${date.getDate()}일 ${days[date.getDay()]}요일`}</Text>
           {/* ${date.getFullYear()}년 */}
+        <Text style={styles.datestyle}>~</Text>
+        <Pressable style={styles.titlestyle}onPress={showDatePicker}>
+          <Text style={styles.titletext} >{` ${date.getMonth() + 1}월 ${date.getDate()}일 ${days[date.getDay()]}요일`}</Text>
+        </Pressable>
+        <Datetimepickermodal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+        />
+        </View>
         <Fullline/>
         <TextInput
           value={content}
@@ -101,4 +129,19 @@ const styles = StyleSheet.create({
     marginLeft:"10%",
     marginRight:"10%",
   },
+  datetext:{
+    flexDirection:"row",
+  },
+  titlestyle:{
+    alignSelf:"flex-start",
+    marginTop:"5%",
+    marginLeft:"5%",
+ },
+ titletext:{
+     fontSize: 15,
+     fontWeight: "bold",
+     color: colors.main.background,
+     marginLeft:"5%",
+     
+ },
 });
