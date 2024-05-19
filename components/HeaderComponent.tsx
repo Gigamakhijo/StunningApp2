@@ -13,7 +13,7 @@ export default function HeaderComponent(props: any)  {
         <Grayline/>
         <View style={styles.container}>
           <CloseButton onPress={()=> router.back()} />
-          <CheckButtion onPress={()=> router.push("/(screens)/")} />
+          <CheckButtion onPress={()=> router.push("/(screens)/(tabs)/todo")} />
         </View>
       </View>
     </>
