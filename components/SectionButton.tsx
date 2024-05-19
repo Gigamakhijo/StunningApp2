@@ -8,11 +8,9 @@ import spacing from "@/constants/spacing";
 export default function SectionButton(props: { href: string; text: string }) {
   return (
     <View style={styles.container}>
-      <Link href={props.href} asChild>
         <Pressable style={styles.button}>
           <Text style={styles.text}>{props.text}</Text>
         </Pressable>
-      </Link>
     </View>
   );
 }
