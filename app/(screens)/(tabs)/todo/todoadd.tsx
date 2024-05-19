@@ -3,8 +3,10 @@ import React, { FC, useState, useEffect } from "react"
 import { TextInput, StyleSheet, Text,View ,Pressable, ScrollView} from "react-native";
 import colors from "@/constants/Colors";
 import Fullline from "@/components/Fullline";
+import Datetimepickermodal from "react-native-modal-datetime-picker";
 export default function TodoScreen() {
   const [title, setTitle] = useState("")
+  const [firstdate,Setfirstdate] = useState(new Date(Date.now()))
   const [date, setDate] = useState(new Date(Date.now()))
   const [content, setContent]=useState("")
 
@@ -12,14 +14,27 @@ export default function TodoScreen() {
   const days = ["일", "월", "화", "수", "목", "금", "토"];
 
   const formattedDate = `${date.getFullYear()}년 ${months[date.getMonth()]} ${date.getDate()}일 (${days[date.getDay()]})`;
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+};
 
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+};
+
+  const handleConfirm = (selectedDate) => {
+    setDate(selectedDate);
+    hideDatePicker();
+};
+  const [open,setOpen]=useState(false);
 
   useEffect(() => {
-    setDate(date)
+    Setfirstdate(date)
     setTitle(title)
     setContent(content)
     return () => {
-      setDate(date)
+      Setfirstdate(date)
       setTitle(title)
       setContent(content)
     }
@@ -36,9 +51,21 @@ export default function TodoScreen() {
           placeholderTextColor={colors.main.background}
           maxLength={30}
         />
+        <View style={styles.datetext}>
         <Text style={styles.datestyle}>
-          {` ${date.getMonth() + 1}월 ${date.getDate()}일 ${days[date.getDay()]}요일`}</Text>
+          {` ${firstdate.getMonth() + 1}월 ${firstdate.getDate()}일 ${days[firstdate.getDay()]}요일`}</Text>
           {/* ${date.getFullYear()}년 */}
+          <Text style={styles.datestyle}>~</Text>
+          <Pressable style={styles.titlestyle}onPress={showDatePicker}>
+            <Text style={styles.titletext} >{` ${date.getMonth() + 1}월 ${date.getDate()}일 ${days[date.getDay()]}요일`}</Text>
+          </Pressable>
+          <Datetimepickermodal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+          />
+        </View>
         <Fullline/>
         <TextInput
           value={content}
@@ -65,6 +92,9 @@ const styles = StyleSheet.create({
     marginLeft:"10%",
     marginRight:"10%",
   },
+  datetext:{
+    flexDirection:"row",
+  },
   datestyle:{
     fontSize:15,
     fontWeight: "bold",
@@ -77,4 +107,16 @@ const styles = StyleSheet.create({
     marginLeft:"10%",
     marginRight:"10%",
   },
+  titlestyle:{
+    alignSelf:"flex-start",
+    marginTop:"5%",
+    marginLeft:"5%",
+ },
+ titletext:{
+     fontSize: 15,
+     fontWeight: "bold",
+     color: colors.main.background,
+     marginLeft:"5%",
+     
+ },
 });
