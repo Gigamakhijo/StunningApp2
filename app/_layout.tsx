@@ -1,5 +1,8 @@
+import HeaderComponent from "@/components/HeaderComponent";
 import { Slot } from "expo-router";
 import { Auth0Provider } from "react-native-auth0";
+import { Header } from "react-native/Libraries/NewAppScreen";
+import { Redirect, Stack } from "expo-router";
 
 export default function Layout() {
   return (
