@@ -34,10 +34,10 @@ export default {
   gray: {
     background: "#C0C7D0",
   },
-  switchblack:{
+  switchblack: {
     background: "#B3B3B3",
   },
-  switchfalse:{
+  switchfalse: {
     background: "#B8B8B8",
-  }
+  },
 };

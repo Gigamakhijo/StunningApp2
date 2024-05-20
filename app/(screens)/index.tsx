@@ -7,6 +7,7 @@ import {
   Pressable,
   TextInput,
   Button,
+  SafeAreaView,
 } from "react-native";
 import { useState } from "react";
 import { useAuth0 } from "react-native-auth0";
@@ -35,45 +36,37 @@ export default function MainScreen() {
 
   return (
     <ScrollView style={styles.entry}>
-      <SmallButton href="./chat" text="Trainer" />
-      <CalendarView
-        selectday={selected}
-        onDayPress={(day: {dateString: string})=> setSelected(day.dateString)}
-      />
-      <View style={styles.content}>
-        <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+      <SafeAreaView>
+        <SmallButton href="./chat" text="Trainer" />
+        <CalendarView
+          selectday={selected}
+          onDayPress={(day: { dateString: string }) =>
+            setSelected(day.dateString)
+          }
+        />
+        <View style={styles.content}>
+          <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+          <View style={styles.section}>
+            <SectionButton href="./todo" text="Todolist +" />
 
-        <View style={styles.buttonRow}>
-          <ScrollButton text="todo" />
-          <ScrollButton text="comment" />
-          <ScrollButton text="challenge" />
+            <SwitchView />
+          </View>
+
+          <View style={styles.section}>
+            <SectionButton href="./comment" text="Comment +" />
+            <TextInput
+              style={styles.commentbox}
+              placeholder="회고를 남겨 보세요."
+              placeholderTextColor={colors.gray.background}
+            />
+          </View>
+
+          <View style={styles.section}>
+            <SectionButton href="./schedule" text="Challenge +" />
+          </View>
         </View>
-
-        <View style={styles.section}>
-          <SectionButton href="./schedule" text="Schedule +" />
-        </View>
-
-        <View style={styles.section}>
-          <SectionButton href="./todo" text="Todolist +" />
-
-          <SwitchView/>
-
-        </View>
-
-        <View style={styles.section}>
-          <SectionButton href="./comment" text="Comment +" />
-          <TextInput
-            style={styles.commentbox}
-            placeholder="회고를 남겨 보세요."
-            placeholderTextColor={colors.gray.background}
-          />
-        </View>
-
-        <View style={styles.section}>
-          <SectionButton href="./schedule" text="Challenge +" />
-        </View>
-      </View>
-      <Button title="logout" onPress={onLogout} />
+        <Button title="logout" onPress={onLogout} />
+      </SafeAreaView>
     </ScrollView>
   );
 }
@@ -85,7 +78,8 @@ function formatDate(d: Date) {
 
 const styles = StyleSheet.create({
   entry: {
-    height: "100%",
+    flex: 1,
+    backgroundColor: "#F7F9FC",
   },
   content: {
     flex: 2,
@@ -96,10 +90,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     color: colors.main.background,
-  },
-  buttonRow: {
-    flexDirection: "row",
-    marginBottom: spacing.s,
   },
   section: {
     flex: 1,
