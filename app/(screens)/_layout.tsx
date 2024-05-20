@@ -8,14 +8,6 @@ export default function Layout() {
 
   const loggedIn = user !== undefined && user !== null;
 
-  const onLogout = async () => {
-    try {
-      await clearSession();
-    } catch (e) {
-      console.log("Log out cancelled");
-    }
-  };
-
   if (isLoading) {
     return (
       <View>

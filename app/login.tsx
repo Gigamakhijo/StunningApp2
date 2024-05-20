@@ -1,5 +1,5 @@
-import { Alert, Button, StyleSheet, Text, View } from "react-native";
-import { Redirect } from "expo-router";
+import { StyleSheet } from "react-native";
+import { router } from "expo-router";
 
 import LoginButton from "@/components/LoginButton";
 import Logo from "@/components/Logo";
@@ -11,21 +11,18 @@ export default function LoginScreen() {
 
   const onLogin = async () => {
     await authorize();
+
+    // doesn't run if authentication fails
+    router.replace("/");
   };
 
-  const loggedIn = user !== undefined && user !== null;
+  return (
+    <>
+      <Logo />
 
-  if (loggedIn) {
-    return <Redirect href="/(screens)" />;
-  } else {
-    return (
-      <>
-        <Logo />
-
-        <LoginButton onPress={onLogin} />
-      </>
-    );
-  }
+      <LoginButton onPress={onLogin} />
+    </>
+  );
 }
 
 const styles = StyleSheet.create({

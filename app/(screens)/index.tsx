@@ -6,8 +6,10 @@ import {
   Text,
   Pressable,
   TextInput,
+  Button,
 } from "react-native";
 import { useState } from "react";
+import { useAuth0 } from "react-native-auth0";
 
 import SmallButton from "@/components/SmallButton";
 import ScrollButton from "@/components/ScrollButton";
@@ -16,12 +18,20 @@ import SwitchView from "@/components/SwitchView";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
 import CalendarView from "@/components/CalendarView";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { isEnabled } from "react-native/Libraries/Performance/Systrace";
 
 export default function MainScreen() {
   /* hacky way to convert to string */
   const [selected, setSelected] = useState(new Date(Date.now()) + "");
+
+  const { clearSession } = useAuth0();
+
+  const onLogout = async () => {
+    try {
+      await clearSession();
+    } catch (e) {
+      console.log("Log out cancelled");
+    }
+  };
 
   return (
     <ScrollView style={styles.entry}>
@@ -63,6 +73,7 @@ export default function MainScreen() {
           <SectionButton href="./schedule" text="Challenge +" />
         </View>
       </View>
+      <Button title="logout" onPress={onLogout} />
     </ScrollView>
   );
 }
