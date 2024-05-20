@@ -7,7 +7,7 @@ import {
   Pressable,
   TextInput,
   Button,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import { useState } from "react";
 import { useAuth0 } from "react-native-auth0";
@@ -15,6 +15,7 @@ import { useAuth0 } from "react-native-auth0";
 import SmallButton from "@/components/SmallButton";
 import ScrollButton from "@/components/ScrollButton";
 import SectionButton from "@/components/SectionButton";
+import SwitchView from "@/components/SwitchView";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
 import CalendarView from "@/components/CalendarView";
@@ -36,20 +37,36 @@ export default function MainScreen() {
   return (
     <ScrollView style={styles.entry}>
       <SafeAreaView>
-      <SmallButton href="./chat" text="Trainer" />
-      <CalendarView
-        selectday={selected}
-        onDayPress={(day: {dateString: string})=> setSelected(day.dateString)}
-      />
-      <View style={styles.content}>
-        <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
-        <View style={styles.section}>
-          <SectionButton href="./todo" text="Todolist +" />
+        <SmallButton href="./chat" text="Trainer" />
+        <CalendarView
+          selectday={selected}
+          onDayPress={(day: { dateString: string }) =>
+            setSelected(day.dateString)
+          }
+        />
+        <View style={styles.content}>
+          <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+          <View style={styles.section}>
+            <SectionButton href="./todo" text="Todolist +" />
+
+            <SwitchView />
+          </View>
+
+          <View style={styles.section}>
+            <SectionButton href="./comment" text="Comment +" />
+            <TextInput
+              style={styles.commentbox}
+              placeholder="회고를 남겨 보세요."
+              placeholderTextColor={colors.gray.background}
+            />
+          </View>
+
+          <View style={styles.section}>
+            <SectionButton href="./schedule" text="Challenge +" />
+          </View>
         </View>
-      </View>
-      <Button title="logout" onPress={onLogout} />
+        <Button title="logout" onPress={onLogout} />
       </SafeAreaView>
-     
     </ScrollView>
   );
 }
@@ -62,7 +79,7 @@ function formatDate(d: Date) {
 const styles = StyleSheet.create({
   entry: {
     flex: 1,
-    backgroundColor: "#F7F9FC"
+    backgroundColor: "#F7F9FC",
   },
   content: {
     flex: 2,

@@ -15,17 +15,19 @@ export default function CommentScreen() {
   }
 
   return (
-  <>
-  <SafeAreaView style={styles.container}>
-      <SmallButton href="./chat" text="Trainer" />
-      <CalenderView
-        selectday={selected}
-        onDayPress={(day: {dateString: string})=> setSelected(day.dateString)}
-      />
-      <View style={styles.content}>
-        <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
-      </View>
-      <View style={styles.section}>
+    <>
+      <SafeAreaView style={styles.container}>
+        <SmallButton href="./chat" text="Trainer" />
+        <CalenderView
+          selectday={selected}
+          onDayPress={(day: { dateString: string }) =>
+            setSelected(day.dateString)
+          }
+        />
+        <View style={styles.content}>
+          <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+        </View>
+        <View style={styles.section}>
           <SectionButton href="./comment" text="Comment +" />
           <TextInput
             style={styles.commentbox}
@@ -38,15 +40,14 @@ export default function CommentScreen() {
           <SectionButton href="./schedule" text="Challenge +" />
         </View>
       </SafeAreaView>
-  </>
-  
-);
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F7F8FC"
+    backgroundColor: "#F7F8FC",
   },
   content: {
     marginTop: "5%",
@@ -57,8 +58,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.main.background,
   },
-  section: {
-  },
+  section: {},
   commentbox: {
     height: 135,
     width: 320,

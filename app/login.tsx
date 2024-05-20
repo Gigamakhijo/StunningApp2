@@ -20,18 +20,17 @@ export default function LoginScreen() {
   return (
     <>
       <SafeAreaView style={styles.contianer}>
-         <Logo />
+        <Logo />
 
         <LoginButton onPress={onLogin} />
       </SafeAreaView>
-     
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  contianer:{
+  contianer: {
     flex: 1,
-    backgroundColor: "#F7F8FC"
+    backgroundColor: "#F7F8FC",
   },
 });

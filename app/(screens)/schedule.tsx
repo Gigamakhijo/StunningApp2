@@ -1,4 +1,4 @@
-import { StyleSheet, Text, SafeAreaView, View} from "react-native";
+import { StyleSheet, Text, SafeAreaView, View } from "react-native";
 import { useState } from "react";
 import CalenderView from "@/components/CalendarView";
 import colors from "@/constants/Colors";
@@ -18,17 +18,18 @@ export default function ScheduleScreen() {
       <SafeAreaView style={styles.container}>
         <SmallButton href="./chat" text="Trainer" />
         <CalenderView
-        selectday={selected}
-        onDayPress={(day: {dateString: string})=> setSelected(day.dateString)}
-      />
-      <View style={styles.content}>
-        <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
-      </View>
-      <View style={styles.section}>
+          selectday={selected}
+          onDayPress={(day: { dateString: string }) =>
+            setSelected(day.dateString)
+          }
+        />
+        <View style={styles.content}>
+          <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+        </View>
+        <View style={styles.section}>
           <SectionButton href="./schedule" text="Schedule +" />
-      </View>
+        </View>
       </SafeAreaView>
-      
     </>
   );
 }
@@ -36,7 +37,7 @@ export default function ScheduleScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F7F8FC"
+    backgroundColor: "#F7F8FC",
   },
   content: {
     marginTop: "5%",
@@ -47,6 +48,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.main.background,
   },
-  section: {
-  },
+  section: {},
 });

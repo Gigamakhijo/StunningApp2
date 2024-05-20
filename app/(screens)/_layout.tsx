@@ -21,24 +21,26 @@ export default function Layout() {
   } else {
   }
 
-  return(
-    <Tabs screenOptions={{ headerShown: false,tabBarActiveTintColor: "#408DFE" }}>
+  return (
+    <Tabs
+      screenOptions={{ headerShown: false, tabBarActiveTintColor: "#408DFE" }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: "Home",
         }}
       />
       <Tabs.Screen
         name="schedule"
         options={{
-          title: '일정',
+          title: "일정",
         }}
       />
       <Tabs.Screen
         name="comment_challenge"
         options={{
-          title: 'cc'
+          title: "cc",
         }}
       />
     </Tabs>

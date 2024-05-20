@@ -6,8 +6,7 @@ export default function Logo(props: any) {
     <View style={styles.container}>
       <Text>STUNNING</Text>
     </View>
-  
-);
+  );
 }
 
 const styles = StyleSheet.create({

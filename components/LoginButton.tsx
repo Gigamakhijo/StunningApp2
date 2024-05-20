@@ -18,19 +18,19 @@ export default function LoginButton(props: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignSelf: "center"
-  },  
+    alignSelf: "center",
+  },
   button: {
     width: 300,
     height: 40,
     borderRadius: 10,
     justifyContent: "center",
     alignContent: "center",
-    backgroundColor: "#77ADF5"
+    backgroundColor: "#77ADF5",
   },
   text: {
     alignSelf: "center",
     fontSize: 15,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 });

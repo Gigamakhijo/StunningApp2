@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Stunning2",
-    "slug": "Stunning2",
+    "name": "Stunning",
+    "slug": "Stunning",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -34,7 +34,7 @@
       [
         "react-native-auth0",
         {
-          "domain": "dev-w0c3tnyi46mfgb5q.us.auth0.com"
+          "domain": ""
         }
       ]
     ],
