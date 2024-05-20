@@ -86,7 +86,6 @@ LocaleConfig.locales.en = {
 }
 const styles = StyleSheet.create({
     calendar: {
-      flex: 1,
-      marginHorizontal: "5%",
+      marginHorizontal: "5%"
     },
 })
