@@ -26,7 +26,7 @@ export default function CalenderView(props: any) {
 
 const styles = StyleSheet.create({
   toggle: {
-    transform: [{ scaleX: 1.5 }, { scaleY: 1.2 }],
-    marginLeft: "5%",
+    transform: [{ scaleX: 1.1 }, { scaleY: 1.1 }],
+    marginLeft: "30%",
   },
 });
