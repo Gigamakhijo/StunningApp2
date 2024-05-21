@@ -1,11 +1,12 @@
-import { StyleSheet, Text, SafeAreaView, View } from "react-native";
+import { StyleSheet, Text, SafeAreaView, View, TextInput } from "react-native";
 import { useState } from "react";
 import CalenderView from "@/components/CalendarView";
-import colors from "@/constants/Colors";
 import SmallButton from "@/components/SmallButton";
 import SectionButton from "@/components/SectionButton";
+import colors from "@/constants/Colors";
+import spacing from "@/constants/spacing";
 
-export default function ScheduleScreen() {
+export default function CommentScreen() {
   const [selected, setSelected] = useState(new Date(Date.now()) + "");
 
   function formatDate(d: Date) {
@@ -27,7 +28,16 @@ export default function ScheduleScreen() {
           <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
         </View>
         <View style={styles.section}>
-          <SectionButton href="./schedule" text="Schedule +" />
+          <SectionButton href="./comment" text="Comment +" />
+          <TextInput
+            style={styles.commentbox}
+            placeholder="회고를 남겨 보세요."
+            placeholderTextColor={colors.gray.background}
+          ></TextInput>
+        </View>
+
+        <View style={styles.section}>
+          <SectionButton href="./schedule" text="Challenge +" />
         </View>
       </SafeAreaView>
     </>
@@ -49,4 +59,19 @@ const styles = StyleSheet.create({
     color: colors.main.background,
   },
   section: {},
+  commentbox: {
+    height: 135,
+    width: 320,
+    backgroundColor: colors.white.background,
+    borderRadius: 15,
+    borderColor: colors.main.background,
+    borderWidth: 1.5,
+    justifyContent: "center",
+    textAlign: "center",
+    marginTop: spacing.s,
+    marginLeft: "7%",
+    fontSize: 15,
+    fontWeight: "normal",
+    color: "black",
+  },
 });

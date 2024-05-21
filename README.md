@@ -24,6 +24,10 @@ npx install 패키지
 
 ## 코드 설명
 
+## auth0 domain, clientID 설정
+
+`app/_layout.tsx`에서 domain 과 clientID 설정, `app.json`에 domain 설정
+
 ### app/(screens)/_layout.tsx
 
 앱을 실행하면 제일 먼저 실행됨

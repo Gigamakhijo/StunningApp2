@@ -1,4 +1,4 @@
-import { Redirect, Stack } from "expo-router";
+import { Redirect, Stack, Tabs } from "expo-router";
 import { Alert, Button, StyleSheet, Text, View } from "react-native";
 
 import { useAuth0 } from "react-native-auth0";
@@ -7,14 +7,6 @@ export default function Layout() {
   const { clearSession, user, isLoading } = useAuth0();
 
   const loggedIn = user !== undefined && user !== null;
-
-  const onLogout = async () => {
-    try {
-      await clearSession();
-    } catch (e) {
-      console.log("Log out cancelled");
-    }
-  };
 
   if (isLoading) {
     return (
@@ -29,5 +21,28 @@ export default function Layout() {
   } else {
   }
 
-  return <Stack />;
+  return (
+    <Tabs
+      screenOptions={{ headerShown: false, tabBarActiveTintColor: "#408DFE" }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Home",
+        }}
+      />
+      <Tabs.Screen
+        name="schedule"
+        options={{
+          title: "일정",
+        }}
+      />
+      <Tabs.Screen
+        name="comment_challenge"
+        options={{
+          title: "cc",
+        }}
+      />
+    </Tabs>
+  );
 }
