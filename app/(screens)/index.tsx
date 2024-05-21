@@ -6,18 +6,18 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  SafeAreaView,
 } from "react-native";
 import { useState } from "react";
 import { useAuth0 } from "react-native-auth0";
 
-import SmallButton from "@/components/SmallButton";
+import ScrollButton from "@/components/ScrollButton";
 import SectionButton from "@/components/SectionButton";
 import SwitchView from "@/components/SwitchView";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
 import CalendarView from "@/components/CalendarView";
 import { SwipeListView } from "react-native-swipe-list-view";
+
 interface DataItem {
   id: string;
   title: string;
@@ -92,14 +92,26 @@ export default function MainScreen() {
 
   return (
     <ScrollView style={styles.entry}>
-      <SafeAreaView>
-        <SmallButton href="./chat" text="Trainer" />
-        <CalendarView
-          selectday={selected}
-          onDayPress={(day: { dateString: string }) =>
-            setSelected(day.dateString)
-          }
-        />
+      {/* <SmallButton href="./chat" text="Trainer" /> */}
+      <CalendarView
+        selectday={selected}
+        onDayPress={(day: { dateString: string }) =>
+          setSelected(day.dateString)
+        }
+      />
+      <View style={styles.content}>
+        <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+
+        <View style={styles.buttonRow}>
+          <ScrollButton text="todo" />
+          <ScrollButton text="comment" />
+          <ScrollButton text="challenge" />
+        </View>
+
+        <View style={styles.section}>
+          <SectionButton href="./schedule" text="Schedule +" />
+        </View>
+
         <View style={styles.section}>
           <SectionButton href="./todo" text="Todolist +" />
           <View style={styles.todolist}>
@@ -125,7 +137,7 @@ export default function MainScreen() {
         <View style={styles.section}>
           <SectionButton href="./schedule" text="Challenge +" />
         </View>
-      </SafeAreaView>
+      </View>
     </ScrollView>
   );
 }
@@ -157,6 +169,10 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     color: colors.main.background,
+  },
+  buttonRow: {
+    flexDirection: "row",
+    marginBottom: spacing.s,
   },
   section: {
     flex: 1,
