@@ -10,11 +10,9 @@ import {
 } from "react-native";
 import colors from "@/constants/Colors";
 import Fullline from "@/components/Fullline";
-
-export default function ScheduleScreen() {
+export default function TodoScreen() {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date(Date.now()));
-  const [color, setColor] = useState("FFFFFF99");
   const [content, setContent] = useState("");
 
   const months = [
@@ -38,12 +36,10 @@ export default function ScheduleScreen() {
   useEffect(() => {
     setDate(date);
     setTitle(title);
-    setColor(color);
     setContent(content);
     return () => {
       setDate(date);
       setTitle(title);
-      setColor(color);
       setContent(content);
     };
   });
@@ -59,11 +55,6 @@ export default function ScheduleScreen() {
           placeholderTextColor={colors.main.background}
           maxLength={30}
         />
-        <View style={styles.button}>
-          <Pressable>
-            <Text style={styles.buttontext}>컬러</Text>
-          </Pressable>
-        </View>
         <Text style={styles.datestyle}>
           {` ${date.getMonth() + 1}월 ${date.getDate()}일 ${days[date.getDay()]}요일`}
         </Text>
@@ -93,21 +84,6 @@ const styles = StyleSheet.create({
     color: colors.main.background,
     marginLeft: "10%",
     marginRight: "10%",
-  },
-  button: {
-    width: 65,
-    height: 20,
-    backgroundColor: colors.main.background,
-    borderRadius: 15,
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: "10%",
-    marginTop: "5%",
-  },
-  buttontext: {
-    color: colors.white.background,
-    fontWeight: "bold",
-    fontSize: 10,
   },
   datestyle: {
     fontSize: 15,

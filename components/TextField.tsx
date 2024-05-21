@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import spacing from "@/constants/spacing";
 import { Children } from "react";
 
-export default function TextField({children, ...rest}: any) {
+export default function TextField({ children, ...rest }: any) {
   return (
     <>
       {children}

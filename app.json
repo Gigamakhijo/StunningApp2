@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Stunning2",
-    "slug": "Stunning2",
+    "name": "Stunning",
+    "slug": "Stunning",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,14 +15,14 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.urw7rs.stunning2"
+      "bundleIdentifier": "com.stunning"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#F7F9FC"
       },
-      "package": "com.urw7rs.stunning2"
+      "package": "com.stunning"
     },
     "web": {
       "bundler": "metro",
@@ -34,7 +34,7 @@
       [
         "react-native-auth0",
         {
-          "domain": "dev-txofdyv5y7iqh1gd.us.auth0.com"
+          "domain": "dev-w0c3tnyi46mfgb5q.us.auth0.com"
         }
       ]
     ],
