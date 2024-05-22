@@ -1,4 +1,11 @@
-import { StyleSheet, Text, SafeAreaView, View, TextInput, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  View,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import { useState } from "react";
 import CalenderView from "@/components/CalendarView";
 import SmallButton from "@/components/SmallButton";
@@ -26,7 +33,9 @@ export default function CommentScreen() {
             }
           />
           <View style={styles.content}>
-            <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+            <Text style={styles.selectday}>
+              {formatDate(new Date(selected))}
+            </Text>
           </View>
           <View style={styles.section}>
             <SectionButton href="./comment" text="Comment +" />
