@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import colors from "@/constants/Colors";
 import Fullline from "@/components/Fullline";
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function TodoScreen() {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date(Date.now()));
@@ -45,6 +46,7 @@ export default function TodoScreen() {
   });
   return (
     <>
+    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <TextInput
           value={title}
@@ -69,6 +71,7 @@ export default function TodoScreen() {
           placeholderTextColor={"black"}
         />
       </ScrollView>
+      </SafeAreaView>
     </>
   );
 }
