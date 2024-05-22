@@ -7,6 +7,7 @@ import MainHeader from "@/components/MainHeader";
 import TodoScreen from "../(screens)/todo"
 import colors from "@/constants/Colors";
 import { Header } from "react-native/Libraries/NewAppScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Layout() {
   const { clearSession, clearCredentials, user, isLoading } = useAuth0();
@@ -43,18 +44,25 @@ export default function Layout() {
         name="index"
         options={{
           title: "Home",
+          tabBarShowLabel: false,
+          tabBarIcon: () => <Ionicons name="checkbox-outline" size={25} color="#000000" />
         }}
+      
       />
       <Tabs.Screen
         name="schedule"
         options={{
           title: "일정",
+          tabBarShowLabel: false,
+          tabBarIcon: () => <Ionicons name="calendar-clear-outline" size={25} color="#000000" />
         }}
       />
       <Tabs.Screen
         name="comment_challenge"
         options={{
           title: "cc",
+          tabBarShowLabel: false,
+          tabBarIcon: () => <Ionicons name="create-outline" size={25} color="#000000" />
         }}
       />
     </Tabs>
