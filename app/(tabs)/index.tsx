@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Button
 } from "react-native";
 import { useState } from "react";
 import { useAuth0 } from "react-native-auth0";
@@ -19,6 +20,10 @@ import spacing from "@/constants/spacing";
 import CalendarView from "@/components/CalendarView";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Drawer } from "react-native-drawer-layout";
+import { Ionicons } from "@expo/vector-icons";
+import Menu from "@/components/Menu";
+
 
 interface DataItem {
   id: string;
@@ -28,11 +33,14 @@ interface DataItem {
 }
 
 export default function MainScreen() {
+
+  
   /* hacky way to convert to string */
   const modifyicon = require("@/assets/images/editicon.png");
   const deleteicon = require("@/assets/images/trashicon.png");
   const circle = require("@/assets/images/whitecircle.png");
   const [selected, setSelected] = useState(new Date(Date.now()) + "");
+  const [open, setOpen] = useState(false);
 
   const [data, setData] = useState<DataItem[]>([
     { id: "1", title: "Item 1", contents: "content1", completed: false },
@@ -41,15 +49,6 @@ export default function MainScreen() {
     // Add more items as needed
   ]);
 
-  const { clearSession } = useAuth0();
-
-  const onLogout = async () => {
-    try {
-      await clearSession();
-    } catch (e) {
-      console.log("Log out cancelled");
-    }
-  };
 
   const renderItem = ({ item }: { item: DataItem }) => (
     <View style={styles.row}>
@@ -94,8 +93,25 @@ export default function MainScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={{bottom:"off", top:"additive"}}>
+      <Drawer
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={() => setOpen(false)}
+        renderDrawerContent={() => {
+          return (
+            <Menu/>
+        );
+        }}
+        drawerPosition="right"
+        drawerType="front"
+        drawerStyle={{width: 300}}
+      >
       <ScrollView style={styles.entry}>
-        <SmallButton href="./chat" text="Trainer" />
+        <View style={styles.header}>
+          <SmallButton href="./chat" text="Trainer" />
+          <Ionicons name="ellipsis-vertical" size={25} color="#000000" style={{marginRight: "5%"}} onPress={()=>setOpen(true)}/>
+        </View>
+        
         <CalendarView
           selectday={selected}
           onDayPress={(day: { dateString: string }) =>
@@ -118,6 +134,7 @@ export default function MainScreen() {
           </View>
         </View>
       </ScrollView>
+      </Drawer>
     </SafeAreaView>
   );
 }
@@ -134,6 +151,11 @@ const styles = StyleSheet.create({
   },
   entry: {
     backgroundColor: "#F7F9FC",
+  },
+  header:{
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   content: {
     // flex: 2,

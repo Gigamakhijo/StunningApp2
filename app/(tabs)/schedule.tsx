@@ -19,6 +19,9 @@ import {
   import CalendarView from "@/components/CalendarView";
   import { SwipeListView } from "react-native-swipe-list-view";
   import { SafeAreaView } from "react-native-safe-area-context";
+  import { Drawer } from "react-native-drawer-layout";
+  import Menu from "@/components/Menu";
+  import { Ionicons } from "@expo/vector-icons";
   
   interface ScheduleItem {
     id: string;
@@ -33,7 +36,8 @@ import {
     const deleteicon = require("@/assets/images/trashicon.png");
     const circle = require("@/assets/images/whitecircle.png");
     const [selected, setSelected] = useState(new Date(Date.now()) + "");
-  
+    const [open, setOpen] = useState(false);
+
     const [data, setData] = useState<ScheduleItem[]>([
       { id: "1", title: "Item 1", contents: "content1", completed: false },
       { id: "2", title: "Item 2", contents: "content2", completed: false },
@@ -41,15 +45,6 @@ import {
       // Add more items as needed
     ]);
   
-    const { clearSession } = useAuth0();
-  
-    const onLogout = async () => {
-      try {
-        await clearSession();
-      } catch (e) {
-        console.log("Log out cancelled");
-      }
-    };
   
     const renderItem = ({ item }: { item: ScheduleItem }) => (
       <View style={styles.row}>
@@ -94,8 +89,24 @@ import {
   
     return (
       <SafeAreaView style={styles.container} edges={{bottom: "off", top: "additive"}}>
+        <Drawer
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={() => setOpen(false)}
+        renderDrawerContent={() => {
+          return (
+            <Menu/>
+        );
+        }}
+        drawerPosition="right"
+        drawerType="front"
+        drawerStyle={{width: 300}}
+        >
         <ScrollView>
+        <View style={styles.header}>
           <SmallButton href="./chat" text="Trainer" />
+          <Ionicons name="ellipsis-vertical" size={25} color="#000000" style={{marginRight: "5%"}} onPress={()=>setOpen(true)}/>
+        </View>
           <CalendarView
             selectday={selected}
             onDayPress={(day: { dateString: string }) =>
@@ -118,6 +129,7 @@ import {
               </View>
           </View>
         </ScrollView>
+        </Drawer>
       </SafeAreaView>
     );
   }
@@ -131,6 +143,11 @@ import {
     container:{
       flex: 1,
       backgroundColor: "#F7F9FC",
+    },
+    header:{
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center"
     },
     content: {
       // flex: 2,
