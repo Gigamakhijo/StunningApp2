@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
     color: colors.white.background,
   },
   button: {
-    color: colors.main.background,
+    backgroundColor: colors.main.background,
   },
 });

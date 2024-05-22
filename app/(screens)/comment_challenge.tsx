@@ -1,4 +1,11 @@
-import { StyleSheet, Text, SafeAreaView, View, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  View,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import { useState } from "react";
 import CalenderView from "@/components/CalendarView";
 import SmallButton from "@/components/SmallButton";
@@ -18,27 +25,31 @@ export default function CommentScreen() {
     <>
       <SafeAreaView style={styles.container}>
         <SmallButton href="./chat" text="Trainer" />
-        <CalenderView
-          selectday={selected}
-          onDayPress={(day: { dateString: string }) =>
-            setSelected(day.dateString)
-          }
-        />
-        <View style={styles.content}>
-          <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
-        </View>
-        <View style={styles.section}>
-          <SectionButton href="./comment" text="Comment +" />
-          <TextInput
-            style={styles.commentbox}
-            placeholder="회고를 남겨 보세요."
-            placeholderTextColor={colors.gray.background}
-          ></TextInput>
-        </View>
+        <ScrollView>
+          <CalenderView
+            selectday={selected}
+            onDayPress={(day: { dateString: string }) =>
+              setSelected(day.dateString)
+            }
+          />
+          <View style={styles.content}>
+            <Text style={styles.selectday}>
+              {formatDate(new Date(selected))}
+            </Text>
+          </View>
+          <View style={styles.section}>
+            <SectionButton href="./comment" text="Comment +" />
+            <TextInput
+              style={styles.commentbox}
+              placeholder="회고를 남겨 보세요."
+              placeholderTextColor={colors.gray.background}
+            ></TextInput>
+          </View>
 
-        <View style={styles.section}>
-          <SectionButton href="./schedule" text="Challenge +" />
-        </View>
+          <View style={styles.section}>
+            <SectionButton href="./schedule" text="Challenge +" />
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </>
   );

@@ -12,11 +12,13 @@ import { useAuth0 } from "react-native-auth0";
 
 import ScrollButton from "@/components/ScrollButton";
 import SectionButton from "@/components/SectionButton";
+import SmallButton from "@/components/SmallButton";
 import SwitchView from "@/components/SwitchView";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
 import CalendarView from "@/components/CalendarView";
 import { SwipeListView } from "react-native-swipe-list-view";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface DataItem {
   id: string;
@@ -91,54 +93,32 @@ export default function MainScreen() {
   );
 
   return (
-    <ScrollView style={styles.entry}>
-      {/* <SmallButton href="./chat" text="Trainer" /> */}
-      <CalendarView
-        selectday={selected}
-        onDayPress={(day: { dateString: string }) =>
-          setSelected(day.dateString)
-        }
-      />
-      <View style={styles.content}>
-        <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
-
-        <View style={styles.buttonRow}>
-          <ScrollButton text="todo" />
-          <ScrollButton text="comment" />
-          <ScrollButton text="challenge" />
-        </View>
-
-        <View style={styles.section}>
-          <SectionButton href="./schedule" text="Schedule +" />
-        </View>
-
-        <View style={styles.section}>
-          <SectionButton href="./todo" text="Todolist +" />
-          <View style={styles.todolist}>
-            <SwipeListView
-              data={data}
-              renderItem={renderItem}
-              renderHiddenItem={renderHiddenItem}
-              leftOpenValue={50}
-              rightOpenValue={-50}
-            />
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.entry}>
+        <SmallButton href="./chat" text="Trainer" />
+        <CalendarView
+          selectday={selected}
+          onDayPress={(day: { dateString: string }) =>
+            setSelected(day.dateString)
+          }
+        />
+        <View style={styles.content}>
+          <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+          <View style={styles.section}>
+            <SectionButton href="./todo" text="Todolist +" />
+            <View style={styles.todolist}>
+              <SwipeListView
+                data={data}
+                renderItem={renderItem}
+                renderHiddenItem={renderHiddenItem}
+                leftOpenValue={50}
+                rightOpenValue={-50}
+              />
+            </View>
           </View>
         </View>
-
-        <View style={styles.section}>
-          <SectionButton href="./comment" text="Comment +" />
-          <TextInput
-            style={styles.commentbox}
-            placeholder="회고를 남겨 보세요."
-            placeholderTextColor={colors.gray.background}
-          />
-        </View>
-
-        <View style={styles.section}>
-          <SectionButton href="./schedule" text="Challenge +" />
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -148,13 +128,15 @@ function formatDate(d: Date) {
 }
 
 const styles = StyleSheet.create({
-  entry: {
-    height: "100%",
+  container: {
     flex: 1,
     backgroundColor: "#F7F9FC",
   },
+  entry: {
+    backgroundColor: "#F7F9FC",
+  },
   content: {
-    flex: 2,
+    // flex: 2,
     marginTop: "5%",
   },
   interval: {
