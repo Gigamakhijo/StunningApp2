@@ -8,6 +8,10 @@ node_modules/
 dist/
 web-build/
 
+# Expo prebuilds
+ios
+android
+
 # Native
 *.orig.*
 *.jks
