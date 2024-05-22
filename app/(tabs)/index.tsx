@@ -93,7 +93,10 @@ export default function MainScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.container} edges={{bottom:"off", top:"additive"}}>
+    <SafeAreaView
+      style={styles.container}
+      edges={{ bottom: "off", top: "additive" }}
+    >
       <ScrollView style={styles.entry}>
         <SmallButton href="./chat" text="Trainer" />
         <CalendarView
@@ -128,7 +131,7 @@ function formatDate(d: Date) {
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
     backgroundColor: "#F7F9FC",
   },

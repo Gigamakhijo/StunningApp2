@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, ScrollView, } from "react-native";
+import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
 import { useState } from "react";
 import CalenderView from "@/components/CalendarView";
 import SmallButton from "@/components/SmallButton";
@@ -17,7 +17,10 @@ export default function CommentScreen() {
 
   return (
     <>
-        <SafeAreaView style={styles.container} edges={{bottom: "off", top:"additive"}}>
+      <SafeAreaView
+        style={styles.container}
+        edges={{ bottom: "off", top: "additive" }}
+      >
         <SmallButton href="./chat" text="Trainer" />
         <ScrollView>
           <CalenderView
@@ -27,7 +30,9 @@ export default function CommentScreen() {
             }
           />
           <View style={styles.content}>
-            <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+            <Text style={styles.selectday}>
+              {formatDate(new Date(selected))}
+            </Text>
           </View>
           <View style={styles.section}>
             <SectionButton href="./comment" text="Comment +" />

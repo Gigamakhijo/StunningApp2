@@ -46,31 +46,31 @@ export default function TodoScreen() {
   });
   return (
     <>
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.container}>
-        <TextInput
-          value={title}
-          onChangeText={(value: string) => setTitle(value)}
-          placeholder="할 일 제목"
-          style={styles.title}
-          textAlignVertical="center"
-          placeholderTextColor={colors.main.background}
-          maxLength={30}
-        />
-        <Text style={styles.datestyle}>
-          {` ${date.getMonth() + 1}월 ${date.getDate()}일 ${days[date.getDay()]}요일`}
-        </Text>
-        {/* ${date.getFullYear()}년 */}
-        <Fullline />
-        <TextInput
-          value={content}
-          onChangeText={(value: string) => setContent(value)}
-          placeholder="내용을 입력하세요."
-          style={styles.content}
-          multiline={true}
-          placeholderTextColor={"black"}
-        />
-      </ScrollView>
+      <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.container}>
+          <TextInput
+            value={title}
+            onChangeText={(value: string) => setTitle(value)}
+            placeholder="할 일 제목"
+            style={styles.title}
+            textAlignVertical="center"
+            placeholderTextColor={colors.main.background}
+            maxLength={30}
+          />
+          <Text style={styles.datestyle}>
+            {` ${date.getMonth() + 1}월 ${date.getDate()}일 ${days[date.getDay()]}요일`}
+          </Text>
+          {/* ${date.getFullYear()}년 */}
+          <Fullline />
+          <TextInput
+            value={content}
+            onChangeText={(value: string) => setContent(value)}
+            placeholder="내용을 입력하세요."
+            style={styles.content}
+            multiline={true}
+            placeholderTextColor={"black"}
+          />
+        </ScrollView>
       </SafeAreaView>
     </>
   );
