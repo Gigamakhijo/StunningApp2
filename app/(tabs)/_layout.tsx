@@ -4,7 +4,7 @@ import { Alert, Button, StyleSheet, Text, View } from "react-native";
 import { useAuth0 } from "react-native-auth0";
 import HeaderComponent from "@/components/HeaderComponent";
 import MainHeader from "@/components/MainHeader";
-import TodoScreen from "../(screens)/todo"
+import TodoScreen from "../(screens)/todo";
 import colors from "@/constants/Colors";
 import { Header } from "react-native/Libraries/NewAppScreen";
 import { Ionicons } from "@expo/vector-icons";
@@ -46,16 +46,19 @@ export default function Layout() {
         options={{
           title: "Home",
           tabBarShowLabel: false,
-          tabBarIcon: () => <Ionicons name="checkbox-outline" size={25} color="#000000" />
+          tabBarIcon: () => (
+            <Ionicons name="checkbox-outline" size={25} color="#000000" />
+          ),
         }}
-      
       />
       <Tabs.Screen
         name="schedule"
         options={{
           title: "일정",
           tabBarShowLabel: false,
-          tabBarIcon: () => <Ionicons name="calendar-clear-outline" size={25} color="#000000" />
+          tabBarIcon: () => (
+            <Ionicons name="calendar-clear-outline" size={25} color="#000000" />
+          ),
         }}
       />
       <Tabs.Screen
@@ -63,7 +66,9 @@ export default function Layout() {
         options={{
           title: "cc",
           tabBarShowLabel: false,
-          tabBarIcon: () => <Ionicons name="create-outline" size={25} color="#000000" />
+          tabBarIcon: () => (
+            <Ionicons name="create-outline" size={25} color="#000000" />
+          ),
         }}
       />
     </Tabs>
