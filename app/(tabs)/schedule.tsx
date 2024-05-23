@@ -27,7 +27,7 @@ interface ScheduleItem {
   completed: boolean;
 }
 
-export default function MainScreen() {
+export default function ScheduleScreen() {
   /* hacky way to convert to string */
   const modifyicon = require("@/assets/images/editicon.png");
   const deleteicon = require("@/assets/images/trashicon.png");

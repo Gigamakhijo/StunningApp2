@@ -55,7 +55,7 @@ export default function ScheduleScreen() {
           <TextInput
             value={title}
             onChangeText={(value: string) => setTitle(value)}
-            placeholder="일정 제목"
+            placeholder="할 일 제목"
             style={styles.title}
             textAlignVertical="center"
             placeholderTextColor={colors.main.background}

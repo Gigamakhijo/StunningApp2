@@ -44,7 +44,7 @@ export default function CommentScreen() {
           </View>
 
           <View style={styles.section}>
-            <SectionButton href="./schedule" text="Challenge +" />
+            <SectionButton href="./challenge" text="Challenge +" />
           </View>
         </ScrollView>
       </SafeAreaView>
