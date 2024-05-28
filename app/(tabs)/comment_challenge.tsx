@@ -8,7 +8,7 @@ import spacing from "@/constants/spacing";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CommentScreen() {
-  const [selected, setSelected] = useState(new Date(Date.now()) + "");
+  const [date,setDate] = useState(new Date(Date.now()));
 
   function formatDate(d: Date) {
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
@@ -24,15 +24,13 @@ export default function CommentScreen() {
         <SmallButton href="./chat" text="Trainer" />
         <ScrollView>
           <CalenderView
-            selectday={selected}
-            onDayPress={(day: { dateString: string }) =>
-              setSelected(day.dateString)
-            }
+            onDayPress={(dateData) => {
+              const selectedDate = new Date(Date.parse(dateData.dateString))
+              setDate(selectedDate)
+            }}
           />
           <View style={styles.content}>
-            <Text style={styles.selectday}>
-              {formatDate(new Date(selected))}
-            </Text>
+            <Text style={styles.selectday}>{formatDate(date)}</Text>
           </View>
           <View style={styles.section}>
             <SectionButton href="./comment" text="Comment +" />
