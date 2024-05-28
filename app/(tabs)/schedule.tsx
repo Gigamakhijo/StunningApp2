@@ -15,6 +15,7 @@ import spacing from "@/constants/spacing";
 import CalendarView from "@/components/CalendarView";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
 interface ScheduleItem {
   id: string;
@@ -44,6 +45,14 @@ export default function ScheduleScreen() {
       console.log("Log out cancelled");
     }
   };
+
+  const trainerButtonPress = () => {
+    router.replace('/(screens)/chat')
+  }
+
+  const scheduleButtonPress = () => {
+    router.replace('/(screens)/addSchedule')
+  }
 
   const renderItem = ({ item }: { item: ScheduleItem }) => (
     <View style={styles.row}>
@@ -80,7 +89,7 @@ export default function ScheduleScreen() {
       style={styles.container}
       edges={{ bottom: "off", top: "additive" }}
     >
-        <SmallButton href="./chat" text="Trainer" />
+        <SmallButton onPress={trainerButtonPress} text="Trainer" />
         <CalendarView
           selectday={selected}
           onDayPress={(day: { dateString: string }) =>
@@ -90,7 +99,7 @@ export default function ScheduleScreen() {
         <View style={styles.content}>
           <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
           <View>
-            <SectionButton href="../addSchedule" text="Schedule +" />
+            <SectionButton onPress={scheduleButtonPress} text="Schedule +" />
           </View>
           <View style={styles.schedulelist}>
             <SwipeListView
