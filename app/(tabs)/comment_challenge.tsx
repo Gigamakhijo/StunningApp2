@@ -6,6 +6,7 @@ import SectionButton from "@/components/SectionButton";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
 export default function CommentScreen() {
   const [selected, setSelected] = useState(new Date(Date.now()) + "");
@@ -15,13 +16,17 @@ export default function CommentScreen() {
     return dayNames[d.getDay()] + " " + d.getDate();
   }
 
+    const trainereButtonPress = () => {
+    router.replace('/(screens)/chat')
+  }
+
   return (
     <>
       <SafeAreaView
         style={styles.container}
         edges={{ bottom: "off", top: "additive" }}
       >
-        <SmallButton href="./chat" text="Trainer" />
+        <SmallButton onPress={trainereButtonPress} text="Trainer" />
         <ScrollView>
           <CalenderView
             selectday={selected}
@@ -35,7 +40,7 @@ export default function CommentScreen() {
             </Text>
           </View>
           <View style={styles.section}>
-            <SectionButton href="./comment" text="Comment +" />
+            <SectionButton onPress={()=>{}} text="Comment +" />
             <TextInput
               style={styles.commentbox}
               placeholder="회고를 남겨 보세요."
@@ -44,7 +49,7 @@ export default function CommentScreen() {
           </View>
 
           <View style={styles.section}>
-            <SectionButton href="./challenge" text="Challenge +" />
+            <SectionButton onPress={()=>{}} text="Challenge +" />
           </View>
         </ScrollView>
       </SafeAreaView>

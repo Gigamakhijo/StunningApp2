@@ -8,6 +8,8 @@ import {
 import colors from "@/constants/Colors";
 import Fullline from "@/components/Fullline";
 import { SafeAreaView } from "react-native-safe-area-context";
+import SmallButton from "@/components/SmallButton";
+import { router } from "expo-router";
 export default function TodoScreen() {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date(Date.now()));
@@ -31,6 +33,9 @@ export default function TodoScreen() {
 
   const formattedDate = `${date.getFullYear()}년 ${months[date.getMonth()]} ${date.getDate()}일 (${days[date.getDay()]})`;
 
+  const backButton = () => {
+    router.replace('/(tabs)/')
+  }
   useEffect(() => {
     setDate(date);
     setTitle(title);
@@ -45,6 +50,7 @@ export default function TodoScreen() {
     <>
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.container}>
+          <SmallButton onPress={backButton} text="Back"/>
           <TextInput
             value={title}
             onChangeText={(value: string) => setTitle(value)}
