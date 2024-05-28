@@ -3,14 +3,11 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   Image,
 } from "react-native";
 import { useState } from "react";
 import { useAuth0 } from "react-native-auth0";
-
-import ScrollButton from "@/components/ScrollButton";
 import SectionButton from "@/components/SectionButton";
 import SmallButton from "@/components/SmallButton";
 import SwitchView from "@/components/SwitchView";
@@ -28,7 +25,6 @@ interface ScheduleItem {
 }
 
 export default function ScheduleScreen() {
-  /* hacky way to convert to string */
   const modifyicon = require("@/assets/images/editicon.png");
   const deleteicon = require("@/assets/images/trashicon.png");
   const circle = require("@/assets/images/whitecircle.png");
@@ -38,7 +34,6 @@ export default function ScheduleScreen() {
     { id: "1", title: "Item 1", contents: "content1", completed: false },
     { id: "2", title: "Item 2", contents: "content2", completed: false },
     { id: "3", title: "Item 3", contents: "content3", completed: false },
-    // Add more items as needed
   ]);
 
   const { clearSession } = useAuth0();
