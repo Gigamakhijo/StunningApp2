@@ -35,17 +35,7 @@ export default function ScheduleScreen() {
     { id: "2", title: "Item 2", contents: "content2", completed: false },
     { id: "3", title: "Item 3", contents: "content3", completed: false },
   ]);
-
-  const { clearSession } = useAuth0();
-
-  const onLogout = async () => {
-    try {
-      await clearSession();
-    } catch (e) {
-      console.log("Log out cancelled");
-    }
-  };
-
+  
   const trainerButtonPress = () => {
     router.replace('/(screens)/chat')
   }

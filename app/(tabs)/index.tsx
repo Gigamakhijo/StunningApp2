@@ -38,15 +38,6 @@ export default function MainScreen() {
     // Add more items as needed
   ]);
 
-  const { clearSession } = useAuth0();
-
-  const onLogout = async () => {
-    try {
-      await clearSession();
-    } catch (e) {
-      console.log("Log out cancelled");
-    }
-  };
 
   const trainerButtonPress = () => {
     router.replace('/(screens)/chat')
@@ -87,6 +78,7 @@ export default function MainScreen() {
       </TouchableOpacity>
     </View>
   );
+
 
   return (
     <SafeAreaView
