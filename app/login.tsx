@@ -14,7 +14,7 @@ export default function LoginScreen() {
     await authorize();
 
     // doesn't run if authentication fails
-    router.replace("/(screens)");
+    router.replace("/(tabs)");
   };
 
   return (
