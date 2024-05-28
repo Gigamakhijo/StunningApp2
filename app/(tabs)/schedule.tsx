@@ -1,9 +1,7 @@
 import {
   View,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   Image,
 } from "react-native";
@@ -54,23 +52,12 @@ export default function ScheduleScreen() {
   const renderItem = ({ item }: { item: ScheduleItem }) => (
     <View style={styles.row}>
       <View style={styles.rowcontent}>
-        <Text
-          style={{
-            color: colors.white.background,
-            fontSize: 18,
-            fontWeight: "normal",
-          }}
-        >
-          {item.title}
+        <Text style={styles.itemTitle}>
         </Text>
         <View style={styles.interval}>
-          <Image source={circle} style={{ height: 8, width: 8 }} />
+          <Image source={circle} style={styles.itemContentCircle} />
           <Text
-            style={{
-              color: colors.white.background,
-              fontSize: 15,
-              fontWeight: "normal",
-            }}
+            style={styles.itemContent}
           >
             {item.contents}
           </Text>
@@ -84,10 +71,10 @@ export default function ScheduleScreen() {
   const renderHiddenItem = () => (
     <View style={styles.rowBack}>
       <TouchableOpacity onPress={() => console.log("left button click")}>
-        <Image source={modifyicon} style={{ height: 20, width: 20 }} />
+        <Image source={modifyicon} style={styles.iconStyle} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => console.log("right button click")}>
-        <Image source={deleteicon} style={{ height: 20, width: 20 }} />
+        <Image source={deleteicon} style={styles.iconStyle} />
       </TouchableOpacity>
     </View>
   );
@@ -97,7 +84,6 @@ export default function ScheduleScreen() {
       style={styles.container}
       edges={{ bottom: "off", top: "additive" }}
     >
-      <ScrollView>
         <SmallButton href="./chat" text="Trainer" />
         <CalendarView
           selectday={selected}
@@ -107,7 +93,7 @@ export default function ScheduleScreen() {
         />
         <View style={styles.content}>
           <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
-          <View style={styles.section}>
+          <View>
             <SectionButton href="../addSchedule" text="Schedule +" />
           </View>
           <View style={styles.schedulelist}>
@@ -120,7 +106,6 @@ export default function ScheduleScreen() {
             />
           </View>
         </View>
-      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -152,9 +137,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.main.background,
   },
-  section: {
-    flex: 1,
-  },
   schedulelist: {
     alignItems: "center",
   },
@@ -185,4 +167,22 @@ const styles = StyleSheet.create({
     paddingLeft: spacing.m,
     paddingRight: spacing.m,
   },
+  itemTitle:{
+    color: colors.white.background,
+    fontSize: 18,
+    fontWeight: "normal",
+  },
+  itemContentCircle:{
+    height: 8, 
+    width: 8
+  },
+  itemContent:{
+    color: colors.white.background,
+    fontSize: 15,
+    fontWeight: "normal"
+  },
+  iconStyle:{
+    height: 20, 
+    width: 20
+  }
 });
