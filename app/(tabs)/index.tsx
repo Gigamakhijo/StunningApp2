@@ -1,29 +1,22 @@
 import {
   View,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   Image,
-  Button
 } from "react-native";
 import { useState } from "react";
-import { useAuth0 } from "react-native-auth0";
-
-import ScrollButton from "@/components/ScrollButton";
 import SectionButton from "@/components/SectionButton";
-import SmallButton from "@/components/SmallButton";
 import SwitchView from "@/components/SwitchView";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
 import CalendarView from "@/components/CalendarView";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 import { Drawer } from "react-native-drawer-layout";
-import { Ionicons } from "@expo/vector-icons";
 import Menu from "@/components/Menu";
-
+import MainHeader from "@/components/MainHeader";
 
 interface DataItem {
   id: string;
@@ -50,27 +43,26 @@ export default function MainScreen() {
   ]);
 
 
+  const trainerButtonPress = () => {
+    router.replace('/(screens)/chat')
+  }
+
+  const todoButtonPress = () => {
+    router.replace('/(screens)/todo')
+  }
+
   const renderItem = ({ item }: { item: DataItem }) => (
     <View style={styles.row}>
       <View style={styles.rowcontent}>
         <Text
-          style={{
-            color: colors.white.background,
-            fontSize: 18,
-            fontWeight: "normal",
-          }}
+          style={styles.itemTitle}
         >
           {item.title}
         </Text>
         <View style={styles.interval}>
-          <Image source={circle} style={{ height: 8, width: 8 }} />
+          <Image source={circle} style={styles.itemContentCircle} />
           <Text
-            style={{
-              color: colors.white.background,
-              fontSize: 15,
-              fontWeight: "normal",
-            }}
-          >
+            style={styles.itemContent}>
             {item.contents}
           </Text>
         </View>
@@ -83,16 +75,20 @@ export default function MainScreen() {
   const renderHiddenItem = () => (
     <View style={styles.rowBack}>
       <TouchableOpacity onPress={() => console.log("left button click")}>
-        <Image source={modifyicon} style={{ height: 20, width: 20 }} />
+        <Image source={modifyicon} style={styles.iconStyle} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => console.log("right button click")}>
-        <Image source={deleteicon} style={{ height: 20, width: 20 }} />
+        <Image source={deleteicon} style={styles.iconStyle} />
       </TouchableOpacity>
     </View>
   );
 
+
   return (
-    <SafeAreaView style={styles.container} edges={{bottom:"off", top:"additive"}}>
+    <SafeAreaView
+      style={styles.container}
+      edges={{ bottom: "off", top: "additive" }}
+    >
       <Drawer
         open={open}
         onOpen={() => setOpen(true)}
@@ -106,12 +102,8 @@ export default function MainScreen() {
         drawerType="front"
         drawerStyle={{width: 300}}
       >
-      <ScrollView style={styles.entry}>
-        <View style={styles.header}>
-          <SmallButton href="./chat" text="Trainer" />
-          <Ionicons name="ellipsis-vertical" size={25} color="#000000" style={{marginRight: "5%"}} onPress={()=>setOpen(true)}/>
-        </View>
-        
+      <View style={styles.entry}>
+        <MainHeader onPress={()=>setOpen(true)} />
         <CalendarView
           selectday={selected}
           onDayPress={(day: { dateString: string }) =>
@@ -120,8 +112,8 @@ export default function MainScreen() {
         />
         <View style={styles.content}>
           <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
-          <View style={styles.section}>
-            <SectionButton href="./todo" text="Todolist +" />
+          <View>
+            <SectionButton onPress={todoButtonPress} text="Todolist +" />
             <View style={styles.todolist}>
               <SwipeListView
                 data={data}
@@ -133,7 +125,7 @@ export default function MainScreen() {
             </View>
           </View>
         </View>
-      </ScrollView>
+        </View>
       </Drawer>
     </SafeAreaView>
   );
@@ -152,13 +144,7 @@ const styles = StyleSheet.create({
   entry: {
     backgroundColor: "#F7F9FC",
   },
-  header:{
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
   content: {
-    // flex: 2,
     marginTop: "5%",
   },
   interval: {
@@ -177,9 +163,6 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: "row",
     marginBottom: spacing.s,
-  },
-  section: {
-    flex: 1,
   },
   commentbox: {
     height: 135,
@@ -225,5 +208,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingLeft: spacing.m,
     paddingRight: spacing.m,
+  },  
+  itemTitle:{
+    color: colors.white.background,
+    fontSize: 18,
+    fontWeight: "normal",
   },
+  itemContentCircle:{
+    height: 8, 
+    width: 8
+  },
+  itemContent:{
+    color: colors.white.background,
+    fontSize: 15,
+    fontWeight: "normal"
+  },
+  iconStyle:{
+    height: 20, 
+    width: 20
+  }
 });

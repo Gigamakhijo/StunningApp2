@@ -6,10 +6,12 @@ import SectionButton from "@/components/SectionButton";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { Drawer } from "react-native-drawer-layout";
 import Menu from "@/components/Menu";
 import { useAuth0 } from "react-native-auth0";
+import MainHeader from "@/components/MainHeader";
 
 export default function CommentScreen() {
   const [selected, setSelected] = useState(new Date(Date.now()) + "");
@@ -18,6 +20,10 @@ export default function CommentScreen() {
   function formatDate(d: Date) {
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
     return dayNames[d.getDay()] + " " + d.getDate();
+  }
+
+    const trainereButtonPress = () => {
+    router.replace('/(screens)/chat')
   }
 
   return (
@@ -36,10 +42,7 @@ export default function CommentScreen() {
         drawerType="front"
         drawerStyle={{width: 300}}
         >
-        <View style={styles.header}>
-          <SmallButton href="./chat" text="Trainer" />
-          <Ionicons name="ellipsis-vertical" size={25} color="#000000" style={{marginRight: "5%"}} onPress={()=>setOpen(true)}/>
-        </View>
+        <MainHeader onPress={()=>setOpen(true)}/>
         <ScrollView>
           <CalenderView
             selectday={selected}
@@ -53,7 +56,7 @@ export default function CommentScreen() {
             </Text>
           </View>
           <View style={styles.section}>
-            <SectionButton href="./comment" text="Comment +" />
+            <SectionButton onPress={()=>{}} text="Comment +" />
             <TextInput
               style={styles.commentbox}
               placeholder="회고를 남겨 보세요."
@@ -62,7 +65,7 @@ export default function CommentScreen() {
           </View>
 
           <View style={styles.section}>
-            <SectionButton href="./challenge" text="Challenge +" />
+            <SectionButton onPress={()=>{}} text="Challenge +" />
           </View>
         </ScrollView>
         </Drawer>
