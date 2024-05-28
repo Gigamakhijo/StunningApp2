@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth0 } from "react-native-auth0";
 import SectionButton from "@/components/SectionButton";
 import SmallButton from "@/components/SmallButton";
@@ -16,6 +16,7 @@ import spacing from "@/constants/spacing";
 import CalendarView from "@/components/CalendarView";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { DateData } from "react-native-calendars";
 
 interface DataItem {
   id: string;
@@ -29,8 +30,7 @@ export default function MainScreen() {
   const modifyicon = require("@/assets/images/editicon.png");
   const deleteicon = require("@/assets/images/trashicon.png");
   const circle = require("@/assets/images/whitecircle.png");
-  const [selected, setSelected] = useState(new Date(Date.now()) + "");
-
+  const [date,setDate] = useState(new Date(Date.now()));
   const [data, setData] = useState<DataItem[]>([
     { id: "1", title: "Item 1", contents: "content1", completed: false },
     { id: "2", title: "Item 2", contents: "content2", completed: false },
@@ -47,7 +47,10 @@ export default function MainScreen() {
       console.log("Log out cancelled");
     }
   };
-
+  function formatDate(d: Date) {
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+    return dayNames[d.getDay()] + " " + d.getDate();
+  }
   const renderItem = ({ item }: { item: DataItem }) => (
     <View style={styles.row}>
       <View style={styles.rowcontent}>
@@ -88,7 +91,6 @@ export default function MainScreen() {
       </TouchableOpacity>
     </View>
   );
-
   return (
     <SafeAreaView
       style={styles.container}
@@ -97,13 +99,13 @@ export default function MainScreen() {
       <ScrollView style={styles.entry}>
         <SmallButton href="./chat" text="Trainer" />
         <CalendarView
-          selectday={selected}
-          onDayPress={(day: { dateString: string }) =>
-            setSelected(day.dateString)
-          }
+          onDayPress={(dateData) => {
+            const selectedDate = new Date(Date.parse(dateData.dateString))
+            setDate(selectedDate)
+          }}
         />
         <View style={styles.content}>
-          <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+          <Text style={styles.selectday}>{formatDate(date)}</Text>
           <View style={styles.section}>
             <SectionButton href="./todo" text="Todolist +" />
             <View style={styles.todolist}>
@@ -120,11 +122,6 @@ export default function MainScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
-
-function formatDate(d: Date) {
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
-  return dayNames[d.getDay()] + " " + d.getDate();
 }
 
 const styles = StyleSheet.create({
