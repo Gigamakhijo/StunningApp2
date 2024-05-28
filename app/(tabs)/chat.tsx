@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Pressable,View,Image ,TextInput} from "react-native";
+import { StyleSheet, Text, Pressable,View,Image ,TextInput,Alert, Platform, KeyboardAvoidingView} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, useRouter } from "expo-router";
 import { useState, useCallback, useEffect } from "react";
@@ -27,6 +27,7 @@ export default function ChatScreen() {
     ]);
   }, []);
   const onSend=useCallback((messages: IMessage[] = [])=>{
+    try{
     setMessages(previousMessages=>
       GiftedChat.append(previousMessages,messages)
     );
@@ -37,7 +38,24 @@ export default function ChatScreen() {
     } else {
       setShowCancelButtons(false);
     }
-  },[])
+    // test
+    setTimeout(() => {
+      const responseMessage: IMessage = {
+        _id: Math.random().toString(),
+        text: `You said: ${lastMessage.text}`,
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: "React Native",
+        },
+      };
+      setMessages((previousMessages) => GiftedChat.append(previousMessages, [responseMessage]));
+    }, 2000);
+    }catch(e:any){
+      Alert.alert('Message Error', e.message);
+  }
+  }, []);
+  
   const onCancelButtonPress = () => {
     // Handle cancel button press
     console.log("Cancel button pressed");
@@ -102,6 +120,9 @@ export default function ChatScreen() {
         wrapperStyle={{
           left:{
             backgroundColor:"#F2F2F2",
+            borderTopLeftRadius:15,
+            borderTopRightRadius:15,
+            borderBottomRightRadius:15,
             borderBottomLeftRadius:0,
             marginLeft:"5%"
           },
@@ -109,7 +130,11 @@ export default function ChatScreen() {
             backgroundColor:"#98CEFF",
             borderColor:"#408DFE",
             borderWidth:1,
+            borderRadius:15,
+            borderTopLeftRadius:15,
+            borderTopRightRadius:15,
             borderBottomRightRadius:0,
+            borderBottomLeftRadius:15,
             marginRight:"5%"
           }
         }}
@@ -130,6 +155,10 @@ export default function ChatScreen() {
     <>
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={styles.container} >
+        <KeyboardAvoidingView
+        style={{flex:1}}
+        behavior={Platform.OS === "ios" ? "padding": undefined}
+        keyboardVerticalOffset={Platform.OS === "ios"? 60:30}>
         <GiftedChat
           alwaysShowSend={true} // 입력란 비어있는경우에도 전송버튼 항상 표시할건지
           showUserAvatar={false} // 각 메시지 옆에 아바타 표시할건지
@@ -148,6 +177,7 @@ export default function ChatScreen() {
           // renderSend={renderSend} // 보내기 버튼 style
           renderInputToolbar={renderInputToolbar}
         />
+      </KeyboardAvoidingView>
       </SafeAreaView>
       </GestureHandlerRootView>
     </>
@@ -189,10 +219,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     backgroundColor: "#FFFFFF",
-    // position:"absolute",
-    // bottom:0,
-    // left:0,
-    // right:0,
   },
   cancelbutton: {
     backgroundColor: "#D8D8D8",
