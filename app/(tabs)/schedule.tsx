@@ -1,5 +1,6 @@
 import {
   View,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -48,12 +49,23 @@ export default function ScheduleScreen() {
   const renderItem = ({ item }: { item: ScheduleItem }) => (
     <View style={styles.row}>
       <View style={styles.rowcontent}>
-        <Text style={styles.itemTitle}>
+        <Text
+          style={{
+            color: colors.white.background,
+            fontSize: 18,
+            fontWeight: "normal",
+          }}
+        >
+          {item.title}
         </Text>
         <View style={styles.interval}>
-          <Image source={circle} style={styles.itemContentCircle} />
+          <Image source={circle} style={{ height: 8, width: 8 }} />
           <Text
-            style={styles.itemContent}
+            style={{
+              color: colors.white.background,
+              fontSize: 15,
+              fontWeight: "normal",
+            }}
           >
             {item.contents}
           </Text>
@@ -67,10 +79,10 @@ export default function ScheduleScreen() {
   const renderHiddenItem = () => (
     <View style={styles.rowBack}>
       <TouchableOpacity onPress={() => console.log("left button click")}>
-        <Image source={modifyicon} style={styles.iconStyle} />
+        <Image source={modifyicon} style={{ height: 20, width: 20 }} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => console.log("right button click")}>
-        <Image source={deleteicon} style={styles.iconStyle} />
+        <Image source={deleteicon} style={{ height: 20, width: 20 }} />
       </TouchableOpacity>
     </View>
   );
@@ -80,6 +92,7 @@ export default function ScheduleScreen() {
       style={styles.container}
       edges={{ bottom: "off", top: "additive" }}
     >
+      <ScrollView>
         <SmallButton href="./chat" text="Trainer" />
         <CalendarView
           selectday={selected}
@@ -89,7 +102,7 @@ export default function ScheduleScreen() {
         />
         <View style={styles.content}>
           <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
-          <View>
+          <View style={styles.section}>
             <SectionButton href="../addSchedule" text="Schedule +" />
           </View>
           <View style={styles.schedulelist}>
@@ -102,6 +115,7 @@ export default function ScheduleScreen() {
             />
           </View>
         </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -133,6 +147,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.main.background,
   },
+  section: {
+    flex: 1,
+  },
   schedulelist: {
     alignItems: "center",
   },
@@ -163,22 +180,4 @@ const styles = StyleSheet.create({
     paddingLeft: spacing.m,
     paddingRight: spacing.m,
   },
-  itemTitle:{
-    color: colors.white.background,
-    fontSize: 18,
-    fontWeight: "normal",
-  },
-  itemContentCircle:{
-    height: 8, 
-    width: 8
-  },
-  itemContent:{
-    color: colors.white.background,
-    fontSize: 15,
-    fontWeight: "normal"
-  },
-  iconStyle:{
-    height: 20, 
-    width: 20
-  }
 });
