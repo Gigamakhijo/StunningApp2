@@ -1,6 +1,5 @@
 import {
   View,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -52,23 +51,14 @@ export default function MainScreen() {
     <View style={styles.row}>
       <View style={styles.rowcontent}>
         <Text
-          style={{
-            color: colors.white.background,
-            fontSize: 18,
-            fontWeight: "normal",
-          }}
+          style={styles.itemTitle}
         >
           {item.title}
         </Text>
         <View style={styles.interval}>
-          <Image source={circle} style={{ height: 8, width: 8 }} />
+          <Image source={circle} style={styles.itemContentCircle} />
           <Text
-            style={{
-              color: colors.white.background,
-              fontSize: 15,
-              fontWeight: "normal",
-            }}
-          >
+            style={styles.itemContent}>
             {item.contents}
           </Text>
         </View>
@@ -81,10 +71,10 @@ export default function MainScreen() {
   const renderHiddenItem = () => (
     <View style={styles.rowBack}>
       <TouchableOpacity onPress={() => console.log("left button click")}>
-        <Image source={modifyicon} style={{ height: 20, width: 20 }} />
+        <Image source={modifyicon} style={styles.iconStyle} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => console.log("right button click")}>
-        <Image source={deleteicon} style={{ height: 20, width: 20 }} />
+        <Image source={deleteicon} style={styles.iconStyle} />
       </TouchableOpacity>
     </View>
   );
@@ -94,7 +84,7 @@ export default function MainScreen() {
       style={styles.container}
       edges={{ bottom: "off", top: "additive" }}
     >
-      <ScrollView style={styles.entry}>
+      <View style={styles.entry}>
         <SmallButton href="./chat" text="Trainer" />
         <CalendarView
           selectday={selected}
@@ -104,7 +94,7 @@ export default function MainScreen() {
         />
         <View style={styles.content}>
           <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
-          <View style={styles.section}>
+          <View>
             <SectionButton href="./todo" text="Todolist +" />
             <View style={styles.todolist}>
               <SwipeListView
@@ -117,7 +107,7 @@ export default function MainScreen() {
             </View>
           </View>
         </View>
-      </ScrollView>
+        </View>
     </SafeAreaView>
   );
 }
@@ -154,9 +144,6 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: "row",
     marginBottom: spacing.s,
-  },
-  section: {
-    flex: 1,
   },
   commentbox: {
     height: 135,
@@ -202,5 +189,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingLeft: spacing.m,
     paddingRight: spacing.m,
+  },  
+  itemTitle:{
+    color: colors.white.background,
+    fontSize: 18,
+    fontWeight: "normal",
   },
+  itemContentCircle:{
+    height: 8, 
+    width: 8
+  },
+  itemContent:{
+    color: colors.white.background,
+    fontSize: 15,
+    fontWeight: "normal"
+  },
+  iconStyle:{
+    height: 20, 
+    width: 20
+  }
 });
