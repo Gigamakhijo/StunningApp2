@@ -1,5 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
-// import TextField from "@/components/TextField";
+import React, { useState, useEffect } from "react";
 import {
   TextInput,
   StyleSheet,

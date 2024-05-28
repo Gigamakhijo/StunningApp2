@@ -1,12 +1,6 @@
 import { Redirect, Stack, Tabs } from "expo-router";
-import { Alert, Button, StyleSheet, Text, View } from "react-native";
-
+import { Text, View } from "react-native";
 import { useAuth0 } from "react-native-auth0";
-import HeaderComponent from "@/components/HeaderComponent";
-import MainHeader from "@/components/MainHeader";
-import TodoScreen from "../(screens)/todo";
-import colors from "@/constants/Colors";
-import { Header } from "react-native/Libraries/NewAppScreen";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Layout() {
