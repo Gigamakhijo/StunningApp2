@@ -3,14 +3,11 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   Image,
 } from "react-native";
 import { useState } from "react";
 import { useAuth0 } from "react-native-auth0";
-
-import ScrollButton from "@/components/ScrollButton";
 import SectionButton from "@/components/SectionButton";
 import SmallButton from "@/components/SmallButton";
 import SwitchView from "@/components/SwitchView";
@@ -139,7 +136,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#F7F9FC",
   },
   content: {
-    // flex: 2,
     marginTop: "5%",
   },
   interval: {
