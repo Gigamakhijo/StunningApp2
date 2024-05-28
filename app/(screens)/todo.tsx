@@ -1,11 +1,8 @@
 import React, { FC, useState, useEffect } from "react";
-// import TextField from "@/components/TextField";
 import {
   TextInput,
   StyleSheet,
   Text,
-  View,
-  Pressable,
   ScrollView,
 } from "react-native";
 import colors from "@/constants/Colors";
