@@ -28,8 +28,7 @@ export default function ScheduleScreen() {
   const modifyicon = require("@/assets/images/editicon.png");
   const deleteicon = require("@/assets/images/trashicon.png");
   const circle = require("@/assets/images/whitecircle.png");
-  const [selected, setSelected] = useState(new Date(Date.now()) + "");
-
+  const [date,setDate] = useState(new Date(Date.now()));
   const [data, setData] = useState<ScheduleItem[]>([
     { id: "1", title: "Item 1", contents: "content1", completed: false },
     { id: "2", title: "Item 2", contents: "content2", completed: false },
@@ -81,13 +80,13 @@ export default function ScheduleScreen() {
     >
         <SmallButton onPress={trainerButtonPress} text="Trainer" />
         <CalendarView
-          selectday={selected}
-          onDayPress={(day: { dateString: string }) =>
-            setSelected(day.dateString)
-          }
+          onDayPress={(dateData) => {
+            const selectedDate = new Date(Date.parse(dateData.dateString))
+            setDate(selectedDate)
+          }}
         />
         <View style={styles.content}>
-          <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+          <Text style={styles.selectday}>{formatDate(date)}</Text>
           <View>
             <SectionButton onPress={scheduleButtonPress} text="Schedule +" />
           </View>

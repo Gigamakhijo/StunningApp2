@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { useState } from "react";
-import { Calendar, LocaleConfig } from "react-native-calendars";
+import { Calendar, DateData, LocaleConfig } from "react-native-calendars";
 
 import colors from "@/constants/Colors";
 
@@ -47,9 +47,12 @@ LocaleConfig.locales.en = {
   // numbers: ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'] // number localization example
 };
 LocaleConfig.defaultLocale = "en";
-
-export default function CalenderView(props: any) {
-  const [selected, setSelected] = useState(new Date(Date.now()) + "");
+export interface CalendarViewProps{
+  onDayPress: (date:DateData) => void;
+}
+export default function CalenderView(props:CalendarViewProps) {
+  const [selected,setSelected] = useState("");
+  
   return (
     <Calendar
       style={styles.calendar}
@@ -69,8 +72,9 @@ export default function CalenderView(props: any) {
         textDisabledColor: colors.gray.background, // 다른달 일 나오는 부분 색깔
         dotColor: "#deabb2",
       }}
-      onDayPress={(day) => {
-        setSelected(day.dateString);
+      onDayPress={(day)=>{
+        setSelected(day.dateString)
+        props.onDayPress(day)
       }}
       markedDates={{
         [selected]: { selected: true, disableTouchEvent: true },
