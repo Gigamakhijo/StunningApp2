@@ -18,29 +18,23 @@ export default function Chatheader(props: {onPress: any}) {
                 <Text style={styles.trainertext}>Friday</Text>
             </View>
           </View>
-            <View style={styles.whitebar}/>
-          </View>
+         {/* // <View style={styles.whitebar}/> */}
+      </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
     header: {
-        // flex: 1,
-        height:120,
-        backgroundColor:"#98CEFF",
-        position:"absolute",
-        top:0,
-        left:0,
-        right:0,
-        flexDirection:"column"
-      },
+        flex: 1,
+        // height:120,
+       // backgroundColor:"#98CEFF",
+    },
       container:{
         flexDirection:"row",
-        marginTop:"15%",
+        // marginTop:"15%",
         marginLeft:"5%",
         marginBottom:5,
-        // marginRight:"5%",
       },
       button:{
         flex:1,
@@ -62,10 +56,10 @@ const styles = StyleSheet.create({
         fontSize:20,
         fontWeight:"bold",
       },
-      whitebar:{
-        height:50,
-        borderTopLeftRadius:100,
-        borderTopRightRadius:100,
-        backgroundColor:colors.white.background,
-      },
+      // whitebar:{
+      //   height:50,
+      //   borderTopLeftRadius:100,
+      //   borderTopRightRadius:100,
+      //   backgroundColor:colors.white.background,
+      // },
 });

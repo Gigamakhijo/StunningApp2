@@ -67,7 +67,7 @@ export default function ChatScreen() {
     // Hide cancel buttons after cancel button press
     setShowCancelButtons(false);
   };
-  const renderInputToolbar = () => {
+  const renderInputToolbar = (props: any) => {
     return (
       <View style={styles.inputToolbar}>
         {showCancelButtons && (
@@ -87,32 +87,32 @@ export default function ChatScreen() {
           </View>
         )}
         <View style={styles.field}>
-        <View style={styles.inputstyle}>
-        <TextInput
-          // {...props}
-          value={inputText}
-          onChangeText={setInputText}
-          multiline={false} // 한 줄만 입력할 수 있도록 설정
-          placeholder="메시지를 입력하세요."
-          placeholderTextColor="#A8A8A8"
-        />
-      </View>
-        <TouchableOpacity 
-        style={styles.sendbuttoncontainer}
-        onPress={()=>{
-        // props.onSend({text: props.text}, true);
-        onSend([{
-          _id: Math.random().toString(),
-          text: inputText,
-          createdAt: new Date(),
-          user: {
-            _id: 1,
-          },
-        }]);
-        setInputText(""); // 메시지를 전송한 후에 입력된 텍스트를 초기화
-      }}>
-          <Image source={sendbutton} style={styles.sendbutton}/>
-      </TouchableOpacity>
+          <View style={styles.inputstyle}>
+            <TextInput
+              {...props}
+              value={inputText}
+              onChangeText={setInputText}
+              multiline={false} // 한 줄만 입력할 수 있도록 설정
+              placeholder="메시지를 입력하세요."
+              placeholderTextColor="#A8A8A8"
+            />
+           </View>
+          <TouchableOpacity 
+          style={styles.sendbuttoncontainer}
+          onPress={()=>{
+          // props.onSend({text: props.text}, true);
+          onSend([{
+            _id: Math.random().toString(),
+            text: inputText,
+            createdAt: new Date(),
+            user: {
+              _id: 1,
+            },
+          }]);
+          setInputText(""); // 메시지를 전송한 후에 입력된 텍스트를 초기화
+        }}>
+            <Image source={sendbutton} style={styles.sendbutton}/>
+          </TouchableOpacity>
       </View>
       </View>
     );
@@ -160,15 +160,13 @@ export default function ChatScreen() {
     <>
       <SafeAreaView style={styles.container} 
       edges={{ bottom: "off", top: "additive" }}>
-        <Chatheader onPress={goBack}/>
           <KeyboardAvoidingView
-          style={{flex:1}}
+          style={{flex:1, backgroundColor: "#98CEFF"}}
           behavior={Platform.OS === "ios" ? "padding": undefined}
           keyboardVerticalOffset={Platform.OS === "ios"? 60:30}
           >
             <Chatheader onPress={goBack}/>
-            <View style={{flex: 1,}}>
-
+            <View style={{flex: 20, borderTopLeftRadius: 50, borderTopRightRadius:50, backgroundColor:colors.white.background, }}>
             <GestureHandlerRootView style={{ flex: 1 }}>
             <GiftedChat
               alwaysShowSend={true} // 입력란 비어있는경우에도 전송버튼 항상 표시할건지
@@ -204,7 +202,7 @@ export default function ChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:colors.white.background,
+    backgroundColor:"#98CEFF",
   },
   sendbuttoncontainer:{
     justifyContent:"center",
@@ -230,12 +228,12 @@ const styles = StyleSheet.create({
     justifyContent:"center"
   },
   inputToolbar: {
-  
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 8,
     backgroundColor: "#FFFFFF",
+    
   },
   cancelbutton: {
     backgroundColor: "#D8D8D8",
