@@ -1,10 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import {
-  TextInput,
-  StyleSheet,
-  Text,
-  ScrollView,
-} from "react-native";
+import { TextInput, StyleSheet, Text, ScrollView } from "react-native";
 import colors from "@/constants/Colors";
 import Fullline from "@/components/Fullline";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -34,8 +29,8 @@ export default function TodoScreen() {
   const formattedDate = `${date.getFullYear()}년 ${months[date.getMonth()]} ${date.getDate()}일 (${days[date.getDay()]})`;
 
   const backButton = () => {
-    router.replace('/(tabs)/')
-  }
+    router.replace("/(tabs)/");
+  };
   useEffect(() => {
     setDate(date);
     setTitle(title);
@@ -50,7 +45,7 @@ export default function TodoScreen() {
     <>
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.container}>
-          <SmallButton onPress={backButton} text="Back"/>
+          <SmallButton onPress={backButton} text="Back" />
           <TextInput
             value={title}
             onChangeText={(value: string) => setTitle(value)}
