@@ -4,10 +4,18 @@ import { useAuth0 } from "react-native-auth0";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Layout() {
-  const { user, isLoading } = useAuth0();
+  const { clearSession, clearCredentials, user, isLoading } = useAuth0();
 
   const loggedIn = user !== undefined && user !== null;
 
+  const onLogout = async () => {
+    try {
+      await clearSession();
+      await clearCredentials();
+    } catch (e) {
+      console.log("Log out cancelled");
+    }
+  };
 
   if (isLoading) {
     return (
