@@ -83,7 +83,6 @@ export default function CalenderView(props: any) {
 }
 const styles = StyleSheet.create({
   calendar: {
-    flex: 1,
     marginHorizontal: "5%",
   },
 });

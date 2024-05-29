@@ -1,18 +1,23 @@
 import { StyleSheet, Text, Pressable,View,Image ,TextInput,Alert, Platform, KeyboardAvoidingView} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link, useRouter } from "expo-router";
+import { router, useRouter } from "expo-router";
 import { useState, useCallback, useEffect } from "react";
 import {Bubble, GiftedChat, IMessage, InputToolbar} from 'react-native-gifted-chat';
 import colors from "@/constants/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
+import Chatheader from "@/components/Chatheader";
 export default function ChatScreen() {
   const [messages, setMessages] =useState<IMessage[]>([]);
   const [inputText, setInputText] = useState("");
   const [showCancelButtons, setShowCancelButtons] = useState(false);
-  const router=useRouter();
   const sendbutton = require("@/assets/images/sendbutton.png");
+
+  const goBack = () => {
+    console.log("on Press")
+    router.replace('/(tabs)/')
+  }
+
   useEffect(() => {
     setMessages([
       {
@@ -62,7 +67,7 @@ export default function ChatScreen() {
     // Hide cancel buttons after cancel button press
     setShowCancelButtons(false);
   };
-  const renderInputToolbar = (props: any) => {
+  const renderInputToolbar = () => {
     return (
       <View style={styles.inputToolbar}>
         {showCancelButtons && (
@@ -84,7 +89,7 @@ export default function ChatScreen() {
         <View style={styles.field}>
         <View style={styles.inputstyle}>
         <TextInput
-          {...props}
+          // {...props}
           value={inputText}
           onChangeText={setInputText}
           multiline={false} // 한 줄만 입력할 수 있도록 설정
@@ -153,33 +158,45 @@ export default function ChatScreen() {
 
   return (
     <>
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView style={styles.container} >
-        <KeyboardAvoidingView
-        style={{flex:1}}
-        behavior={Platform.OS === "ios" ? "padding": undefined}
-        keyboardVerticalOffset={Platform.OS === "ios"? 60:30}>
-        <GiftedChat
-          alwaysShowSend={true} // 입력란 비어있는경우에도 전송버튼 항상 표시할건지
-          showUserAvatar={false} // 각 메시지 옆에 아바타 표시할건지
-          renderUsernameOnMessage={false} // 각메시지 위에 사용자 이름 표시여부
-          renderAvatar={null} // 아바타 렌더링 함수 제공-> 아바타 모양, 동작 완전 제어가능
-          messages={messages} // 현재 채팅 메시지 배열
-          isTyping={true} // 현재 사용자가 타이핑 중인지 여부
-          // 메시지 전송될때 호출되는 콜백 함수
-          onSend={(messages: IMessage[]) => onSend(messages)}
-          user={{ // 현재 사용자 정보
-            _id:1,
-          }}
-          renderBubble={renderBubble} // 채팅 스타일
-          // renderComposer={renderComposer} // textinput style
-          // loadEarlier={true} // 이전 메시지 불러오는 옵션 표시여부
-          // renderSend={renderSend} // 보내기 버튼 style
-          renderInputToolbar={renderInputToolbar}
-        />
-      </KeyboardAvoidingView>
+      <SafeAreaView style={styles.container} 
+      edges={{ bottom: "off", top: "additive" }}>
+        <Chatheader onPress={goBack}/>
+          <KeyboardAvoidingView
+          style={{flex:1}}
+          behavior={Platform.OS === "ios" ? "padding": undefined}
+          keyboardVerticalOffset={Platform.OS === "ios"? 60:30}
+          >
+            <Chatheader onPress={goBack}/>
+            <View style={{flex: 1,}}>
+
+            <GestureHandlerRootView style={{ flex: 1 }}>
+            <GiftedChat
+              alwaysShowSend={true} // 입력란 비어있는경우에도 전송버튼 항상 표시할건지
+              showUserAvatar={false} // 각 메시지 옆에 아바타 표시할건지
+              renderUsernameOnMessage={false} // 각메시지 위에 사용자 이름 표시여부
+              renderAvatar={null} // 아바타 렌더링 함수 제공-> 아바타 모양, 동작 완전 제어가능
+              messages={messages} // 현재 채팅 메시지 배열
+              isTyping={true} // 현재 사용자가 타이핑 중인지 여부
+              // 메시지 전송될때 호출되는 콜백 함수
+              onSend={(messages: IMessage[]) => onSend(messages)}
+              user={{ // 현재 사용자 정보
+                _id:1,
+              }}
+              renderBubble={renderBubble} // 채팅 스타일
+              // renderComposer={renderComposer} // textinput style
+              // loadEarlier={true} // 이전 메시지 불러오는 옵션 표시여부
+              // renderSend={renderSend} // 보내기 버튼 style
+              renderInputToolbar={renderInputToolbar}
+              infiniteScroll={true}
+              // renderLoadEarlier={}
+              loadEarlier={true}
+            />
+            </GestureHandlerRootView>
+            </View>
+        </KeyboardAvoidingView> 
+      
       </SafeAreaView>
-      </GestureHandlerRootView>
+     
     </>
   );
 }
@@ -213,7 +230,7 @@ const styles = StyleSheet.create({
     justifyContent:"center"
   },
   inputToolbar: {
-    flexDirection: "column",
+  
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 16,

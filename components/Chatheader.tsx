@@ -1,18 +1,19 @@
 import { StyleSheet, Text, View,Pressable, } from "react-native";
-import { useRouter } from "expo-router";
 import colors from "@/constants/Colors";
+import { router } from "expo-router";
 
-export default function Chatheader(props: any) {
-  const router = useRouter();
+export default function Chatheader(props: {onPress: any}) {
+
+  const goback = () => {
+    router.back;
+  }
   return (
     <>
       <View style={styles.header}>
           <View style={styles.container}>
-            <View style={styles.button} >
-                <Pressable onPress={() => router.back()}>
+              <Pressable onPress={goback} style={styles.button}>
                 <Text style={styles.buttontext}>{'< Back'}</Text>
-                </Pressable>
-            </View>
+              </Pressable>
             <View style={styles.trainer}>
                 <Text style={styles.trainertext}>Friday</Text>
             </View>
@@ -25,6 +26,7 @@ export default function Chatheader(props: any) {
 
 const styles = StyleSheet.create({
     header: {
+        // flex: 1,
         height:120,
         backgroundColor:"#98CEFF",
         position:"absolute",
@@ -42,9 +44,6 @@ const styles = StyleSheet.create({
       },
       button:{
         flex:1,
-        // height:30,
-        // justifyContent:"center",
-        //marginTop:"10%",
       },
       buttontext: {
         color: colors.white.background,
