@@ -1,8 +1,8 @@
-import { StyleSheet, Text, Pressable,View,Image ,TextInput,Alert, Platform, KeyboardAvoidingView} from "react-native";
+import { StyleSheet, Text, View,Image ,TextInput, Alert, Platform, KeyboardAvoidingView} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useRouter } from "expo-router";
 import { useState, useCallback, useEffect } from "react";
-import {Bubble, GiftedChat, IMessage, InputToolbar} from 'react-native-gifted-chat';
+import {Bubble, GiftedChat, GiftedChatProps, IMessage, InputToolbar} from 'react-native-gifted-chat';
 import colors from "@/constants/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -14,7 +14,6 @@ export default function ChatScreen() {
   const sendbutton = require("@/assets/images/sendbutton.png");
 
   const goBack = () => {
-    console.log("on Press")
     router.replace('/(tabs)/')
   }
 
@@ -22,7 +21,7 @@ export default function ChatScreen() {
     setMessages([
       {
         _id: 1,
-        text:"무엇을도와드릴까요?",
+        text:"무엇을 도와드릴까요?",
         createdAt: new Date(),
         user: {
           _id: 2,
@@ -31,19 +30,23 @@ export default function ChatScreen() {
       },
     ]);
   }, []);
+
   const onSend=useCallback((messages: IMessage[] = [])=>{
     try{
     setMessages(previousMessages=>
       GiftedChat.append(previousMessages,messages)
     );
+    setInputText("")
+    
     const lastMessage = messages[messages.length - 1];
     // Check if the last message sent was the trigger for showing cancel buttons
     if (lastMessage.text === "Trigger") {
-      setShowCancelButtons(true);
+      setShowCancelButtons(true); 
     } else {
       setShowCancelButtons(false);
     }
     // test
+
     setTimeout(() => {
       const responseMessage: IMessage = {
         _id: Math.random().toString(),
@@ -62,59 +65,57 @@ export default function ChatScreen() {
   }, []);
   
   const onCancelButtonPress = () => {
-    // Handle cancel button press
     console.log("Cancel button pressed");
-    // Hide cancel buttons after cancel button press
     setShowCancelButtons(false);
   };
-  const renderInputToolbar = (props: any) => {
-    return (
-      <View style={styles.inputToolbar}>
-        {showCancelButtons && (
-          <View style={styles.ButtonsContainer}>
-            <TouchableOpacity
-              style={styles.cancelbutton}
-              onPress={onCancelButtonPress}
-            >
-              <Text style={styles.buttonText}>취소</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.checkbutton}
-              onPress={onCancelButtonPress}
-            >
-              <Text style={styles.buttonText}>확인</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-        <View style={styles.field}>
-          <View style={styles.inputstyle}>
-            <TextInput
-              {...props}
-              value={inputText}
-              onChangeText={setInputText}
-              multiline={false} // 한 줄만 입력할 수 있도록 설정
-              placeholder="메시지를 입력하세요."
-              placeholderTextColor="#A8A8A8"
-            />
-           </View>
-          <TouchableOpacity 
-          style={styles.sendbuttoncontainer}
-          onPress={()=>{
-          // props.onSend({text: props.text}, true);
+
+  const cancelAndcheckButton = () => {
+    return(
+        <View style={styles.ButtonsContainer}>
+          <TouchableOpacity
+            style={styles.cancelbutton}
+            onPress={onCancelButtonPress}
+          >
+            <Text style={styles.buttonText}>취소</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.checkbutton}
+            onPress={onCancelButtonPress}
+          >
+            <Text style={styles.buttonText}>확인</Text>           
+          </TouchableOpacity>
+        </View>
+    )
+  }
+  const senderButton = (props: any) => {
+    return(
+       <TouchableOpacity 
+       {...props}
+      style={styles.sendbuttoncontainer}
+        onPress={()=>{
           onSend([{
             _id: Math.random().toString(),
-            text: inputText,
+            text: props.text,
             createdAt: new Date(),
             user: {
               _id: 1,
             },
-          }]);
+          }]),
           setInputText(""); // 메시지를 전송한 후에 입력된 텍스트를 초기화
-        }}>
-            <Image source={sendbutton} style={styles.sendbutton}/>
-          </TouchableOpacity>
-      </View>
-      </View>
+          props.text = inputText
+          }} >
+      <Image source={sendbutton} style={styles.sendbutton}/>
+    </TouchableOpacity>
+    );
+  }
+
+  const renderInputToolbar = (props: any) => {
+    return (
+      <InputToolbar
+      {...props}
+      containerStyle={styles.inputToolBarContainer}
+      >
+       </InputToolbar>
     );
   };
 
@@ -123,34 +124,12 @@ export default function ChatScreen() {
       <Bubble
         {...props}
         wrapperStyle={{
-          left:{
-            backgroundColor:"#F2F2F2",
-            borderTopLeftRadius:15,
-            borderTopRightRadius:15,
-            borderBottomRightRadius:15,
-            borderBottomLeftRadius:0,
-            marginLeft:"5%"
-          },
-          right:{
-            backgroundColor:"#98CEFF",
-            borderColor:"#408DFE",
-            borderWidth:1,
-            borderRadius:15,
-            borderTopLeftRadius:15,
-            borderTopRightRadius:15,
-            borderBottomRightRadius:0,
-            borderBottomLeftRadius:15,
-            marginRight:"5%"
-          }
+          left:styles.leftBubble,
+          right:styles.rigthBubble
         }}
         textStyle={{
-          left:{
-            fontSize:15,
-          },
-          right:{
-            color:"white",
-            fontSize:15,
-          }
+          left:styles.leftbubbleText,
+          right:styles.rigthBubbleText
         }}
       />
     )
@@ -161,38 +140,39 @@ export default function ChatScreen() {
       <SafeAreaView style={styles.container} 
       edges={{ bottom: "off", top: "additive" }}>
           <KeyboardAvoidingView
-          style={{flex:1, backgroundColor: "#98CEFF"}}
-          behavior={Platform.OS === "ios" ? "padding": undefined}
-          keyboardVerticalOffset={Platform.OS === "ios"? 60:30}
-          >
-            <Chatheader onPress={goBack}/>
-            <View style={{flex: 20, borderTopLeftRadius: 50, borderTopRightRadius:50, backgroundColor:colors.white.background, }}>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-            <GiftedChat
-              alwaysShowSend={true} // 입력란 비어있는경우에도 전송버튼 항상 표시할건지
-              showUserAvatar={false} // 각 메시지 옆에 아바타 표시할건지
-              renderUsernameOnMessage={false} // 각메시지 위에 사용자 이름 표시여부
-              renderAvatar={null} // 아바타 렌더링 함수 제공-> 아바타 모양, 동작 완전 제어가능
-              messages={messages} // 현재 채팅 메시지 배열
-              isTyping={true} // 현재 사용자가 타이핑 중인지 여부
-              // 메시지 전송될때 호출되는 콜백 함수
-              onSend={(messages: IMessage[]) => onSend(messages)}
-              user={{ // 현재 사용자 정보
-                _id:1,
-              }}
-              renderBubble={renderBubble} // 채팅 스타일
-              // renderComposer={renderComposer} // textinput style
-              // loadEarlier={true} // 이전 메시지 불러오는 옵션 표시여부
-              // renderSend={renderSend} // 보내기 버튼 style
-              renderInputToolbar={renderInputToolbar}
-              infiniteScroll={true}
-              // renderLoadEarlier={}
-              loadEarlier={true}
-            />
+          style={styles.viewFlex} >
+            <GestureHandlerRootView style={styles.viewFlex}>
+              <Chatheader onPress={goBack}/>
+              <View style={styles.chatView}>
+                <GiftedChat
+                  placeholder="메시지를 입력하세요"
+                  alwaysShowSend={true} // 입력란 비어있는경우에도 전송버튼 항상 표시할건지
+                  showUserAvatar={false} // 각 메시지 옆에 아바타 표시할건지
+                  renderUsernameOnMessage={false} // 각메시지 위에 사용자 이름 표시여부
+                  renderAvatar={null} // 아바타 렌더링 함수 제공-> 아바타 모양, 동작 완전 제어가능
+                  messages={messages} // 현재 채팅 메시지 배열
+                  isTyping={true} // 현재 사용자가 타이핑 중인지 여부
+                  // 메시지 전송될때 호출되는 콜백 함수
+                  onSend={(messages: IMessage[]) => {onSend(messages)}}
+                  user={{ // 현재 사용자 정보
+                    _id:1,
+                  }}
+                  renderBubble={renderBubble} // 채팅 스타일
+                  isKeyboardInternallyHandled={true}
+                  renderInputToolbar={renderInputToolbar}
+                  renderSend={(props=>senderButton(props))}
+                  infiniteScroll={true}
+                  loadEarlier={true}
+                  text={inputText}
+                  onInputTextChanged={(value) => setInputText(value)}
+                  renderFooter={()=>{
+                    if(showCancelButtons){
+                    return cancelAndcheckButton()
+                  }}}
+                />
+              </View>
             </GestureHandlerRootView>
-            </View>
-        </KeyboardAvoidingView> 
-      
+        </KeyboardAvoidingView>
       </SafeAreaView>
      
     </>
@@ -203,16 +183,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor:"#98CEFF",
+    marginBottom: "10%",
+  },
+  viewFlex:{
+    flex: 1,
   },
   sendbuttoncontainer:{
+    width: 32,
+    height: 32,
     justifyContent:"center",
     alignItems:"center",
-    marginTop:10,
-    marginRight:15,
   },
   sendbutton:{
-    height:32,
-    width:32,
+    height:30,
+    width:30,
     resizeMode:"contain",
   },
   inputstyle:{
@@ -221,19 +205,14 @@ const styles = StyleSheet.create({
     borderRadius:15,
     paddingHorizontal:10,
     marginHorizontal:10,
-    height:30,
+    height:40,
     width:320,
     marginTop:10,
-    marginLeft:"5%",
-    justifyContent:"center"
+    justifyContent:"center",
   },
   inputToolbar: {
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    backgroundColor: "#FFFFFF",
-    
   },
   cancelbutton: {
     backgroundColor: "#D8D8D8",
@@ -243,7 +222,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     width: 145,
     height: 33,
-    marginRight:"5%",
   },
   checkbutton:{
     backgroundColor: "#98CEFF",
@@ -262,10 +240,50 @@ const styles = StyleSheet.create({
   },
   ButtonsContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 8,
+    justifyContent: "space-evenly",
+    marginBottom: 10,
+    alignItems: "center",
   },
-  field:{
-    flexDirection:"row",
+  inputToolBarContainer:{
+     borderTopWidth:1,
+    borderTopColor:"#408DFE",
+    borderRadius:15,
+    paddingHorizontal:10,
+     height:45,
+    marginTop:10,
+    alignSelf: "flex-end",
+    alignItems: "center",
   },
+  chatView:{
+    flex: 50, 
+    borderTopLeftRadius: 50, 
+    borderTopRightRadius:50, 
+    backgroundColor:colors.white.background
+  },
+  leftBubble:{
+    backgroundColor:"#F2F2F2",
+    borderTopLeftRadius:15,
+    borderTopRightRadius:15,
+    borderBottomRightRadius:15,
+    borderBottomLeftRadius:0,
+    marginLeft:"5%"
+  },
+  rigthBubble:{
+    backgroundColor:"#98CEFF",
+    borderColor:"#408DFE",
+    borderWidth:1,
+    borderRadius:15,
+    borderTopLeftRadius:15,
+    borderTopRightRadius:15,
+    borderBottomRightRadius:0,
+    borderBottomLeftRadius:15,
+    marginRight:"5%"
+  },
+  leftbubbleText:{
+    fontSize:15,
+  },
+  rigthBubbleText:{
+    color:"white",
+    fontSize:15,
+  }
 });
