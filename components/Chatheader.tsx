@@ -11,36 +11,27 @@ export default function Chatheader(props: {onPress: any}) {
     <>
       <View style={styles.header}>
           <View style={styles.container}>
-              <Pressable onPress={goback} style={styles.button}>
+              <Pressable onPress={props.onPress} style={styles.button}>
                 <Text style={styles.buttontext}>{'< Back'}</Text>
               </Pressable>
             <View style={styles.trainer}>
                 <Text style={styles.trainertext}>Friday</Text>
             </View>
           </View>
-            <View style={styles.whitebar}/>
-          </View>
+         {/* // <View style={styles.whitebar}/> */}
+      </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
     header: {
-        // flex: 1,
-        height:120,
-        backgroundColor:"#98CEFF",
-        position:"absolute",
-        top:0,
-        left:0,
-        right:0,
-        flexDirection:"column"
-      },
+        flex: 2,
+    },
       container:{
         flexDirection:"row",
-        marginTop:"15%",
         marginLeft:"5%",
         marginBottom:5,
-        // marginRight:"5%",
       },
       button:{
         flex:1,
@@ -52,8 +43,6 @@ const styles = StyleSheet.create({
       },
       trainer:{
         flex:2,
-        // height:30,
-        // alignItems:"center",
         justifyContent:"center",
         marginLeft:"10%"
       },
@@ -61,11 +50,5 @@ const styles = StyleSheet.create({
         color:colors.white.background,
         fontSize:20,
         fontWeight:"bold",
-      },
-      whitebar:{
-        height:50,
-        borderTopLeftRadius:100,
-        borderTopRightRadius:100,
-        backgroundColor:colors.white.background,
-      },
+      }
 });
