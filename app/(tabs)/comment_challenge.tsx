@@ -9,16 +9,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 
 export default function CommentScreen() {
-  const [date,setDate] = useState(new Date(Date.now()));
+  const [date, setDate] = useState(new Date(Date.now()));
 
   function formatDate(d: Date) {
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
     return dayNames[d.getDay()] + " " + d.getDate();
   }
 
-    const trainereButtonPress = () => {
-    router.replace('/(screens)/chat')
-  }
+  const trainereButtonPress = () => {
+    router.replace("/(screens)/chat");
+  };
 
   return (
     <>
@@ -30,15 +30,15 @@ export default function CommentScreen() {
         <ScrollView>
           <CalenderView
             onDayPress={(dateData) => {
-              const selectedDate = new Date(Date.parse(dateData.dateString))
-              setDate(selectedDate)
+              const selectedDate = new Date(Date.parse(dateData.dateString));
+              setDate(selectedDate);
             }}
           />
           <View style={styles.content}>
             <Text style={styles.selectday}>{formatDate(date)}</Text>
           </View>
           <View style={styles.section}>
-            <SectionButton onPress={()=>{}} text="Comment +" />
+            <SectionButton onPress={() => {}} text="Comment +" />
             <TextInput
               style={styles.commentbox}
               placeholder="회고를 남겨 보세요."
@@ -47,7 +47,7 @@ export default function CommentScreen() {
           </View>
 
           <View style={styles.section}>
-            <SectionButton onPress={()=>{}} text="Challenge +" />
+            <SectionButton onPress={() => {}} text="Challenge +" />
           </View>
         </ScrollView>
       </SafeAreaView>
