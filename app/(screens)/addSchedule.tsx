@@ -38,8 +38,8 @@ export default function ScheduleScreen() {
   const formattedDate = `${date.getFullYear()}년 ${months[date.getMonth()]} ${date.getDate()}일 (${days[date.getDay()]})`;
 
   const backButton = () => {
-    router.replace("/(tabs)/schedule")
-  }
+    router.replace("/(tabs)/schedule");
+  };
 
   useEffect(() => {
     setDate(date);
@@ -57,7 +57,7 @@ export default function ScheduleScreen() {
     <>
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          <SmallButton onPress={backButton}text="Back"/>
+          <SmallButton onPress={backButton} text="Back" />
           <TextInput
             value={title}
             onChangeText={(value: string) => setTitle(value)}
