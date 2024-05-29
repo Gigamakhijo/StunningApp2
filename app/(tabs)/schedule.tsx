@@ -1,10 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { useState } from "react";
 import { useAuth0 } from "react-native-auth0";
 import SectionButton from "@/components/SectionButton";
@@ -28,33 +22,28 @@ export default function ScheduleScreen() {
   const modifyicon = require("@/assets/images/editicon.png");
   const deleteicon = require("@/assets/images/trashicon.png");
   const circle = require("@/assets/images/whitecircle.png");
-  const [date,setDate] = useState(new Date(Date.now()));
+  const [date, setDate] = useState(new Date(Date.now()));
   const [data, setData] = useState<ScheduleItem[]>([
     { id: "1", title: "Item 1", contents: "content1", completed: false },
     { id: "2", title: "Item 2", contents: "content2", completed: false },
     { id: "3", title: "Item 3", contents: "content3", completed: false },
   ]);
-  
+
   const trainerButtonPress = () => {
-    router.replace('/(screens)/chat')
-  }
+    router.replace("/(screens)/chat");
+  };
 
   const scheduleButtonPress = () => {
-    router.replace('/(screens)/addSchedule')
-  }
+    router.replace("/(screens)/addSchedule");
+  };
 
   const renderItem = ({ item }: { item: ScheduleItem }) => (
     <View style={styles.row}>
       <View style={styles.rowcontent}>
-        <Text style={styles.itemTitle}>
-        </Text>
+        <Text style={styles.itemTitle}></Text>
         <View style={styles.interval}>
           <Image source={circle} style={styles.itemContentCircle} />
-          <Text
-            style={styles.itemContent}
-          >
-            {item.contents}
-          </Text>
+          <Text style={styles.itemContent}>{item.contents}</Text>
         </View>
       </View>
       <SwitchView />
@@ -78,28 +67,28 @@ export default function ScheduleScreen() {
       style={styles.container}
       edges={{ bottom: "off", top: "additive" }}
     >
-        <SmallButton onPress={trainerButtonPress} text="Trainer" />
-        <CalendarView
-          onDayPress={(dateData) => {
-            const selectedDate = new Date(Date.parse(dateData.dateString))
-            setDate(selectedDate)
-          }}
-        />
-        <View style={styles.content}>
-          <Text style={styles.selectday}>{formatDate(date)}</Text>
-          <View>
-            <SectionButton onPress={scheduleButtonPress} text="Schedule +" />
-          </View>
-          <View style={styles.schedulelist}>
-            <SwipeListView
-              data={data}
-              renderItem={renderItem}
-              renderHiddenItem={renderHiddenItem}
-              leftOpenValue={50}
-              rightOpenValue={-50}
-            />
-          </View>
+      <SmallButton onPress={trainerButtonPress} text="Trainer" />
+      <CalendarView
+        onDayPress={(dateData) => {
+          const selectedDate = new Date(Date.parse(dateData.dateString));
+          setDate(selectedDate);
+        }}
+      />
+      <View style={styles.content}>
+        <Text style={styles.selectday}>{formatDate(date)}</Text>
+        <View>
+          <SectionButton onPress={scheduleButtonPress} text="Schedule +" />
         </View>
+        <View style={styles.schedulelist}>
+          <SwipeListView
+            data={data}
+            renderItem={renderItem}
+            renderHiddenItem={renderHiddenItem}
+            leftOpenValue={50}
+            rightOpenValue={-50}
+          />
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -161,22 +150,22 @@ const styles = StyleSheet.create({
     paddingLeft: spacing.m,
     paddingRight: spacing.m,
   },
-  itemTitle:{
+  itemTitle: {
     color: colors.white.background,
     fontSize: 18,
     fontWeight: "normal",
   },
-  itemContentCircle:{
-    height: 8, 
-    width: 8
+  itemContentCircle: {
+    height: 8,
+    width: 8,
   },
-  itemContent:{
+  itemContent: {
     color: colors.white.background,
     fontSize: 15,
-    fontWeight: "normal"
+    fontWeight: "normal",
   },
-  iconStyle:{
-    height: 20, 
-    width: 20
-  }
+  iconStyle: {
+    height: 20,
+    width: 20,
+  },
 });
