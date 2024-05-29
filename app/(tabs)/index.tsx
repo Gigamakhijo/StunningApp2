@@ -1,6 +1,5 @@
 import {
   View,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -16,6 +15,7 @@ import spacing from "@/constants/spacing";
 import CalendarView from "@/components/CalendarView";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 import { DateData } from "react-native-calendars";
 
 interface DataItem {
@@ -38,40 +38,32 @@ export default function MainScreen() {
     // Add more items as needed
   ]);
 
-  const { clearSession } = useAuth0();
 
-  const onLogout = async () => {
-    try {
-      await clearSession();
-    } catch (e) {
-      console.log("Log out cancelled");
-    }
-  };
+  const trainerButtonPress = () => {
+    router.replace('/(screens)/chat')
+  }
+
+  const todoButtonPress = () => {
+    router.replace('/(screens)/todo')
+  }
+
   function formatDate(d: Date) {
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
     return dayNames[d.getDay()] + " " + d.getDate();
   }
+
   const renderItem = ({ item }: { item: DataItem }) => (
     <View style={styles.row}>
       <View style={styles.rowcontent}>
         <Text
-          style={{
-            color: colors.white.background,
-            fontSize: 18,
-            fontWeight: "normal",
-          }}
+          style={styles.itemTitle}
         >
           {item.title}
         </Text>
         <View style={styles.interval}>
-          <Image source={circle} style={{ height: 8, width: 8 }} />
+          <Image source={circle} style={styles.itemContentCircle} />
           <Text
-            style={{
-              color: colors.white.background,
-              fontSize: 15,
-              fontWeight: "normal",
-            }}
-          >
+            style={styles.itemContent}>
             {item.contents}
           </Text>
         </View>
@@ -84,20 +76,21 @@ export default function MainScreen() {
   const renderHiddenItem = () => (
     <View style={styles.rowBack}>
       <TouchableOpacity onPress={() => console.log("left button click")}>
-        <Image source={modifyicon} style={{ height: 20, width: 20 }} />
+        <Image source={modifyicon} style={styles.iconStyle} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => console.log("right button click")}>
-        <Image source={deleteicon} style={{ height: 20, width: 20 }} />
+        <Image source={deleteicon} style={styles.iconStyle} />
       </TouchableOpacity>
     </View>
   );
+
   return (
     <SafeAreaView
       style={styles.container}
       edges={{ bottom: "off", top: "additive" }}
     >
-      <ScrollView style={styles.entry}>
-        <SmallButton href="./chat" text="Trainer" />
+      <View style={styles.entry}>
+        <SmallButton onPress={trainerButtonPress} text="Trainer" />
         <CalendarView
           onDayPress={(dateData) => {
             const selectedDate = new Date(Date.parse(dateData.dateString))
@@ -106,8 +99,8 @@ export default function MainScreen() {
         />
         <View style={styles.content}>
           <Text style={styles.selectday}>{formatDate(date)}</Text>
-          <View style={styles.section}>
-            <SectionButton href="./todo" text="Todolist +" />
+          <View>
+            <SectionButton onPress={todoButtonPress} text="Todolist +" />
             <View style={styles.todolist}>
               <SwipeListView
                 data={data}
@@ -119,7 +112,7 @@ export default function MainScreen() {
             </View>
           </View>
         </View>
-      </ScrollView>
+        </View>
     </SafeAreaView>
   );
 }
@@ -151,9 +144,6 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: "row",
     marginBottom: spacing.s,
-  },
-  section: {
-    flex: 1,
   },
   commentbox: {
     height: 135,
@@ -199,5 +189,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingLeft: spacing.m,
     paddingRight: spacing.m,
+  },  
+  itemTitle:{
+    color: colors.white.background,
+    fontSize: 18,
+    fontWeight: "normal",
   },
+  itemContentCircle:{
+    height: 8, 
+    width: 8
+  },
+  itemContent:{
+    color: colors.white.background,
+    fontSize: 15,
+    fontWeight: "normal"
+  },
+  iconStyle:{
+    height: 20, 
+    width: 20
+  }
 });

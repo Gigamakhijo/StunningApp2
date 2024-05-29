@@ -10,6 +10,8 @@ import {
 import colors from "@/constants/Colors";
 import Fullline from "@/components/Fullline";
 import { SafeAreaView } from "react-native-safe-area-context";
+import SmallButton from "@/components/SmallButton";
+import { router } from "expo-router";
 
 export default function ScheduleScreen() {
   const [title, setTitle] = useState("");
@@ -35,6 +37,10 @@ export default function ScheduleScreen() {
 
   const formattedDate = `${date.getFullYear()}년 ${months[date.getMonth()]} ${date.getDate()}일 (${days[date.getDay()]})`;
 
+  const backButton = () => {
+    router.replace("/(tabs)/schedule")
+  }
+
   useEffect(() => {
     setDate(date);
     setTitle(title);
@@ -51,6 +57,7 @@ export default function ScheduleScreen() {
     <>
       <SafeAreaView style={styles.container}>
         <ScrollView>
+          <SmallButton onPress={backButton}text="Back"/>
           <TextInput
             value={title}
             onChangeText={(value: string) => setTitle(value)}
