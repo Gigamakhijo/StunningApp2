@@ -3,13 +3,11 @@ import { StyleSheet } from "react-native";
 
 import { router } from "expo-router";
 
-export default function CancelButton(props: any) {
-  const goback = () => {
-    router.back;
-  };
+export default function CancelButton(props: {onPress: any}) {
+
   return (
     <View style={styles.container}>
-      <Pressable onPress={goback} style={styles.button}>
+      <Pressable onPress={props.onPress} style={styles.button}>
         <Text style={styles.text}>취소</Text>
       </Pressable>
     </View>
