@@ -14,7 +14,7 @@ import { useAuth0 } from "react-native-auth0";
 import MainHeader from "@/components/MainHeader";
 
 export default function CommentScreen() {
-  const [selected, setSelected] = useState(new Date(Date.now()) + "");
+  const [date, setDate] = useState(new Date(Date.now()));
   const [open, setOpen] = useState(false);
 
   function formatDate(d: Date) {
@@ -22,9 +22,9 @@ export default function CommentScreen() {
     return dayNames[d.getDay()] + " " + d.getDate();
   }
 
-    const trainereButtonPress = () => {
-    router.replace('/(screens)/chat')
-  }
+  const trainereButtonPress = () => {
+    router.replace("/(screens)/chat");
+  };
 
   return (
     <>
@@ -45,18 +45,16 @@ export default function CommentScreen() {
         <MainHeader onPress={()=>setOpen(true)}/>
         <ScrollView>
           <CalenderView
-            selectday={selected}
-            onDayPress={(day: { dateString: string }) =>
-              setSelected(day.dateString)
-            }
+            onDayPress={(dateData) => {
+              const selectedDate = new Date(Date.parse(dateData.dateString));
+              setDate(selectedDate);
+            }}
           />
           <View style={styles.content}>
-            <Text style={styles.selectday}>
-              {formatDate(new Date(selected))}
-            </Text>
+            <Text style={styles.selectday}>{formatDate(date)}</Text>
           </View>
           <View style={styles.section}>
-            <SectionButton onPress={()=>{}} text="Comment +" />
+            <SectionButton onPress={() => {}} text="Comment +" />
             <TextInput
               style={styles.commentbox}
               placeholder="회고를 남겨 보세요."
@@ -65,7 +63,7 @@ export default function CommentScreen() {
           </View>
 
           <View style={styles.section}>
-            <SectionButton onPress={()=>{}} text="Challenge +" />
+            <SectionButton onPress={() => {}} text="Challenge +" />
           </View>
         </ScrollView>
         </Drawer>

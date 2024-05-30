@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SectionButton from "@/components/SectionButton";
 import SwitchView from "@/components/SwitchView";
 import colors from "@/constants/Colors";
@@ -14,6 +14,7 @@ import CalendarView from "@/components/CalendarView";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import { DateData } from "react-native-calendars";
 import { Drawer } from "react-native-drawer-layout";
 import Menu from "@/components/Menu";
 import MainHeader from "@/components/MainHeader";
@@ -32,7 +33,7 @@ export default function MainScreen() {
   const modifyicon = require("@/assets/images/editicon.png");
   const deleteicon = require("@/assets/images/trashicon.png");
   const circle = require("@/assets/images/whitecircle.png");
-  const [selected, setSelected] = useState(new Date(Date.now()) + "");
+  const [date, setDate] = useState(new Date(Date.now()));
   const [open, setOpen] = useState(false);
 
   const [data, setData] = useState<DataItem[]>([
@@ -42,29 +43,26 @@ export default function MainScreen() {
     // Add more items as needed
   ]);
 
-
   const trainerButtonPress = () => {
     router.replace('/(screens)/chat')
-  }
+  };
 
   const todoButtonPress = () => {
-    router.replace('/(screens)/todo')
+    router.replace("/(screens)/todo");
+  };
+
+  function formatDate(d: Date) {
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+    return dayNames[d.getDay()] + " " + d.getDate();
   }
 
   const renderItem = ({ item }: { item: DataItem }) => (
     <View style={styles.row}>
       <View style={styles.rowcontent}>
-        <Text
-          style={styles.itemTitle}
-        >
-          {item.title}
-        </Text>
+        <Text style={styles.itemTitle}>{item.title}</Text>
         <View style={styles.interval}>
           <Image source={circle} style={styles.itemContentCircle} />
-          <Text
-            style={styles.itemContent}>
-            {item.contents}
-          </Text>
+          <Text style={styles.itemContent}>{item.contents}</Text>
         </View>
       </View>
       <SwitchView />
@@ -82,7 +80,6 @@ export default function MainScreen() {
       </TouchableOpacity>
     </View>
   );
-
 
   return (
     <SafeAreaView
@@ -105,13 +102,14 @@ export default function MainScreen() {
       <View style={styles.entry}>
         <MainHeader onPress={()=>setOpen(true)} />
         <CalendarView
-          selectday={selected}
-          onDayPress={(day: { dateString: string }) =>
-            setSelected(day.dateString)
-          }
+          onDayPress={(dateData) => {
+            const selectedDate = new Date(Date.parse(dateData.dateString));
+            setDate(selectedDate);
+          }}
+
         />
         <View style={styles.content}>
-          <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+          <Text style={styles.selectday}>{formatDate(date)}</Text>
           <View>
             <SectionButton onPress={todoButtonPress} text="Todolist +" />
             <View style={styles.todolist}>
@@ -129,11 +127,6 @@ export default function MainScreen() {
       </Drawer>
     </SafeAreaView>
   );
-}
-
-function formatDate(d: Date) {
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
-  return dayNames[d.getDay()] + " " + d.getDate();
 }
 
 const styles = StyleSheet.create({
@@ -208,23 +201,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingLeft: spacing.m,
     paddingRight: spacing.m,
-  },  
-  itemTitle:{
+  },
+  itemTitle: {
     color: colors.white.background,
     fontSize: 18,
     fontWeight: "normal",
   },
-  itemContentCircle:{
-    height: 8, 
-    width: 8
+  itemContentCircle: {
+    height: 8,
+    width: 8,
   },
-  itemContent:{
+  itemContent: {
     color: colors.white.background,
     fontSize: 15,
-    fontWeight: "normal"
+    fontWeight: "normal",
   },
-  iconStyle:{
-    height: 20, 
-    width: 20
-  }
+  iconStyle: {
+    height: 20,
+    width: 20,
+  },
 });

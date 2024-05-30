@@ -3,7 +3,6 @@ import { router } from "expo-router";
 import SmallButton from "@/components/SmallButton";
 import { Ionicons } from "@expo/vector-icons";
 export default function MainHeader(props: {onPress:any }) {
-  const listicon = require("@/assets/images/listicon.png");
 
 
   const trainerButtonPress = () =>{

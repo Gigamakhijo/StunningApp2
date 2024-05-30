@@ -1,28 +1,32 @@
 import { View, Text, Pressable } from "react-native";
 import { StyleSheet } from "react-native";
 
-import { Link } from "expo-router";
+import { router } from "expo-router";
 
-export default function CancelButton(props: { href: string }) {
+export default function CancelButton(props: {onPress: any}) {
+
   return (
     <View style={styles.container}>
-      <Link href={props.href} asChild>
-        <Pressable style={styles.button}>
-          <Text style={styles.text}>취소</Text>
-        </Pressable>
-      </Link>
+      <Pressable onPress={props.onPress} style={styles.button}>
+        <Text style={styles.text}>취소</Text>
+      </Pressable>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: 300,
-    height: 90,
+    width: 140,
+    height: 35,
+    borderRadius: 15,
+    backgroundColor: "#D8D8D8",
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
     fontSize: 15,
     fontWeight: "normal",
+    color: "white",
   },
   button: {},
 });

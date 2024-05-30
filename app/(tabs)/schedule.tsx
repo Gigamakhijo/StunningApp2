@@ -1,10 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { useState } from "react";
 import SectionButton from "@/components/SectionButton";
 import SwitchView from "@/components/SwitchView";
@@ -28,7 +22,7 @@ export default function ScheduleScreen() {
   const modifyicon = require("@/assets/images/editicon.png");
   const deleteicon = require("@/assets/images/trashicon.png");
   const circle = require("@/assets/images/whitecircle.png");
-  const [selected, setSelected] = useState(new Date(Date.now()) + "");
+  const [date, setDate] = useState(new Date(Date.now()));
 
   const [open, setOpen] = useState(false);
 
@@ -38,22 +32,21 @@ export default function ScheduleScreen() {
     { id: "3", title: "Item 3", contents: "content3", completed: false },
   ]);
 
+  const trainerButtonPress = () => {
+    router.replace("/(screens)/chat");
+  };
+
   const scheduleButtonPress = () => {
-    router.replace('/(screens)/addSchedule')
-  }
+    router.replace("/(screens)/addSchedule");
+  };
 
   const renderItem = ({ item }: { item: ScheduleItem }) => (
     <View style={styles.row}>
       <View style={styles.rowcontent}>
-        <Text style={styles.itemTitle}>
-        </Text>
+        <Text style={styles.itemTitle}></Text>
         <View style={styles.interval}>
           <Image source={circle} style={styles.itemContentCircle} />
-          <Text
-            style={styles.itemContent}
-          >
-            {item.contents}
-          </Text>
+          <Text style={styles.itemContent}>{item.contents}</Text>
         </View>
       </View>
       <SwitchView />
@@ -92,13 +85,13 @@ export default function ScheduleScreen() {
     >
        <MainHeader onPress={()=>setOpen(true)} />
         <CalendarView
-          selectday={selected}
-          onDayPress={(day: { dateString: string }) =>
-            setSelected(day.dateString)
-          }
+          onDayPress={(dateData) => {
+            const selectedDate = new Date(Date.parse(dateData.dateString));
+            setDate(selectedDate);
+          }}
         />
         <View style={styles.content}>
-          <Text style={styles.selectday}>{formatDate(new Date(selected))}</Text>
+          <Text style={styles.selectday}>{formatDate(new Date(date))}</Text>
           <View>
             <SectionButton onPress={scheduleButtonPress} text="Schedule +" />
           </View>
@@ -174,22 +167,22 @@ const styles = StyleSheet.create({
     paddingLeft: spacing.m,
     paddingRight: spacing.m,
   },
-  itemTitle:{
+  itemTitle: {
     color: colors.white.background,
     fontSize: 18,
     fontWeight: "normal",
   },
-  itemContentCircle:{
-    height: 8, 
-    width: 8
+  itemContentCircle: {
+    height: 8,
+    width: 8,
   },
-  itemContent:{
+  itemContent: {
     color: colors.white.background,
     fontSize: 15,
-    fontWeight: "normal"
+    fontWeight: "normal",
   },
-  iconStyle:{
-    height: 20, 
-    width: 20
-  }
+  iconStyle: {
+    height: 20,
+    width: 20,
+  },
 });
