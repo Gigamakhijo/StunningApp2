@@ -3,7 +3,7 @@ import { useState } from "react";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
 
-export default function CalenderView(props: any) {
+export default function SwitchView(props: any) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   return (

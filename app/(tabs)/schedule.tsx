@@ -1,8 +1,6 @@
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { useState } from "react";
-import { useAuth0 } from "react-native-auth0";
 import SectionButton from "@/components/SectionButton";
-import SmallButton from "@/components/SmallButton";
 import SwitchView from "@/components/SwitchView";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
@@ -10,7 +8,9 @@ import CalendarView from "@/components/CalendarView";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
-
+import { Drawer } from "react-native-drawer-layout";
+import Menu from "@/components/Menu";
+import MainHeader from "@/components/MainHeader";
 interface ScheduleItem {
   id: string;
   title: string;
@@ -23,6 +23,9 @@ export default function ScheduleScreen() {
   const deleteicon = require("@/assets/images/trashicon.png");
   const circle = require("@/assets/images/whitecircle.png");
   const [date, setDate] = useState(new Date(Date.now()));
+
+  const [open, setOpen] = useState(false);
+
   const [data, setData] = useState<ScheduleItem[]>([
     { id: "1", title: "Item 1", contents: "content1", completed: false },
     { id: "2", title: "Item 2", contents: "content2", completed: false },
@@ -66,29 +69,43 @@ export default function ScheduleScreen() {
     <SafeAreaView
       style={styles.container}
       edges={{ bottom: "off", top: "additive" }}
+    > 
+    <Drawer
+    open={open}
+    onOpen={() => setOpen(true)}
+    onClose={() => setOpen(false)}
+    renderDrawerContent={() => {
+      return (
+        <Menu/>
+    );
+    }}
+    drawerPosition="right"
+    drawerType="front"
+    drawerStyle={{width: 300}}
     >
-      <SmallButton onPress={trainerButtonPress} text="Trainer" />
-      <CalendarView
-        onDayPress={(dateData) => {
-          const selectedDate = new Date(Date.parse(dateData.dateString));
-          setDate(selectedDate);
-        }}
-      />
-      <View style={styles.content}>
-        <Text style={styles.selectday}>{formatDate(date)}</Text>
-        <View>
-          <SectionButton onPress={scheduleButtonPress} text="Schedule +" />
+       <MainHeader onPress={()=>setOpen(true)} />
+        <CalendarView
+          onDayPress={(dateData) => {
+            const selectedDate = new Date(Date.parse(dateData.dateString));
+            setDate(selectedDate);
+          }}
+        />
+        <View style={styles.content}>
+          <Text style={styles.selectday}>{formatDate(new Date(date))}</Text>
+          <View>
+            <SectionButton onPress={scheduleButtonPress} text="Schedule +" />
+          </View>
+          <View style={styles.schedulelist}>
+            <SwipeListView
+              data={data}
+              renderItem={renderItem}
+              renderHiddenItem={renderHiddenItem}
+              leftOpenValue={50}
+              rightOpenValue={-50}
+            />
+          </View>
         </View>
-        <View style={styles.schedulelist}>
-          <SwipeListView
-            data={data}
-            renderItem={renderItem}
-            renderHiddenItem={renderHiddenItem}
-            leftOpenValue={50}
-            rightOpenValue={-50}
-          />
-        </View>
-      </View>
+        </Drawer>
     </SafeAreaView>
   );
 }

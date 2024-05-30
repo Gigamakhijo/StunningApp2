@@ -1,29 +1,18 @@
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import { Link, router } from "expo-router";
-// import { router} from "expo-router";
+import { StyleSheet, View } from "react-native";
+import { router } from "expo-router";
 import SmallButton from "@/components/SmallButton";
 import { Ionicons } from "@expo/vector-icons";
+export default function MainHeader(props: {onPress:any }) {
 
-export default function MainHeader(props: { onPress: any }) {
-  const listicon = require("@/assets/images/listicon.png");
-  const testpress = () => {
-    console.log("hi");
-  };
 
-  const trainerButtonPress = () => {
-    router.replace("/(screens)/chat");
-  };
+  const trainerButtonPress = () =>{
+    router.replace('/(screens)/chat')
+  }
   return (
     <>
       <View style={styles.container}>
         <SmallButton onPress={trainerButtonPress} text="Trainer" />
-        <Ionicons
-          name="ellipsis-vertical"
-          size={25}
-          color="#000000"
-          style={{ marginRight: "5%" }}
-          onPress={props.onPress}
-        />
+        <Ionicons name="ellipsis-vertical" size={25} color="#000000" style={{marginRight: "5%"}} onPress={props.onPress}/>
       </View>
     </>
   );

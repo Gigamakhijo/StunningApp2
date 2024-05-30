@@ -7,9 +7,15 @@ import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { Drawer } from "react-native-drawer-layout";
+import Menu from "@/components/Menu";
+import { useAuth0 } from "react-native-auth0";
+import MainHeader from "@/components/MainHeader";
 
 export default function CommentScreen() {
   const [date, setDate] = useState(new Date(Date.now()));
+  const [open, setOpen] = useState(false);
 
   function formatDate(d: Date) {
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
@@ -22,11 +28,21 @@ export default function CommentScreen() {
 
   return (
     <>
-      <SafeAreaView
-        style={styles.container}
-        edges={{ bottom: "off", top: "additive" }}
-      >
-        <SmallButton onPress={trainereButtonPress} text="Trainer" />
+        <SafeAreaView style={styles.container} edges={{bottom: "off", top:"additive"}}>
+        <Drawer
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={() => setOpen(false)}
+        renderDrawerContent={() => {
+          return (
+            <Menu />
+        );
+        }}
+        drawerPosition="right"
+        drawerType="front"
+        drawerStyle={{width: 300}}
+        >
+        <MainHeader onPress={()=>setOpen(true)}/>
         <ScrollView>
           <CalenderView
             onDayPress={(dateData) => {
@@ -50,6 +66,7 @@ export default function CommentScreen() {
             <SectionButton onPress={() => {}} text="Challenge +" />
           </View>
         </ScrollView>
+        </Drawer>
       </SafeAreaView>
     </>
   );
@@ -59,6 +76,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F7F8FC",
+  },  
+  header:{
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   content: {
     marginTop: "5%",

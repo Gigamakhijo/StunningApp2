@@ -1,8 +1,12 @@
-import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
-import { useEffect, useState } from "react";
-import { useAuth0 } from "react-native-auth0";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+} from "react-native";
+import { useState, useEffect } from "react";
 import SectionButton from "@/components/SectionButton";
-import SmallButton from "@/components/SmallButton";
 import SwitchView from "@/components/SwitchView";
 import colors from "@/constants/Colors";
 import spacing from "@/constants/spacing";
@@ -11,6 +15,9 @@ import { SwipeListView } from "react-native-swipe-list-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { DateData } from "react-native-calendars";
+import { Drawer } from "react-native-drawer-layout";
+import Menu from "@/components/Menu";
+import MainHeader from "@/components/MainHeader";
 
 interface DataItem {
   id: string;
@@ -20,11 +27,15 @@ interface DataItem {
 }
 
 export default function MainScreen() {
+
+  
   /* hacky way to convert to string */
   const modifyicon = require("@/assets/images/editicon.png");
   const deleteicon = require("@/assets/images/trashicon.png");
   const circle = require("@/assets/images/whitecircle.png");
   const [date, setDate] = useState(new Date(Date.now()));
+  const [open, setOpen] = useState(false);
+
   const [data, setData] = useState<DataItem[]>([
     { id: "1", title: "Item 1", contents: "content1", completed: false },
     { id: "2", title: "Item 2", contents: "content2", completed: false },
@@ -75,13 +86,27 @@ export default function MainScreen() {
       style={styles.container}
       edges={{ bottom: "off", top: "additive" }}
     >
+      <Drawer
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={() => setOpen(false)}
+        renderDrawerContent={() => {
+          return (
+            <Menu/>
+        );
+        }}
+        drawerPosition="right"
+        drawerType="front"
+        drawerStyle={{width: 300}}
+      >
       <View style={styles.entry}>
-        <SmallButton onPress={trainerButtonPress} text="Trainer" />
+        <MainHeader onPress={()=>setOpen(true)} />
         <CalendarView
           onDayPress={(dateData) => {
             const selectedDate = new Date(Date.parse(dateData.dateString));
             setDate(selectedDate);
           }}
+
         />
         <View style={styles.content}>
           <Text style={styles.selectday}>{formatDate(date)}</Text>
@@ -98,7 +123,8 @@ export default function MainScreen() {
             </View>
           </View>
         </View>
-      </View>
+        </View>
+      </Drawer>
     </SafeAreaView>
   );
 }

@@ -31,6 +31,7 @@ export default function Layout() {
   }
 
   return (
+    
     <Tabs
       screenOptions={{ headerShown: false, tabBarActiveTintColor: "#408DFE" }}
     >
