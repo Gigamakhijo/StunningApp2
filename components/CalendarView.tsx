@@ -47,12 +47,12 @@ LocaleConfig.locales.en = {
   // numbers: ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'] // number localization example
 };
 LocaleConfig.defaultLocale = "en";
-export interface CalendarViewProps{
-  onDayPress: (date:DateData) => void;
+export interface CalendarViewProps {
+  onDayPress: (date: DateData) => void;
 }
-export default function CalenderView(props:CalendarViewProps) {
-  const [selected,setSelected] = useState("");
-  
+export default function CalenderView(props: CalendarViewProps) {
+  const [selected, setSelected] = useState("");
+
   return (
     <Calendar
       style={styles.calendar}
@@ -72,9 +72,9 @@ export default function CalenderView(props:CalendarViewProps) {
         textDisabledColor: colors.gray.background, // 다른달 일 나오는 부분 색깔
         dotColor: "#deabb2",
       }}
-      onDayPress={(day)=>{
-        setSelected(day.dateString)
-        props.onDayPress(day)
+      onDayPress={(day) => {
+        setSelected(day.dateString);
+        props.onDayPress(day);
       }}
       markedDates={{
         [selected]: { selected: true, disableTouchEvent: true },

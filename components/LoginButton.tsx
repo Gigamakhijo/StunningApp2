@@ -6,7 +6,7 @@ export default function LoginButton(props: any) {
     <View style={styles.container}>
       <Pressable style={styles.button} onPress={props.onPress}>
         <Text style={styles.text}>로그인 / 회원가입</Text>
-       </Pressable>
+      </Pressable>
     </View>
   );
 }

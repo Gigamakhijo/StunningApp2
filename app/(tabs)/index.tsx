@@ -1,10 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "react-native-auth0";
 import SectionButton from "@/components/SectionButton";
@@ -30,7 +24,7 @@ export default function MainScreen() {
   const modifyicon = require("@/assets/images/editicon.png");
   const deleteicon = require("@/assets/images/trashicon.png");
   const circle = require("@/assets/images/whitecircle.png");
-  const [date,setDate] = useState(new Date(Date.now()));
+  const [date, setDate] = useState(new Date(Date.now()));
   const [data, setData] = useState<DataItem[]>([
     { id: "1", title: "Item 1", contents: "content1", completed: false },
     { id: "2", title: "Item 2", contents: "content2", completed: false },
@@ -38,14 +32,13 @@ export default function MainScreen() {
     // Add more items as needed
   ]);
 
-
   const trainerButtonPress = () => {
     router.replace('/(screens)/chat')
-  }
+  };
 
   const todoButtonPress = () => {
-    router.replace('/(screens)/todo')
-  }
+    router.replace("/(screens)/todo");
+  };
 
   function formatDate(d: Date) {
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
@@ -55,17 +48,10 @@ export default function MainScreen() {
   const renderItem = ({ item }: { item: DataItem }) => (
     <View style={styles.row}>
       <View style={styles.rowcontent}>
-        <Text
-          style={styles.itemTitle}
-        >
-          {item.title}
-        </Text>
+        <Text style={styles.itemTitle}>{item.title}</Text>
         <View style={styles.interval}>
           <Image source={circle} style={styles.itemContentCircle} />
-          <Text
-            style={styles.itemContent}>
-            {item.contents}
-          </Text>
+          <Text style={styles.itemContent}>{item.contents}</Text>
         </View>
       </View>
       <SwitchView />
@@ -93,8 +79,8 @@ export default function MainScreen() {
         <SmallButton onPress={trainerButtonPress} text="Trainer" />
         <CalendarView
           onDayPress={(dateData) => {
-            const selectedDate = new Date(Date.parse(dateData.dateString))
-            setDate(selectedDate)
+            const selectedDate = new Date(Date.parse(dateData.dateString));
+            setDate(selectedDate);
           }}
         />
         <View style={styles.content}>
@@ -112,7 +98,7 @@ export default function MainScreen() {
             </View>
           </View>
         </View>
-        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -189,23 +175,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingLeft: spacing.m,
     paddingRight: spacing.m,
-  },  
-  itemTitle:{
+  },
+  itemTitle: {
     color: colors.white.background,
     fontSize: 18,
     fontWeight: "normal",
   },
-  itemContentCircle:{
-    height: 8, 
-    width: 8
+  itemContentCircle: {
+    height: 8,
+    width: 8,
   },
-  itemContent:{
+  itemContent: {
     color: colors.white.background,
     fontSize: 15,
-    fontWeight: "normal"
+    fontWeight: "normal",
   },
-  iconStyle:{
-    height: 20, 
-    width: 20
-  }
+  iconStyle: {
+    height: 20,
+    width: 20,
+  },
 });

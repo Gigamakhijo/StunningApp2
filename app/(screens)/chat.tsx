@@ -2,13 +2,13 @@ import { StyleSheet, Text, View,Image ,TextInput, Alert, Platform, KeyboardAvoid
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useRouter } from "expo-router";
 import { useState, useCallback, useEffect } from "react";
-import {Bubble, GiftedChat, GiftedChatProps, IMessage, InputToolbar} from 'react-native-gifted-chat';
+import {Bubble, GiftedChat, IMessage, InputToolbar} from 'react-native-gifted-chat';
 import colors from "@/constants/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Chatheader from "@/components/Chatheader";
 export default function ChatScreen() {
-  const [messages, setMessages] =useState<IMessage[]>([]);
+  const [messages, setMessages] = useState<IMessage[]>([]);
   const [inputText, setInputText] = useState("");
   const [showCancelButtons, setShowCancelButtons] = useState(false);
   const sendbutton = require("@/assets/images/sendbutton.png");
@@ -25,7 +25,7 @@ export default function ChatScreen() {
         createdAt: new Date(),
         user: {
           _id: 2,
-          name: 'React Native',
+          name: "React Native",
         },
       },
     ]);
@@ -63,7 +63,7 @@ export default function ChatScreen() {
       Alert.alert('Message Error', e.message);
   }
   }, []);
-  
+
   const onCancelButtonPress = () => {
     console.log("Cancel button pressed");
     setShowCancelButtons(false);
@@ -119,8 +119,8 @@ export default function ChatScreen() {
     );
   };
 
-  const renderBubble = (props:any) => {
-    return(
+  const renderBubble = (props: any) => {
+    return (
       <Bubble
         {...props}
         wrapperStyle={{
@@ -132,7 +132,7 @@ export default function ChatScreen() {
           right:styles.rigthBubbleText
         }}
       />
-    )
+    );
   };
 
   return (
@@ -174,7 +174,6 @@ export default function ChatScreen() {
             </GestureHandlerRootView>
         </KeyboardAvoidingView>
       </SafeAreaView>
-     
     </>
   );
 }
@@ -223,7 +222,7 @@ const styles = StyleSheet.create({
     width: 145,
     height: 33,
   },
-  checkbutton:{
+  checkbutton: {
     backgroundColor: "#98CEFF",
     borderRadius: 20,
     paddingVertical: 8,
@@ -236,7 +235,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
-    alignSelf:"center",
+    alignSelf: "center",
   },
   ButtonsContainer: {
     flexDirection: "row",

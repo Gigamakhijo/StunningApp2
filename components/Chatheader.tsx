@@ -1,12 +1,11 @@
-import { StyleSheet, Text, View,Pressable, } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import colors from "@/constants/Colors";
 import { router } from "expo-router";
 
-export default function Chatheader(props: {onPress: any}) {
-
+export default function Chatheader(props: { onPress: any }) {
   const goback = () => {
     router.back;
-  }
+  };
   return (
     <>
       <View style={styles.header}>
