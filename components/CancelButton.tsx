@@ -3,8 +3,7 @@ import { StyleSheet } from "react-native";
 
 import { router } from "expo-router";
 
-export default function CancelButton(props: {onPress: any}) {
-
+export default function CancelButton(props: { onPress: any }) {
   return (
     <View style={styles.container}>
       <Pressable onPress={props.onPress} style={styles.button}>
