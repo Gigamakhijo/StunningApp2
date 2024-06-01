@@ -69,21 +69,19 @@ export default function ScheduleScreen() {
     <SafeAreaView
       style={styles.container}
       edges={{ bottom: "off", top: "additive" }}
-    > 
-    <Drawer
-    open={open}
-    onOpen={() => setOpen(true)}
-    onClose={() => setOpen(false)}
-    renderDrawerContent={() => {
-      return (
-        <Menu/>
-    );
-    }}
-    drawerPosition="right"
-    drawerType="front"
-    drawerStyle={{width: 300}}
     >
-       <MainHeader onPress={()=>setOpen(true)} />
+      <Drawer
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={() => setOpen(false)}
+        renderDrawerContent={() => {
+          return <Menu />;
+        }}
+        drawerPosition="right"
+        drawerType="front"
+        drawerStyle={{ width: 300 }}
+      >
+        <MainHeader onPress={() => setOpen(true)} />
         <CalendarView
           onDayPress={(dateData) => {
             const selectedDate = new Date(Date.parse(dateData.dateString));
@@ -105,7 +103,7 @@ export default function ScheduleScreen() {
             />
           </View>
         </View>
-        </Drawer>
+      </Drawer>
     </SafeAreaView>
   );
 }
