@@ -17,7 +17,7 @@ import spacing from "@/constants/spacing";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import SwitchView from "@/components/SwitchView";
-import ProgressCircle from "react-native-progress-circle";
+// import ProgressCircle from "react-native-progress-circle";
 export default function CommentScreen() {
   const diary = require("@/assets/images/diary.png");
   const exercise = require("@/assets/images/exercise.png");
@@ -68,7 +68,7 @@ export default function CommentScreen() {
             <View style={styles.challenge}>
               {/* 1 */}
               <View style={styles.row}>
-                <ProgressCircle
+                {/* <ProgressCircle
                   percent={70}
                   radius={25}
                   borderWidth={10}
@@ -77,14 +77,14 @@ export default function CommentScreen() {
                   bgColor="#408DFE" // 원안쪽컬러
                 >
                   <Text style={styles.circletext}>70%</Text>
-                </ProgressCircle>
+                </ProgressCircle> */}
                 <Text style={styles.textstyle}> 물 1리터 마시기</Text>
                 <Image source={water} style={styles.icon} />
                 <SwitchView />
               </View>
               {/* 2 */}
               <View style={styles.row}>
-                <ProgressCircle
+                {/* <ProgressCircle
                   percent={50}
                   radius={25}
                   borderWidth={10}
@@ -93,14 +93,14 @@ export default function CommentScreen() {
                   bgColor="#408DFE" // 원안쪽컬러
                 >
                   <Text style={styles.circletext}>50%</Text>
-                </ProgressCircle>
+                </ProgressCircle> */}
                 <Text style={styles.textstyle}> 아침 명상 5분</Text>
                 <Image source={meditation} style={styles.icon} />
                 <SwitchView />
               </View>
               {/* 3 */}
               <View style={styles.row}>
-                <ProgressCircle
+                {/* <ProgressCircle
                   percent={100}
                   radius={25}
                   borderWidth={10}
@@ -109,14 +109,14 @@ export default function CommentScreen() {
                   bgColor="#408DFE" // 원안쪽컬러
                 >
                   <Text style={styles.circletext}>100%</Text>
-                </ProgressCircle>
+                </ProgressCircle> */}
                 <Text style={styles.textstyle}> 뉴스레터 보기 </Text>
                 <Image source={news} style={styles.icon} />
                 <SwitchView />
               </View>
               {/* 4 */}
               <View style={styles.row2}>
-                <ProgressCircle
+                {/* <ProgressCircle
                   percent={30}
                   radius={25}
                   borderWidth={10}
@@ -125,14 +125,14 @@ export default function CommentScreen() {
                   bgColor="#408DFE" // 원안쪽컬러
                 >
                   <Text style={styles.circletext}>30%</Text>
-                </ProgressCircle>
+                </ProgressCircle> */}
                 <Text style={styles.textstyle}>일기쓰기</Text>
                 <Image source={diary} style={styles.icon} />
                 <SwitchView />
               </View>
               {/* 5 */}
               <View style={styles.row2}>
-                <ProgressCircle
+                {/* <ProgressCircle
                   percent={50}
                   radius={25}
                   borderWidth={10}
@@ -141,7 +141,7 @@ export default function CommentScreen() {
                   bgColor="#408DFE" // 원안쪽컬러
                 >
                   <Text style={styles.circletext}>50%</Text>
-                </ProgressCircle>
+                </ProgressCircle> */}
                 <Text style={styles.textstyle}>운동하기</Text>
                 <Image source={exercise} style={styles.icon} />
                 <SwitchView />
