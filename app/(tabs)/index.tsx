@@ -1,10 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { useState, useEffect } from "react";
 import SectionButton from "@/components/SectionButton";
 import SwitchView from "@/components/SwitchView";
@@ -27,8 +21,6 @@ interface DataItem {
 }
 
 export default function MainScreen() {
-
-  
   /* hacky way to convert to string */
   const modifyicon = require("@/assets/images/editicon.png");
   const deleteicon = require("@/assets/images/trashicon.png");
@@ -44,7 +36,7 @@ export default function MainScreen() {
   ]);
 
   const trainerButtonPress = () => {
-    router.replace('/(screens)/chat')
+    router.replace("/(screens)/chat");
   };
 
   const todoButtonPress = () => {
@@ -91,38 +83,35 @@ export default function MainScreen() {
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
         renderDrawerContent={() => {
-          return (
-            <Menu/>
-        );
+          return <Menu />;
         }}
         drawerPosition="right"
         drawerType="front"
-        drawerStyle={{width: 300}}
+        drawerStyle={{ width: 300 }}
       >
-      <View style={styles.entry}>
-        <MainHeader onPress={()=>setOpen(true)} />
-        <CalendarView
-          onDayPress={(dateData) => {
-            const selectedDate = new Date(Date.parse(dateData.dateString));
-            setDate(selectedDate);
-          }}
-
-        />
-        <View style={styles.content}>
-          <Text style={styles.selectday}>{formatDate(date)}</Text>
-          <View>
-            <SectionButton onPress={todoButtonPress} text="Todolist +" />
-            <View style={styles.todolist}>
-              <SwipeListView
-                data={data}
-                renderItem={renderItem}
-                renderHiddenItem={renderHiddenItem}
-                leftOpenValue={50}
-                rightOpenValue={-50}
-              />
+        <View style={styles.entry}>
+          <MainHeader onPress={() => setOpen(true)} />
+          <CalendarView
+            onDayPress={(dateData) => {
+              const selectedDate = new Date(Date.parse(dateData.dateString));
+              setDate(selectedDate);
+            }}
+          />
+          <View style={styles.content}>
+            <Text style={styles.selectday}>{formatDate(date)}</Text>
+            <View>
+              <SectionButton onPress={todoButtonPress} text="Todolist +" />
+              <View style={styles.todolist}>
+                <SwipeListView
+                  data={data}
+                  renderItem={renderItem}
+                  renderHiddenItem={renderHiddenItem}
+                  leftOpenValue={50}
+                  rightOpenValue={-50}
+                />
+              </View>
             </View>
           </View>
-        </View>
         </View>
       </Drawer>
     </SafeAreaView>

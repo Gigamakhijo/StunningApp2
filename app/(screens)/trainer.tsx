@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { TextInput, StyleSheet, Text, View, KeyboardAvoidingView, Platform} from "react-native";
+import {
+  TextInput,
+  StyleSheet,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CancelButton from "@/components/CancelButton";
 import ConfirmButton from "@/components/ConfirmButton";
@@ -9,19 +16,19 @@ export default function TrainerScreen() {
   const [inputText, setInputText] = useState("");
   const check = () => {
     router.replace("/(tabs)/");
-  }
+  };
   const cancel = () => {
-    router.replace("/(tabs)/")
-  }
+    router.replace("/(tabs)/");
+  };
   return (
     <SafeAreaView
       style={styles.container}
       edges={{ bottom: "off", top: "additive" }}
-    >    
-      <KeyboardAvoidingView style={styles.keyboardAvoid}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <KeyboardAvoidingView
+        style={styles.keyboardAvoid}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-
         <Text style={styles.logotext}>Stunning</Text>
         <View style={styles.center}>
           <Text style={styles.explaintext}>당신을 도와줄</Text>
@@ -40,23 +47,21 @@ export default function TrainerScreen() {
           </View>
         </View>
         <View style={styles.button}>
-          <CancelButton onPress={cancel}/>
+          <CancelButton onPress={cancel} />
           <ConfirmButton onPress={check} />
         </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>          
-
-
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: "#F7F8FC",
     // justifyContent: "center",
     alignItems: "center",
   },
-  keyboardAvoid:{
+  keyboardAvoid: {
     flex: 1,
   },
   logotext: {
@@ -67,7 +72,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   center: {
-    flex:2,
+    flex: 2,
     alignItems: "center",
     justifyContent: "center",
   },
