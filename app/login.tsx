@@ -15,6 +15,7 @@ export default function LoginScreen() {
     const credentials = await authorize();
     if(credentials){
       authStore.setAccessToken(credentials?.accessToken)
+      authStore.setIdToken(credentials.idToken)
     // doesn't run if authentication fails
     router.replace("/(tabs)");
     }
