@@ -21,6 +21,11 @@ class AuthStore{
     setIdToken(token: string | null){
         this.idToken = token;
         console.log(this.idToken);
+        
+        if(this.idToken){
+            const decodeidToken = jwtDecode(this.idToken)
+            console.log(decodeidToken)
+        }
     }
 }
 
