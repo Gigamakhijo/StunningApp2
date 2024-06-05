@@ -1,29 +1,39 @@
 import { StyleSheet } from "react-native";
 import { router } from "expo-router";
-import CryptoJS from "crypto-js";
 import LoginButton from "@/components/LoginButton";
 import Logo from "@/components/Logo";
-import { generateVerifier, generatePKCE, getCode, getToken } from "./service/api/auth";
 import { useAuth0 } from "react-native-auth0";
 import { SafeAreaView } from "react-native-safe-area-context";
-import base64 from 'base-64';
+import { generateVerifier, generateChallenge, authenticate, getAuthURL } from "./service/api/auth";
+import * as AuthSession from 'expo-auth-session';
+
+const auth0ClientId = "l6zVUuSOjmexJPFTsg38FbcH5ov1slxl";
+const domain = "https://dev-w0c3tnyi46mfgb5q.us.auth0.com"
+const redirectUri = "com.stunning.auth0://dev-w0c3tnyi46mfgb5q.us.auth0.com/ios/com.stunning/callback"
+const authorizationEndpoint = `${domain}/authorize`;
+const tokenEndpoint = `${domain}/oauth/token`;
+
+// WebBrowser.maybeCompleteAuthSession();
 export default function LoginScreen() {
   const { authorize, user } = useAuth0();
+  // const [request, response, promptAsync] = useAuthRequest({ clientId, scopes, redirectUri, }, discovery);
+  const [request, result, promptAsync] = AuthSession.useAuthRequest(
+    {     
+      responseType: "code",   
+      clientId: auth0ClientId,
+      redirectUri,
+      scopes: [],      
+    },
+    { authorizationEndpoint }
+);
 
-  
   const onLogin = async () => {
-    const credentials = await authorize();
-    if(credentials){
-      const verifier = await generateVerifier();
-      const challenge = await generatePKCE(verifier);
-
-      const result = await getCode(challenge);
-      const token = await getToken(result.code, verifier, challenge);
-      const access_token = base64.decode(token.access_token)
-      console.log(access_token)
-      router.replace('/(tabs)/')
-    }
-    // doesn't run if authentication fails
+    const authUrl = await getAuthURL;
+    console.log(authUrl)
+    // const credentials = await authorize();
+    // if(credentials){
+    //   router.replace('/(tabs)/')
+    // }
   };
 
 
