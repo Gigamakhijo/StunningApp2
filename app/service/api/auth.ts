@@ -21,7 +21,7 @@ function base64URLEncode(str: string): string {
 }
 
 export async function generateVerifier() {
-  const randomBytes = Crypto.getRandomBytes(32);
+  const randomBytes = await Crypto.getRandomBytesAsync(32);
   const verifier = btoa(String.fromCharCode.apply(null, Array.from(randomBytes)));
   return base64URLEncode(verifier);
 }
@@ -71,6 +71,20 @@ export async function authenticate(){
       `audience=com.stunning.todos&` +
       `state=`;
 
-  const result = api.get(authUrl);
-  console.log(result)
+  const request =new AuthSession.AuthRequest({
+    clientId: auth0ClientId,
+    redirectUri: redirectUri,
+    responseType: AuthSession.ResponseType.Code,
+    scopes: ['openid', 'profile', 'email'],
+    extraParams: {
+      code_challenge: challenge,
+      code_challenge_method: 'S256',}
+    }
+    );
+
+  // const reault = await request.promptAsync()
+  // console.log(result)
 }
+
+// GET Request on /authorize
+// POST Reqeust on /oauth/token
