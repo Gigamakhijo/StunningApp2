@@ -1,4 +1,4 @@
-import { StyleSheet, Alert } from "react-native";
+import { StyleSheet, Alert, Linking } from "react-native";
 import { router } from "expo-router";
 import LoginButton from "@/components/LoginButton";
 import Logo from "@/components/Logo";
@@ -6,12 +6,12 @@ import { useAuth0 } from "react-native-auth0";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { generateVerifier, generateChallenge, authenticate, getAuthURL } from "./service/api/auth";
 import * as AuthSession from 'expo-auth-session';
+import WebView from "react-native-webview";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import * as qs from 'qs'; // URL 인코딩을 위한 라이브러리
 import { v4 as uuidv4 } from 'uuid';
 import * as ExpoCrypto from 'expo-crypto';
-import { red } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 const auth0ClientId = "l6zVUuSOjmexJPFTsg38FbcH5ov1slxl";
 const domain = "dev-w0c3tnyi46mfgb5q.us.auth0.com"
 const redirectUri = "com.stunning.auth0://dev-w0c3tnyi46mfgb5q.us.auth0.com/ios/com.stunning/callback"
@@ -35,12 +35,22 @@ const generateState = async () => {
 // generateState 함수를 호출하여 state 값을 생성합니다.
 const state = generateState();
 
-const useDiscovery = (domain: string) => {
+const useDiscovery = () => {
   const [discovery, setDiscovery] = useState<AuthSession.DiscoveryDocument | null>(null);
 
   useEffect(() => {
     const fetchDiscovery = async () => {
-      const response = await fetch(`https://${domain}/authorize`);
+      const code_challenge = await generateChallenge
+      const stateValue = generateState()
+      const response = await fetch(`https://dev-w0c3tnyi46mfgb5q.us.auth0.com/authorize?` +
+      `response_type=code&` +
+      `code_challenge=${code_challenge}&` +
+      `code_challenge_method=S256&` +
+      `client_id=${auth0ClientId}&` +
+      `redirect_uri=${redirectUri}&` +
+      `scope=[read:todos]&` +
+      `audience=com.stunning.todos&` +
+      `state=${stateValue}`);
       const discoveryDocument = await response.json();
       setDiscovery(discoveryDocument);
     };
@@ -48,27 +58,17 @@ const useDiscovery = (domain: string) => {
     fetchDiscovery();
   }, [domain]);
 
-  return discovery;
+  return discovery
 };
 
 
 
 // WebBrowser.maybeCompleteAuthSession();
 export default function LoginScreen() {
-  const discovery = useDiscovery(`https://${domain}`);
   const [loading, setLoading] = useState(false);
+  const discovery = useDiscovery();
 
-  
-  const loginWithAuth0 = async () => {
-    // if (!discovery) {
-    //   console.error('Discovery document not loaded');
-    //   return;
-    // }
-
-    setLoading(true);
-
-    try {
-      function generateRandomString(length: number): string {
+  function generateRandomString(length: number): string {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let result = '';
         for (let i = 0; i < length; i++) {
@@ -78,10 +78,23 @@ export default function LoginScreen() {
       }
       
       // "xyzABC123"과 같은 랜덤한 문자열 생성
+      
+      
+  const loginWithAuth0 = async () => {
       const stateValue = generateRandomString(8);
       console.log('Generated state value:', stateValue);
       const codeVerifier = await generateVerifier();
       const codeChallenge = await generateChallenge(codeVerifier);
+      // if (!discovery) {
+      //   console.error('Discovery document not loaded');
+      //   return;
+      // }
+
+    setLoading(true);
+
+    try {
+      
+
       console.log("1")
       const authorizationRequestConfig = {
         response_type: 'code',
@@ -95,40 +108,57 @@ export default function LoginScreen() {
       };
       const request = new AuthSession.AuthRequest(authorizationRequestConfig);
       console.log("2")
-      const result = await request.promptAsync({authorizationEndpoint: '/authorize?'+
+      const result = await fetch(`https://dev-w0c3tnyi46mfgb5q.us.auth0.com/authorize?` +
       `response_type=code&` +
       `code_challenge=${codeChallenge}&` +
-      `code_challenge_method=${AuthSession.CodeChallengeMethod.S256}6&` +
+      `code_challenge_method=S256&` +
       `client_id=${auth0ClientId}&` +
       `redirect_uri=${redirectUri}&` +
-      `scope=profile&` +
+      `scope=[read:todos]&` +
       `audience=com.stunning.todos&` +
-      `state=${stateValue}`});
+      `state=${stateValue}`);
+      // const result = await request.promptAsync(discovery)
+      const authUrl = `https://${domain}/authorize?` +
+      `response_type=code&` +
+      `code_challenge=${codeChallenge}&` +
+      `code_challenge_method=S256&` +
+      `client_id=${auth0ClientId}&` +
+      `redirect_uri=${redirectUri}&` +
+      `scope=openid profile email&` +
+      `audience=com.stunning.todos&` +
+      `state=${stateValue}`;
       console.log("3")
-      if (result.type === 'success') {
-        const authCode = result.params.code;
-        console.log('Auth Code:', authCode);
-        Alert.alert('Success', `Auth Code: ${authCode}`);
-
-        // 토큰을 교환하기 위해 Auth0 토큰 엔드포인트에 요청
-        const tokenResponse = await axios.post(`https://${domain}/oauth/token`, qs.stringify({
-          grant_type: 'authorization_code',
-          client_id: auth0ClientId,
-          code_verifier: codeVerifier,
-          code: authCode,
-          redirect_uri: redirectUri,
-        }),
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        });
-
-        console.log('Token Response:', tokenResponse.data);
-      } else {
-        console.error('Authentication error:', result);
-        Alert.alert('Error', 'Authentication failed');
+      console.log(result.status)
+      if(result.status === 200){
+        // const results = await AuthSession.startAsync(authUrl)
+        console.log("4")
+        
       }
+      // const results = await AuthSession.
+      // if (result.type === 'success') {
+      //   const authCode = result.params.code;
+      //   console.log('Auth Code:', authCode);
+      //   Alert.alert('Success', `Auth Code: ${authCode}`);
+
+      //   // 토큰을 교환하기 위해 Auth0 토큰 엔드포인트에 요청
+      //   const tokenResponse = await axios.post(`https://${domain}/oauth/token`, qs.stringify({
+      //     grant_type: 'authorization_code',
+      //     client_id: auth0ClientId,
+      //     code_verifier: codeVerifier,
+      //     code: authCode,
+      //     redirect_uri: redirectUri,
+      //   }),
+      //   {
+      //     headers: {
+      //       'Content-Type': 'application/x-www-form-urlencoded',
+      //     },
+      //   });
+
+      //   console.log('Token Response:', tokenResponse.data);
+      // } else {
+      //   console.error('Authentication error:', result);
+      //   Alert.alert('Error', 'Authentication failed');
+      // }
     } catch (error: any) {
       console.error('Error in login:', error);
       Alert.alert('Error', `Login failed: ${error.message}`);

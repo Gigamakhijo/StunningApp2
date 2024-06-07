@@ -26,7 +26,7 @@ export async function generateVerifier() {
   return base64URLEncode(verifier);
 }
 
-async function sha256(buffer: string): Promise<string> {
+async function sha256(buffer: string){
   const hash = await Crypto.digestStringAsync(
       Crypto.CryptoDigestAlgorithm.SHA256,
       buffer,
@@ -35,7 +35,7 @@ async function sha256(buffer: string): Promise<string> {
   return hash;
 }
 
-export async function generateChallenge(verifier: string): Promise<string> {
+export async function generateChallenge(verifier: string) {
   const hash = await sha256(verifier);
   return base64URLEncode(hash);
 }
