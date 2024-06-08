@@ -10,6 +10,7 @@ export default function Menu(props: any) {
     try {
       await clearSession();
       await clearCredentials();
+      router.replace('/login')
     } catch (e) {
       console.log("Log out cancelled");
     }

@@ -1,4 +1,4 @@
-import { Redirect, Stack, Tabs } from "expo-router";
+import { Redirect, Stack, Tabs, router } from "expo-router";
 import { Text, View } from "react-native";
 import { useAuth0 } from "react-native-auth0";
 import { Ionicons } from "@expo/vector-icons";
@@ -6,12 +6,13 @@ import { Ionicons } from "@expo/vector-icons";
 export default function Layout() {
   const { clearSession, clearCredentials, user, isLoading } = useAuth0();
 
-  const loggedIn = user !== undefined && user !== null;
+  // const loggedIn = user !== undefined && user !== null;
 
   const onLogout = async () => {
     try {
       await clearSession();
       await clearCredentials();
+      router.replace('/login')
     } catch (e) {
       console.log("Log out cancelled");
     }
@@ -25,10 +26,10 @@ export default function Layout() {
     );
   }
 
-  if (!loggedIn) {
-    return <Redirect href="/login" />;
-  } else {
-  }
+  // if (!loggedIn) {
+  //   return <Redirect href="/login" />;
+  // } else {
+  // }
 
   return (
     <Tabs
