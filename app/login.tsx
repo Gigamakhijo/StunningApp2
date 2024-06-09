@@ -1,22 +1,19 @@
-import { StyleSheet, Alert, Linking } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 import { router } from "expo-router";
 import LoginButton from "@/components/LoginButton";
 import Logo from "@/components/Logo";
-// import { useAuth0 } from "react-native-auth0";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { generateVerifier, generateChallenge, authenticate, getAuthURL, extractCodeFromUrl, getToken } from "./service/api/auth";
+import { generateVerifier, generateChallenge, extractCodeFromUrl, getToken } from "./service/api/auth";
 import * as AuthSession from 'expo-auth-session';
-import { useState, useEffect, useCallback } from 'react'
-import { v4 as uuidv4 } from 'uuid';
-import * as ExpoCrypto from 'expo-crypto';
+import { useState } from 'react'
 import { useAuth0 } from "react-native-auth0";
-import Auth from "react-native-auth0/lib/typescript/src/auth";
 import { openAuthSessionAsync} from "expo-web-browser";
+import authStore from "./store/authStore";
+import { useSession } from "./service/ctx";
 
 const auth0ClientId = "l6zVUuSOjmexJPFTsg38FbcH5ov1slxl";
 const domain = "dev-w0c3tnyi46mfgb5q.us.auth0.com"
 const redirectUri = AuthSession.makeRedirectUri({native: "com.stunning.auth0://dev-w0c3tnyi46mfgb5q.us.auth0.com/ios/com.stunning/callback"})
-const authorizationEndpoint = `${domain}/authorize`;
 
 function generateRandomString(length: number): string {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -31,12 +28,12 @@ function generateRandomString(length: number): string {
 
 // WebBrowser.maybeCompleteAuthSession();
 export default function LoginScreen() {
+  const { LogIn } = useSession();
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState<string|null>(null);
   const scopeValue = encodeURIComponent("read:todos write:todos openid");
   const { authorize, user } = useAuth0();
-
-      
+  
   const loginWithAuth0 = async () => {
       const stateValue = generateRandomString(8);
       console.log('Generated state value:', stateValue);
@@ -76,6 +73,8 @@ export default function LoginScreen() {
           setCode(authorization_code)
           if(authorization_code){
             const credentials = await getToken(redirectUri, codeVerifier, authorization_code)
+            authStore.setAccessToken(credentials.access_token)
+            authStore.setIdToken(credentials.id_token)
             console.log(credentials)
           }
         }
@@ -102,7 +101,10 @@ export default function LoginScreen() {
       <SafeAreaView style={styles.contianer}>
         <Logo />
 
-        <LoginButton onPress={loginWithAuth0} />
+        <LoginButton onPress={()=>{
+          LogIn(); 
+          router.replace('/(tabs)')}
+        } />
       </SafeAreaView>
     </>
   );

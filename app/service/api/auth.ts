@@ -101,7 +101,6 @@ export const extractCodeFromUrl = (url: string): string | null => {
 };
 
 export const getToken = async (redirect_uri: string, code_verifier: string, code: string) => {
-  const tokenUrl = 'https://dev-w0c3tnyi46mfgb5q.us.auth0.com/oauth/token'
   try {
     const response: ApiResponse<any> = await api.post(
       '/oauth/token',
