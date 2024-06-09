@@ -1,5 +1,10 @@
 import { makeAutoObservable } from "mobx";
 import { api } from "../service/api/api";
+import authStore from "./authStore";
+
+const token = authStore.accessToken
+const user_id = authStore.sub
+
 export interface Todo {
     id: number;
     date: Date;

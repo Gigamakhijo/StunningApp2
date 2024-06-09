@@ -8,7 +8,6 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import { isNewBackTitleImplementation } from "react-native-screens";
 import { todo } from "node:test";
 
-const token = authStore.accessToken
 export const DEFAULT_API_CONFIG: ApiConfig = {
     url: configProd.API_URL,
     timeout: 10000,
