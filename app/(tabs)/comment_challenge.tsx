@@ -19,6 +19,7 @@ import { router } from "expo-router";
 import SwitchView from "@/components/SwitchView";
 import { Drawer } from "react-native-drawer-layout";
 import Menu from "@/components/Menu";
+import MainHeader from "@/components/MainHeader";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 export default function CommentScreen() {
   const diary = require("@/assets/images/diary.png");
@@ -59,11 +60,11 @@ export default function CommentScreen() {
           drawerType="front"
           drawerStyle={{ width: 300 }}
         >
+          <MainHeader onPress={() => setOpen(true)} />
           <KeyboardAvoidingView
             style={styles.keyboardAvoid}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
-            <SmallButton onPress={trainereButtonPress} text="Trainer" />
             <ScrollView>
               <CalenderView
                 onDayPress={(dateData) => {
@@ -84,7 +85,7 @@ export default function CommentScreen() {
                   placeholderTextColor={colors.gray.background}
                 />
               </View>
-              <SectionButton onPress={() => {}} text="Challenge" />
+              <SectionButton onPress={null} text="Challenge" />
               <View style={styles.challenge}>
                 {/* 1 */}
                 <View style={styles.row}>
@@ -103,7 +104,6 @@ export default function CommentScreen() {
                   <Image source={water} style={styles.icon} />
                   <SwitchView />
                 </View>
-                {/* 2 */}
                 <View style={styles.row}>
                   <AnimatedCircularProgress
                     size={47}
@@ -120,7 +120,6 @@ export default function CommentScreen() {
                   <Image source={meditation} style={styles.icon} />
                   <SwitchView />
                 </View>
-                {/* 3 */}
                 <View style={styles.row}>
                   <AnimatedCircularProgress
                     size={47}
@@ -137,7 +136,6 @@ export default function CommentScreen() {
                   <Image source={news} style={styles.icon} />
                   <SwitchView />
                 </View>
-                {/* 4 */}
                 <View style={styles.row2}>
                   <AnimatedCircularProgress
                     size={47}
@@ -154,7 +152,6 @@ export default function CommentScreen() {
                   <Image source={diary} style={styles.icon} />
                   <SwitchView />
                 </View>
-                {/* 5 */}
                 <View style={styles.row2}>
                   <AnimatedCircularProgress
                     size={47}
@@ -203,9 +200,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   circletext: {
-    fontSize: 11,
-    fontWeight: "bold",
+    fontSize: 8,
+    fontWeight: "800",
     color: "white",
+    marginLeft: "8%",
   },
   commentbox: {
     height: 135,
