@@ -17,7 +17,10 @@ import spacing from "@/constants/spacing";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import SwitchView from "@/components/SwitchView";
-// import ProgressCircle from "react-native-progress-circle";
+import { Drawer } from "react-native-drawer-layout";
+import Menu from "@/components/Menu";
+import MainHeader from "@/components/MainHeader";
+import { AnimatedCircularProgress } from "react-native-circular-progress";
 export default function CommentScreen() {
   const diary = require("@/assets/images/diary.png");
   const exercise = require("@/assets/images/exercise.png");
@@ -25,7 +28,12 @@ export default function CommentScreen() {
   const water = require("@/assets/images/water.png");
   const news = require("@/assets/images/news.png");
   const [date, setDate] = useState(new Date(Date.now()));
-
+  const [open, setOpen] = useState(false);
+  const [p1, setp1] = useState(70);
+  const [p2, setp2] = useState(30);
+  const [p3, setp3] = useState(50);
+  const [p4, setp4] = useState(90);
+  const [p5, setp5] = useState(100);
   function formatDate(d: Date) {
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
     return dayNames[d.getDay()] + " " + d.getDate();
@@ -41,114 +49,129 @@ export default function CommentScreen() {
         style={styles.container}
         edges={{ bottom: "off", top: "additive" }}
       >
-        <KeyboardAvoidingView
-          style={styles.keyboardAvoid}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        <Drawer
+          open={open}
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
+          renderDrawerContent={() => {
+            return <Menu />;
+          }}
+          drawerPosition="right"
+          drawerType="front"
+          drawerStyle={{ width: 300 }}
         >
-          <SmallButton onPress={trainereButtonPress} text="Trainer" />
-          <ScrollView>
-            <CalenderView
-              onDayPress={(dateData) => {
-                const selectedDate = new Date(Date.parse(dateData.dateString));
-                setDate(selectedDate);
-              }}
-            />
-            <View style={styles.content}>
-              <Text style={styles.selectday}>{formatDate(date)}</Text>
-            </View>
-            <View style={styles.section}>
-              <SectionButton onPress={() => {}} text="Comment +" />
-              <TextInput
-                style={styles.commentbox}
-                placeholder="회고를 남겨 보세요."
-                placeholderTextColor={colors.gray.background}
+          <MainHeader onPress={() => setOpen(true)} />
+          <KeyboardAvoidingView
+            style={styles.keyboardAvoid}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          >
+            <ScrollView>
+              <CalenderView
+                onDayPress={(dateData) => {
+                  const selectedDate = new Date(
+                    Date.parse(dateData.dateString),
+                  );
+                  setDate(selectedDate);
+                }}
               />
-            </View>
-            <SectionButton onPress={() => {}} text="Challenge" />
-            <View style={styles.challenge}>
-              {/* 1 */}
-              <View style={styles.row}>
-                {/* <ProgressCircle
-                  percent={70}
-                  radius={25}
-                  borderWidth={10}
-                  color="#78AFFF99"
-                  shadowColor="white"
-                  bgColor="#408DFE" // 원안쪽컬러
-                >
-                  <Text style={styles.circletext}>70%</Text>
-                </ProgressCircle> */}
-                <Text style={styles.textstyle}> 물 1리터 마시기</Text>
-                <Image source={water} style={styles.icon} />
-                <SwitchView />
+              <View style={styles.content}>
+                <Text style={styles.selectday}>{formatDate(date)}</Text>
               </View>
-              {/* 2 */}
-              <View style={styles.row}>
-                {/* <ProgressCircle
-                  percent={50}
-                  radius={25}
-                  borderWidth={10}
-                  color="#78AFFF99"
-                  shadowColor="white"
-                  bgColor="#408DFE" // 원안쪽컬러
-                >
-                  <Text style={styles.circletext}>50%</Text>
-                </ProgressCircle> */}
-                <Text style={styles.textstyle}> 아침 명상 5분</Text>
-                <Image source={meditation} style={styles.icon} />
-                <SwitchView />
+              <View style={styles.section}>
+                <SectionButton onPress={() => {}} text="Comment +" />
+                <TextInput
+                  style={styles.commentbox}
+                  placeholder="회고를 남겨 보세요."
+                  placeholderTextColor={colors.gray.background}
+                />
               </View>
-              {/* 3 */}
-              <View style={styles.row}>
-                {/* <ProgressCircle
-                  percent={100}
-                  radius={25}
-                  borderWidth={10}
-                  color="#78AFFF99"
-                  shadowColor="white"
-                  bgColor="#408DFE" // 원안쪽컬러
-                >
-                  <Text style={styles.circletext}>100%</Text>
-                </ProgressCircle> */}
-                <Text style={styles.textstyle}> 뉴스레터 보기 </Text>
-                <Image source={news} style={styles.icon} />
-                <SwitchView />
+              <SectionButton onPress={null} text="Challenge" />
+              <View style={styles.challenge}>
+                {/* 1 */}
+                <View style={styles.row}>
+                  <AnimatedCircularProgress
+                    size={47}
+                    width={9}
+                    fill={p1} //진행률
+                    tintColor="#78AFFF99"
+                    backgroundColor="white"
+                  >
+                    {() => (
+                      <Text style={styles.circleText}>{p1.toFixed(0)}%</Text>
+                    )}
+                  </AnimatedCircularProgress>
+                  <Text style={styles.textstyle}> 물 1리터 마시기</Text>
+                  <Image source={water} style={styles.icon} />
+                  <SwitchView />
+                </View>
+                <View style={styles.row}>
+                  <AnimatedCircularProgress
+                    size={47}
+                    width={9}
+                    fill={p2} //진행률
+                    tintColor="#78AFFF99"
+                    backgroundColor="white"
+                  >
+                    {() => (
+                      <Text style={styles.circleText}>{p2.toFixed(0)}%</Text>
+                    )}
+                  </AnimatedCircularProgress>
+                  <Text style={styles.textstyle}> 아침 명상 5분</Text>
+                  <Image source={meditation} style={styles.icon} />
+                  <SwitchView />
+                </View>
+                <View style={styles.row}>
+                  <AnimatedCircularProgress
+                    size={47}
+                    width={9}
+                    fill={p3} //진행률
+                    tintColor="#78AFFF99"
+                    backgroundColor="white"
+                  >
+                    {() => (
+                      <Text style={styles.circleText}>{p3.toFixed(0)}%</Text>
+                    )}
+                  </AnimatedCircularProgress>
+                  <Text style={styles.textstyle}> 뉴스레터 보기 </Text>
+                  <Image source={news} style={styles.icon} />
+                  <SwitchView />
+                </View>
+                <View style={styles.row2}>
+                  <AnimatedCircularProgress
+                    size={47}
+                    width={9}
+                    fill={p4} //진행률
+                    tintColor="#78AFFF99"
+                    backgroundColor="white"
+                  >
+                    {() => (
+                      <Text style={styles.circleText}>{p4.toFixed(0)}%</Text>
+                    )}
+                  </AnimatedCircularProgress>
+                  <Text style={styles.textstyle}>일기쓰기</Text>
+                  <Image source={diary} style={styles.icon} />
+                  <SwitchView />
+                </View>
+                <View style={styles.row2}>
+                  <AnimatedCircularProgress
+                    size={47}
+                    width={9}
+                    fill={p5} //진행률
+                    tintColor="#78AFFF99"
+                    backgroundColor="white"
+                  >
+                    {() => (
+                      <Text style={styles.circleText}>{p5.toFixed(0)}%</Text>
+                    )}
+                  </AnimatedCircularProgress>
+                  <Text style={styles.textstyle}>운동하기</Text>
+                  <Image source={exercise} style={styles.icon} />
+                  <SwitchView />
+                </View>
               </View>
-              {/* 4 */}
-              <View style={styles.row2}>
-                {/* <ProgressCircle
-                  percent={30}
-                  radius={25}
-                  borderWidth={10}
-                  color="#78AFFF99"
-                  shadowColor="white"
-                  bgColor="#408DFE" // 원안쪽컬러
-                >
-                  <Text style={styles.circletext}>30%</Text>
-                </ProgressCircle> */}
-                <Text style={styles.textstyle}>일기쓰기</Text>
-                <Image source={diary} style={styles.icon} />
-                <SwitchView />
-              </View>
-              {/* 5 */}
-              <View style={styles.row2}>
-                {/* <ProgressCircle
-                  percent={50}
-                  radius={25}
-                  borderWidth={10}
-                  color="#78AFFF99"
-                  shadowColor="white"
-                  bgColor="#408DFE" // 원안쪽컬러
-                >
-                  <Text style={styles.circletext}>50%</Text>
-                </ProgressCircle> */}
-                <Text style={styles.textstyle}>운동하기</Text>
-                <Image source={exercise} style={styles.icon} />
-                <SwitchView />
-              </View>
-            </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
+            </ScrollView>
+          </KeyboardAvoidingView>
+        </Drawer>
       </SafeAreaView>
     </>
   );
@@ -177,9 +200,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   circletext: {
-    fontSize: 11,
-    fontWeight: "bold",
+    fontSize: 8,
+    fontWeight: "800",
     color: "white",
+    marginLeft: "8%",
   },
   commentbox: {
     height: 135,
@@ -231,5 +255,10 @@ const styles = StyleSheet.create({
     height: 35,
     width: 35,
     marginLeft: 15,
+  },
+  circleText: {
+    fontSize: 10,
+    fontWeight: "bold",
+    color: "white",
   },
 });
