@@ -1,9 +1,7 @@
 import { View, Text, Pressable, Image } from "react-native";
 import { StyleSheet } from "react-native";
 
-import { Link } from "expo-router";
-
-export default function LoginButton(props: any) {
+export default function LoginButton(props:{onPress: any}) {
   const closeicon = require("@/assets/images/x.png");
   return (
     <View style={styles.container}>
@@ -16,7 +14,7 @@ export default function LoginButton(props: any) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: "5%",
+    // marginTop: "5%",
     marginLeft: "5%",
     marginBottom: "5%",
   },
@@ -25,3 +23,4 @@ const styles = StyleSheet.create({
     height: 30,
   },
 });
+
