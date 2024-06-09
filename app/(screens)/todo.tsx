@@ -1,13 +1,16 @@
 import React, { FC, useState, useEffect } from "react";
-import { TextInput, StyleSheet, Text, ScrollView } from "react-native";
+import { TextInput, StyleSheet, Text, ScrollView,View, Pressable } from "react-native";
 import colors from "@/constants/Colors";
 import Fullline from "@/components/Fullline";
 import { SafeAreaView } from "react-native-safe-area-context";
-import SmallButton from "@/components/SmallButton";
+import CheckButton from "@/components/CheckButton";
+import CloseButton from "@/components/CloseButton";
 import { router } from "expo-router";
+import Datetimepickermodal from "react-native-modal-datetime-picker";
 export default function TodoScreen() {
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState(new Date(Date.now()));
+  const [firstdate, firstsetDate] = useState(new Date(Date.now()));
+  const [seconddate, secondsetDate] = useState(new Date(Date.now()));
   const [content, setContent] = useState("");
 
   const months = [
@@ -26,26 +29,46 @@ export default function TodoScreen() {
   ];
   const days = ["일", "월", "화", "수", "목", "금", "토"];
 
-  const formattedDate = `${date.getFullYear()}년 ${months[date.getMonth()]} ${date.getDate()}일 (${days[date.getDay()]})`;
-
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [secondisDatePickerVisible, secondsetDatePickerVisibility] = useState(false);
   const backButton = () => {
     router.replace("/(tabs)/");
   };
-  useEffect(() => {
-    setDate(date);
-    setTitle(title);
-    setContent(content);
-    return () => {
-      setDate(date);
-      setTitle(title);
-      setContent(content);
-    };
-  });
+ const confirmButton = () => {
+    router.replace("/(tabs)/schedule");
+  };
+  const firstshowDatePicker = () => {
+    setDatePickerVisibility(true);
+};
+
+  const firsthideDatePicker = () => {
+    setDatePickerVisibility(false);
+};
+
+  const firsthandleConfirm = (selectedDate:any) => {
+    firstsetDate(selectedDate);
+    firsthideDatePicker();
+};
+const secondshowDatePicker = () => {
+  secondsetDatePickerVisibility(true);
+};
+
+const secondhideDatePicker = () => {
+  secondsetDatePickerVisibility(false);
+};
+
+const secondhandleConfirm = (selectedDate:any) => {
+  secondsetDate(selectedDate);
+  secondhideDatePicker();
+};
   return (
     <>
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.container}>
-          <SmallButton onPress={backButton} text="Back" />
+          <View style={styles.buttonstyle}>
+            <CloseButton onPress={backButton}  />
+            <CheckButton onPress={confirmButton} />
+          </View>
           <TextInput
             value={title}
             onChangeText={(value: string) => setTitle(value)}
@@ -55,10 +78,27 @@ export default function TodoScreen() {
             placeholderTextColor={colors.main.background}
             maxLength={30}
           />
-          <Text style={styles.datestyle}>
-            {` ${date.getMonth() + 1}월 ${date.getDate()}일 ${days[date.getDay()]}요일`}
-          </Text>
-          {/* ${date.getFullYear()}년 */}
+          <View style={styles.datetext}>
+          <Pressable style={styles.datestyle}onPress={firstshowDatePicker}>
+            <Text style={styles.titletext} >{` ${firstdate.getMonth() + 1}월 ${firstdate.getDate()}일 ${days[firstdate.getDay()]}요일`}</Text>
+          </Pressable>
+          <Datetimepickermodal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  onConfirm={firsthandleConfirm}
+                  onCancel={firsthideDatePicker}
+          />
+          <Text style={styles.datestyle}>~</Text>
+          <Pressable style={styles.titlestyle}onPress={secondshowDatePicker}>
+            <Text style={styles.titletext} >{` ${seconddate.getMonth() + 1}월 ${seconddate.getDate()}일 ${days[seconddate.getDay()]}요일`}</Text>
+          </Pressable>
+          <Datetimepickermodal
+                  isVisible={secondisDatePickerVisible}
+                  mode="date"
+                  onConfirm={secondhandleConfirm}
+                  onCancel={secondhideDatePicker}
+          />
+        </View>
           <Fullline />
           <TextInput
             value={content}
@@ -98,4 +138,23 @@ const styles = StyleSheet.create({
     marginLeft: "10%",
     marginRight: "10%",
   },
+  buttonstyle:{
+    flexDirection:"row",
+    justifyContent:"space-between",
+  },
+  datetext:{
+    flexDirection:"row",
+  },
+  titlestyle:{
+    alignSelf:"flex-start",
+    marginTop:"5%",
+    marginLeft:"5%",
+ },
+ titletext:{
+     fontSize: 15,
+     fontWeight: "bold",
+     color: colors.main.background,
+     marginLeft:"5%",
+     
+ },
 });
