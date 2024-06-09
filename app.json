@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#F7F9FC"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.stunning"
@@ -36,7 +38,8 @@
         {
           "domain": "dev-w0c3tnyi46mfgb5q.us.auth0.com"
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
