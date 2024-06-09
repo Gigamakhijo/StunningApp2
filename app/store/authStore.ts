@@ -7,6 +7,7 @@ interface DecodedToken {
 class AuthStore{
     accessToken: string | null = null;
     idToken: string | null = null;
+    sub: string | null = null;
     constructor(){
         makeAutoObservable(this);
     }
@@ -24,6 +25,8 @@ class AuthStore{
             const decodeidToken = JSON.parse(Buffer.from(this.idToken.split('.')[1], 'base64').toString())
             // const decodeidToken = jwtDecode(this.idToken)
             console.log(decodeidToken)
+            this.sub = decodeidToken.sub
+            console.log(this.sub)
         }
     }
 }
