@@ -1,5 +1,4 @@
 import { makeAutoObservable } from "mobx";
-import { jwtDecode } from "jwt-decode";
 import { Buffer } from "buffer";
 interface DecodedToken {
     [key: string]: any;
